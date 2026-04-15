@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>How It Works — GoComX</title>
+<title>Quote & Survey — GoComX</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -42,21 +42,13 @@ nav {
 }
 .deck-title { font-size: var(--fs-md); font-weight: 600; color: var(--text); }
 .deck-sub { font-size: var(--fs-sm); color: #9ca3af; margin-top: 2px; }
-.deck-actions { display: flex; gap: 10px; }
-.deck-btn {
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 7px 16px; font-size: var(--fs-sm); font-weight: 500;
-  border-radius: 6px; text-decoration: none; border: 1px solid var(--border);
-  color: var(--muted); background: #fff; cursor: pointer;
-  transition: all .15s; font-family: inherit;
-}
-.deck-btn:hover { color: var(--text); border-color: var(--muted); }
-.deck-btn.primary { background: var(--blue); color: #fff; border-color: var(--blue); }
-.deck-btn.primary:hover { background: var(--blue-dark); border-color: var(--blue-dark); }
+.qr-wrap { display: flex; align-items: center; gap: 12px; }
+.qr-wrap img { width: 72px; height: 72px; border-radius: 8px; border: 1px solid var(--border); background: #fff; }
+.qr-label { font-size: var(--fs-sm); color: var(--muted); text-align: center; line-height: 1.4; }
 
 /* IFRAME */
 .frame-wrap { flex: 1; overflow: hidden; }
-iframe { width: 100%; height: 100%; border: none; display: block; }
+.frame-wrap iframe { width: 100%; height: 100%; border: none; display: block; }
 
 @media (max-width: 640px) {
   nav, .deck-bar { padding-left: 20px; padding-right: 20px; }
@@ -74,24 +66,25 @@ iframe { width: 100%; height: 100%; border: none; display: block; }
   <ul class="nav-links">
     <li><a href="index.html">Home</a></li>
     <li><a href="team.html">Team</a></li>
-    <li><a href="deck.html" class="active">How It Works</a></li>
+    <li><a href="deck.html">How It Works</a></li>
     <li><a href="contact.html">Contact Us</a></li>
-    <li><a href="survey.html">Quote & Survey</a></li>
+    <li><a href="survey.html" class="active">Quote & Survey</a></li>
   </ul>
 </nav>
 
 <div class="deck-bar">
   <div>
-    <div class="deck-title">GoComX — How It Works · Business Model Overview</div>
-    <div class="deck-sub">Use arrow keys ← → or click the navigation arrows inside the deck to browse slides</div>
+    <div class="deck-title">Quote & Survey · 报价与调研问卷</div>
+    <div class="deck-sub">Fill out the form below and our team will get back to you within one business day · 填写问卷，我们将在一个工作日内回复</div>
   </div>
-  <div class="deck-actions">
-    <a href="gocomx_comparison_zh.html" target="_blank" class="deck-btn">⤢ Full Screen</a>
+  <div class="qr-wrap">
+    <div class="qr-label">Scan to open<br>扫码填写</div>
+    <img src="survey-qr.png" alt="GoComX Survey QR Code">
   </div>
 </div>
 
 <div class="frame-wrap">
-  <iframe src="gocomx_comparison_zh.html" title="GoComX Business Overview"></iframe>
+  <iframe src="https://forms.cloud.microsoft/r/S7AWM2629a?embed=true" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen webkitallowfullscreen mozallowfullscreen msallowfullscreen></iframe>
 </div>
 
 </body>
