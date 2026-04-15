@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Investor Deck — GoComX</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --blue: #0078d4; --blue-dark: #005a9e; --blue-light: #eff6ff;
+  --text: #111827; --muted: #6b7280;
+  --bg: #f2f4f7; --card: #ffffff;
+  --border: rgba(0,0,0,0.09);
+  --shadow: 0 2px 16px rgba(0,0,0,.07);
+  --radius: 14px;
+  --fs-md: 15px; --fs-sm: 13px;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { height: 100%; }
+body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; display: flex; flex-direction: column; }
+
+/* NAV */
+nav {
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 48px; height: 62px;
+  background: var(--bg); box-shadow: 0 1px 4px rgba(0,0,0,.08); z-index: 100;
+}
+.nav-brand { display: flex; align-items: center; gap: 16px; text-decoration: none; }
+.nav-logo-text { font-size: 18px; font-weight: 800; color: var(--text); letter-spacing: -.3px; }
+.nav-logo-text span { color: var(--blue); }
+.nav-tagline { font-size: 18px; color: #404040; border-left: 1px solid #e0e0e0; padding-left: 16px; font-weight: 800; letter-spacing: -.3px; }
+.nav-links { display: flex; gap: 2px; list-style: none; align-items: center; }
+.nav-links a { font-size: var(--fs-md); font-weight: 500; color: var(--muted); text-decoration: none; padding: 7px 14px; border-radius: 6px; transition: all .15s; }
+.nav-links a:hover { color: var(--text); background: #e8eaed; }
+.nav-links a.active { color: var(--blue); font-weight: 600; }
+
+/* LOCK SCREEN */
+#lock-screen {
+  flex: 1; display: flex; align-items: center; justify-content: center;
+}
+.lock-card {
+  background: var(--card); border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 48px 44px; width: 100%; max-width: 420px;
+  text-align: center;
+}
+.lock-icon { font-size: 48px; margin-bottom: 16px; }
+.lock-title { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 6px; }
+.lock-title span { color: var(--blue); }
+.lock-sub { font-size: var(--fs-sm); color: var(--muted); margin-bottom: 28px; line-height: 1.6; }
+.lock-input {
+  width: 100%; padding: 12px 16px; font-size: var(--fs-md);
+  border: 1.5px solid #d0d0d0; border-radius: 8px;
+  font-family: 'JetBrains Mono', monospace; letter-spacing: .08em;
+  outline: none; transition: border-color .15s; text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.lock-input:focus { border-color: var(--blue); }
+.lock-input.error { border-color: #ef4444; background: #fff5f5; }
+.lock-btn {
+  width: 100%; padding: 12px; font-size: var(--fs-md); font-weight: 700;
+  background: var(--blue); color: #fff; border: none; border-radius: 8px;
+  cursor: pointer; font-family: inherit; transition: background .15s;
+}
+.lock-btn:hover { background: var(--blue-dark); }
+.lock-error { font-size: var(--fs-sm); color: #ef4444; margin-top: 10px; min-height: 20px; }
+.lock-hint { font-size: var(--fs-sm); color: var(--muted); margin-top: 20px; }
+.lock-hint a { color: var(--blue); text-decoration: none; font-weight: 600; }
+.lock-hint a:hover { text-decoration: underline; }
+
+/* DECK VIEW */
+#deck-screen {
+  flex: 1; overflow: hidden; display: none; flex-direction: column;
+}
+.deck-bar {
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 48px; background: #fff;
+  border-bottom: 1px solid var(--border);
+}
+.deck-title { font-size: var(--fs-md); font-weight: 600; color: var(--text); }
+.deck-sub { font-size: var(--fs-sm); color: #9ca3af; margin-top: 2px; }
+.deck-logout {
+  font-size: var(--fs-sm); color: var(--muted); cursor: pointer;
+  padding: 6px 14px; border: 1px solid var(--border); border-radius: 6px;
+  background: #fff; font-family: inherit; transition: all .15s;
+}
+.deck-logout:hover { color: var(--text); border-color: var(--muted); }
+.frame-wrap { flex: 1; overflow: hidden; }
+.frame-wrap iframe { width: 100%; height: 100%; border: none; display: block; }
+
+@media (max-width: 640px) {
+  nav, .deck-bar { padding-left: 20px; padding-right: 20px; }
+  .nav-tagline { display: none; }
+  .lock-card { padding: 32px 24px; margin: 0 16px; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="index.html">
+    <span class="nav-logo-text">Go<span>Com</span>X</span>
+    <span class="nav-tagline">Cross-Border Distribution OS · 跨境智能分销系统 · Microsoft ISV Certified</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="team.html">Team</a></li>
+    <li><a href="deck.html">How It Works</a></li>
+    <li><a href="contact.html">Contact Us</a></li>
+    <li><a href="survey.html">Survey & Quote</a></li>
+    <li><a href="investor.html" class="active">Investor Deck</a></li>
+  </ul>
+</nav>
+
+<!-- LOCK SCREEN -->
+<div id="lock-screen">
+  <div class="lock-card">
+    <div class="lock-icon">🔒</div>
+    <div class="lock-title">Investor <span>Deck</span></div>
+    <p class="lock-sub">This presentation is restricted.<br>Please enter your access code to continue.<br><span style="font-family:'Noto Sans SC',sans-serif;">此文件受限，请输入访问码以继续。</span></p>
+    <input type="password" class="lock-input" id="code-input" placeholder="ENTER ACCESS CODE" maxlength="30"
+      onkeydown="if(event.key==='Enter') checkCode()">
+    <button class="lock-btn" onclick="checkCode()">Unlock →</button>
+    <div class="lock-error" id="error-msg"></div>
+    <p class="lock-hint">Don't have a code? <a href="contact.html">Contact us →</a></p>
+  </div>
+</div>
+
+<!-- DECK SCREEN -->
+<div id="deck-screen">
+  <div class="deck-bar">
+    <div>
+      <div class="deck-title">GoComX — Investor Deck · 招商资料</div>
+      <div class="deck-sub">Confidential · For authorized recipients only · 保密文件，仅供授权人员查阅</div>
+    </div>
+    <button class="deck-logout" onclick="lockOut()">🔒 Lock</button>
+  </div>
+  <div class="frame-wrap">
+    <iframe src="https://gocomx.sharepoint.com/sites/ECOM/_layouts/15/Doc.aspx?sourcedoc={b2054a46-1480-4e60-b252-74609dcf90c1}&action=embedview&wdAr=1.7777777777777777" frameborder="0" title="GoComX Investor Deck"></iframe>
+  </div>
+</div>
+
+<script>
+const CODE = 'GOCOMXCHLOE';
+
+function checkCode() {
+  const input = document.getElementById('code-input');
+  const err = document.getElementById('error-msg');
+  const val = input.value.trim().toUpperCase();
+  if (val === CODE) {
+    document.getElementById('lock-screen').style.display = 'none';
+    const deck = document.getElementById('deck-screen');
+    deck.style.display = 'flex';
+    err.textContent = '';
+  } else {
+    input.classList.add('error');
+    err.textContent = 'Incorrect code. Please try again. · 访问码错误，请重试。';
+    setTimeout(() => input.classList.remove('error'), 1500);
+  }
+}
+
+function lockOut() {
+  document.getElementById('deck-screen').style.display = 'none';
+  document.getElementById('lock-screen').style.display = 'flex';
+  document.getElementById('code-input').value = '';
+  document.getElementById('error-msg').textContent = '';
+}
+</script>
+
+</body>
+</html>
