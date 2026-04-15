@@ -42,19 +42,23 @@ nav {
 }
 .deck-title { font-size: var(--fs-md); font-weight: 600; color: var(--text); }
 .deck-sub { font-size: var(--fs-sm); color: #9ca3af; margin-top: 2px; }
-.qr-section {
-  flex-shrink: 0;
-  display: flex; justify-content: center; align-items: center;
-  padding: 14px 48px;
-  background: #fff; border-bottom: 1px solid var(--border);
+/* CONTENT AREA: form left 4/5, QR right 1/5 */
+.content-wrap {
+  flex: 1; overflow: hidden;
+  display: grid; grid-template-columns: 4fr 1fr;
 }
-.qr-wrap { display: flex; flex-direction: column; align-items: center; gap: 8px; }
-.qr-wrap img { width: 120px; height: 120px; border-radius: 10px; border: 2px solid var(--blue); background: #fff; box-shadow: 0 2px 12px rgba(0,120,212,.18); }
-.qr-label { font-size: var(--fs-sm); color: var(--muted); text-align: center; line-height: 1.6; font-weight: 500; }
-
-/* IFRAME */
-.frame-wrap { flex: 1; overflow: hidden; }
+.frame-wrap { overflow: hidden; }
 .frame-wrap iframe { width: 100%; height: 100%; border: none; display: block; }
+
+.qr-section {
+  display: flex; flex-direction: column; justify-content: center; align-items: center;
+  padding: 24px 16px; gap: 12px;
+  background: var(--surface); border-left: 1px solid var(--border);
+}
+.qr-wrap { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.qr-wrap img { width: 140px; height: 140px; border-radius: 12px; border: 2px solid var(--blue); background: #fff; box-shadow: 0 4px 16px rgba(0,120,212,.18); }
+.qr-label { font-size: var(--fs-sm); color: var(--muted); text-align: center; line-height: 1.6; font-weight: 500; }
+.qr-title { font-size: var(--fs-md); font-weight: 700; color: var(--text); text-align: center; }
 
 @media (max-width: 640px) {
   nav, .deck-bar { padding-left: 20px; padding-right: 20px; }
@@ -85,15 +89,17 @@ nav {
   </div>
 </div>
 
-<div class="qr-section">
-  <div class="qr-wrap">
-    <img src="survey-qr.png" alt="GoComX Survey QR Code">
-    <div class="qr-label">Scan to open on mobile · 扫码在手机上填写</div>
+<div class="content-wrap">
+  <div class="frame-wrap">
+    <iframe src="https://forms.cloud.microsoft/r/S7AWM2629a?embed=true" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen webkitallowfullscreen mozallowfullscreen msallowfullscreen></iframe>
   </div>
-</div>
-
-<div class="frame-wrap">
-  <iframe src="https://forms.cloud.microsoft/r/S7AWM2629a?embed=true" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen webkitallowfullscreen mozallowfullscreen msallowfullscreen></iframe>
+  <div class="qr-section">
+    <div class="qr-wrap">
+      <div class="qr-title">Scan to Fill</div>
+      <img src="survey-qr.png" alt="GoComX Survey QR Code">
+      <div class="qr-label">扫码在手机上填写<br>GoComX Survey &amp; Quote</div>
+    </div>
+  </div>
 </div>
 
 </body>
