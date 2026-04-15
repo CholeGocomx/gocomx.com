@@ -2234,13 +2234,13 @@ function drawInternals(){
 .sl2-outer{ width:min(1140px,99vw); margin:3px auto 0; display:flex; flex-direction:column; gap:16px; flex:1; }
 
 /* ROW 1: Portal | Mfr+Reps | 80+ECOM */
-.sl2-r1{ display:grid; grid-template-columns:170px 1fr 170px; gap:50px; align-items:stretch; }
+.sl2-r1{ display:grid; grid-template-columns:170px 1fr 170px; gap:16px; align-items:stretch; }
 
 /* ROW 2: PIM (wider) | EDI Middleware */
-.sl2-r2{ display:grid; grid-template-columns:1fr 1fr; gap:12px; align-items:stretch; }
+.sl2-r2{ display:grid; grid-template-columns:1fr 1fr; gap:10px; align-items:stretch; }
 
 /* ROW 3: D365FO | D365SCM */
-.sl2-r3{ display:grid; grid-template-columns:1fr 1fr; gap:12px; align-items:stretch; }
+.sl2-r3{ display:grid; grid-template-columns:1fr 1fr; gap:10px; align-items:stretch; }
 
 /* box base */
 .sl2-box{ border-radius:11px; padding:9px 12px; font-size:10px; }
@@ -3339,7 +3339,8 @@ function drawSloopFlows(){
     scm=document.getElementById('sl2-scm'),portal=document.getElementById('sl2-portal');
   if(!outer||!ecom||!edi||!erp||!scm||!portal)return;
   var ob=outer.getBoundingClientRect();
-  function R(el){var b=el.getBoundingClientRect();return{l:b.left-ob.left,r:b.right-ob.left,t:b.top-ob.top,b:b.bottom-ob.top,mx:(b.left+b.right)/2-ob.left,my:(b.top+b.bottom)/2-ob.top,w:b.width,h:b.height};}
+  var zv=parseFloat(getComputedStyle(outer).zoom)||1;
+  function R(el){var b=el.getBoundingClientRect();return{l:(b.left-ob.left)/zv,r:(b.right-ob.left)/zv,t:(b.top-ob.top)/zv,b:(b.bottom-ob.top)/zv,mx:((b.left+b.right)/2-ob.left)/zv,my:((b.top+b.bottom)/2-ob.top)/zv,w:b.width/zv,h:b.height/zv};}
   var E=R(ecom),D=R(edi),F=R(erp),S=R(scm),P=R(portal);
 
   // gap between FO right edge and EDI left edge (the column gap ~12px)
@@ -3438,14 +3439,14 @@ function drawSloopFlows(){
     var pimR = pim.getBoundingClientRect();
     var mfrR = mfr.getBoundingClientRect();
     var PI = {
-      l: pimR.left-ob.left, r: pimR.right-ob.left,
-      t: pimR.top-ob.top,   b: pimR.bottom-ob.top,
-      mx: (pimR.left+pimR.right)/2-ob.left
+      l: (pimR.left-ob.left)/zv, r: (pimR.right-ob.left)/zv,
+      t: (pimR.top-ob.top)/zv,   b: (pimR.bottom-ob.top)/zv,
+      mx: ((pimR.left+pimR.right)/2-ob.left)/zv
     };
     var MF = {
-      l: mfrR.left-ob.left, r: mfrR.right-ob.left,
-      t: mfrR.top-ob.top,   b: mfrR.bottom-ob.top,
-      mx: (mfrR.left+mfrR.right)/2-ob.left
+      l: (mfrR.left-ob.left)/zv, r: (mfrR.right-ob.left)/zv,
+      t: (mfrR.top-ob.top)/zv,   b: (mfrR.bottom-ob.top)/zv,
+      mx: ((mfrR.left+mfrR.right)/2-ob.left)/zv
     };
     // Single path: Mfr bottom → jog to PIM center-x → through PIM → D365 FO top
     var itemX = PI.mx + 20;
