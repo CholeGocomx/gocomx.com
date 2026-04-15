@@ -2619,16 +2619,21 @@ function drawArchLines(){
 
   svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
 
+  // CSS zoom causes getBoundingClientRect to return scaled values —
+  // divide by zoom so coordinates match the unscaled SVG viewBox
+  const zoomVal = parseFloat(getComputedStyle(wrap).zoom) || 1;
+
   // ── Live DOM measurements — always correct regardless of CSS layout ──
   const ob = wrap.getBoundingClientRect();
   function B(sel){
     const el = wrap.querySelector(sel);
     if(!el) return null;
     const r = el.getBoundingClientRect();
-    return { l: r.left-ob.left, r: r.right-ob.left,
-             t: r.top-ob.top,   b: r.bottom-ob.top,
-             mx:(r.left+r.right)/2-ob.left, my:(r.top+r.bottom)/2-ob.top,
-             w: r.width, h: r.height };
+    return { l: (r.left-ob.left)/zoomVal, r: (r.right-ob.left)/zoomVal,
+             t: (r.top-ob.top)/zoomVal,   b: (r.bottom-ob.top)/zoomVal,
+             mx: ((r.left+r.right)/2 - ob.left)/zoomVal,
+             my: ((r.top+r.bottom)/2 - ob.top)/zoomVal,
+             w: r.width/zoomVal, h: r.height/zoomVal };
   }
   const MFR  = B('.arch-mfr-col');
   const PIM  = B('.arch-pim');
