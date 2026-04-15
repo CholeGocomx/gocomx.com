@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How It Works — GoComX</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --blue: #0078d4; --blue-dark: #005a9e;
+  --text: #111827; --muted: #6b7280;
+  --border: rgba(0,0,0,0.09); --surface: #f8fafc;
+  --fs-md: 15px; --fs-sm: 13px;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { height: 100%; }
+body { background: #fff; color: var(--text); font-family: 'Inter', sans-serif; display: flex; flex-direction: column; }
+
+/* NAV */
+nav {
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 48px; height: 62px;
+  background: #fff; box-shadow: 0 1px 4px rgba(0,0,0,.08); z-index: 100;
+}
+.nav-brand { display: flex; align-items: center; gap: 16px; text-decoration: none; }
+.nav-logo-text { font-size: 18px; font-weight: 800; color: var(--text); letter-spacing: -.3px; }
+.nav-logo-text span { color: var(--blue); }
+.nav-tagline { font-size: 18px; color: #404040; border-left: 1px solid #e0e0e0; padding-left: 16px; font-weight: 800; letter-spacing: -.3px; }
+.nav-links { display: flex; gap: 2px; list-style: none; align-items: center; }
+.nav-links a { font-size: var(--fs-md); font-weight: 500; color: var(--muted); text-decoration: none; padding: 7px 14px; border-radius: 6px; transition: all .15s; }
+.nav-links a:hover { color: var(--text); background: var(--surface); }
+.nav-links a.active { color: var(--blue); font-weight: 600; }
+
+/* DECK BAR */
+.deck-bar {
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 48px; background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+.deck-title { font-size: var(--fs-md); font-weight: 600; color: var(--text); }
+.deck-sub { font-size: var(--fs-sm); color: #9ca3af; margin-top: 2px; }
+.deck-actions { display: flex; gap: 10px; }
+.deck-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 7px 16px; font-size: var(--fs-sm); font-weight: 500;
+  border-radius: 6px; text-decoration: none; border: 1px solid var(--border);
+  color: var(--muted); background: #fff; cursor: pointer;
+  transition: all .15s; font-family: inherit;
+}
+.deck-btn:hover { color: var(--text); border-color: var(--muted); }
+.deck-btn.primary { background: var(--blue); color: #fff; border-color: var(--blue); }
+.deck-btn.primary:hover { background: var(--blue-dark); border-color: var(--blue-dark); }
+
+/* IFRAME */
+.frame-wrap { flex: 1; overflow: hidden; }
+iframe { width: 100%; height: 100%; border: none; display: block; }
+
+@media (max-width: 640px) {
+  nav, .deck-bar { padding-left: 20px; padding-right: 20px; }
+  .nav-tagline, .deck-sub { display: none; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="index.html">
+    <span class="nav-logo-text">Go<span>Com</span>X</span>
+    <span class="nav-tagline">Cross-Border Distribution OS · 跨境智能分销系统 · Microsoft ISV Certified</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="team.html">Team</a></li>
+    <li><a href="deck.html" class="active">How It Works</a></li>
+    <li><a href="contact.html">Contact Us</a></li>
+  </ul>
+</nav>
+
+<div class="deck-bar">
+  <div>
+    <div class="deck-title">GoComX — How It Works · Business Model Overview</div>
+    <div class="deck-sub">Use arrow keys ← → or click the navigation arrows inside the deck to browse slides</div>
+  </div>
+  <div class="deck-actions">
+    <a href="gocomx_comparison_zh.html" target="_blank" class="deck-btn">⤢ Full Screen</a>
+  </div>
+</div>
+
+<div class="frame-wrap">
+  <iframe src="gocomx_comparison_zh.html" title="GoComX Business Overview"></iframe>
+</div>
+
+</body>
+</html>

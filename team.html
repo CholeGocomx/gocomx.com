@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Team — GoComX</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --blue: #0078d4; --blue-dark: #005a9e; --blue-light: #eff6ff;
+  --text: #111827; --text2: #404040; --muted: #6b7280;
+  --bg: #f2f4f7; --card: #ffffff;
+  --shadow: 0 2px 16px rgba(0,0,0,.07);
+  --shadow-hover: 0 6px 28px rgba(0,0,0,.12);
+  --radius: 14px;
+  --fs-lg: 20px; --fs-md: 15px; --fs-sm: 13px;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--text);
+  font-family: 'Inter', sans-serif; font-size: var(--fs-md); line-height: 1.6;
+  height: 100vh; display: flex; flex-direction: column; overflow: hidden;
+}
+
+/* NAV */
+nav {
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 48px; height: 62px;
+  background: #fff; box-shadow: 0 1px 4px rgba(0,0,0,.08); z-index: 100;
+}
+.nav-brand { display: flex; align-items: center; gap: 16px; text-decoration: none; }
+.nav-logo-text { font-size: 18px; font-weight: 800; color: var(--text); letter-spacing: -.3px; }
+.nav-logo-text span { color: var(--blue); }
+.nav-tagline { font-size: 18px; color: #404040; border-left: 1px solid #e0e0e0; padding-left: 16px; font-weight: 800; letter-spacing: -.3px; }
+.nav-links { display: flex; gap: 2px; list-style: none; align-items: center; }
+.nav-links a { font-size: var(--fs-md); font-weight: 500; color: var(--muted); text-decoration: none; padding: 7px 14px; border-radius: 6px; transition: all .15s; }
+.nav-links a:hover { color: var(--text); background: #f0f0f0; }
+.nav-links a.active { color: var(--blue); font-weight: 600; }
+
+/* PAGE LAYOUT */
+.page-layout {
+  flex: 1; overflow: hidden;
+  display: grid; grid-template-columns: 300px 1fr;
+  gap: 20px; padding: 20px 48px;
+}
+
+/* LEFT PANEL */
+.page-left {
+  background: var(--card); border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 36px 28px;
+  display: flex; flex-direction: column;
+  overflow-y: auto;
+}
+.page-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: var(--fs-sm); color: var(--blue);
+  letter-spacing: .08em; text-transform: uppercase; margin-bottom: 8px;
+  display: flex; align-items: center; gap: 8px;
+}
+.page-label::before { content: ''; width: 20px; height: 2px; background: var(--blue); border-radius: 2px; }
+.page-title { font-size: var(--fs-lg); font-weight: 800; letter-spacing: -.02em; margin-bottom: 16px; }
+.page-title span { color: var(--blue); }
+.page-desc { font-size: var(--fs-md); color: var(--text2); line-height: 1.7; margin-bottom: 8px; }
+.page-desc-zh { font-size: var(--fs-sm); color: var(--muted); line-height: 1.65; }
+
+/* RIGHT — team cards */
+.page-right { overflow-y: auto; }
+.team-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 16px; height: 100%;
+}
+
+/* Microsoft-style member card */
+.member-card {
+  background: var(--card); border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 28px 24px;
+  display: flex; flex-direction: column;
+  transition: box-shadow .2s;
+}
+.member-card:hover { box-shadow: var(--shadow-hover); }
+.member-role {
+  display: inline-flex; align-items: center;
+  font-family: 'JetBrains Mono', monospace; font-size: var(--fs-sm);
+  letter-spacing: .08em; text-transform: uppercase;
+  color: var(--blue); background: var(--blue-light);
+  border-radius: 4px; padding: 3px 10px; margin-bottom: 12px;
+  align-self: flex-start;
+}
+.member-name { font-size: var(--fs-lg); font-weight: 800; margin-bottom: 4px; }
+.member-title { font-size: var(--fs-sm); color: var(--muted); line-height: 1.5; margin-bottom: 3px; }
+.member-title-zh { font-size: var(--fs-sm); color: #b0b8c8; margin-bottom: 16px; }
+.member-divider { border: none; border-top: 1px solid #f0f0f0; margin-bottom: 14px; }
+.member-bio { font-size: var(--fs-sm); color: var(--text2); line-height: 1.7; flex: 1; }
+.member-tags { margin-top: 16px; display: flex; flex-wrap: wrap; gap: 6px; }
+.tag { font-size: var(--fs-sm); padding: 3px 10px; background: #f2f4f7; border-radius: 4px; color: var(--muted); font-family: 'JetBrains Mono', monospace; }
+
+/* FOOTER */
+footer {
+  flex-shrink: 0; background: #fff;
+  box-shadow: 0 -1px 4px rgba(0,0,0,.06);
+  padding: 13px 48px;
+  display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 8px;
+}
+.footer-copy { font-size: var(--fs-sm); color: #505050; font-weight: 600; }
+.footer-copy span { color: var(--blue); }
+.footer-info { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; justify-content: center; }
+.footer-info span, .footer-info a { font-size: var(--fs-sm); color: #404040; text-decoration: none; font-weight: 500; }
+.footer-info a:hover { color: var(--blue); }
+
+.zh, :lang(zh) {
+  font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-weight: 500; -webkit-font-smoothing: antialiased;
+}
+
+@media (max-width: 960px) {
+  body { overflow: auto; height: auto; }
+  .page-layout { grid-template-columns: 1fr; overflow: visible; padding: 16px 20px; }
+  .team-grid { grid-template-columns: 1fr; height: auto; }
+  nav { padding: 0 20px; }
+  .nav-tagline { display: none; }
+  footer { padding: 14px 20px; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="index.html">
+    <span class="nav-logo-text">Go<span>Com</span>X</span>
+    <span class="nav-tagline">Cross-Border Distribution OS · 跨境智能分销系统 · Microsoft ISV Certified</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="team.html" class="active">Team</a></li>
+    <li><a href="deck.html">How It Works</a></li>
+    <li><a href="contact.html">Contact Us</a></li>
+  </ul>
+</nav>
+
+<div class="page-layout">
+
+  <!-- LEFT: Intro panel -->
+  <div class="page-left">
+    <div class="page-label">Leadership · 核心团队</div>
+    <div class="page-title">The <span>Team</span></div>
+    <p class="page-desc">Experienced operators driving the future of cross-border distribution.</p>
+    <p class="page-desc-zh zh">经验丰富的运营团队，驱动跨境分销的未来。</p>
+  </div>
+
+  <!-- RIGHT: Team cards -->
+  <div class="page-right">
+    <div class="team-grid">
+
+      <div class="member-card">
+        <div class="member-role">CEO</div>
+        <div class="member-name">Chloe Zeng</div>
+        <div class="member-title">Solution Architect · ERP &amp; EDI Director</div>
+        <div class="member-title-zh zh">解决方案架构师 · ERP与EDI总监</div>
+        <hr class="member-divider">
+        <p class="member-bio">Microsoft D365 F&amp;O/SCM ERP systems architect and technical founder of GoComX. Built the entire integration infrastructure connecting Chinese manufacturers to 80+ North American retail channels.<br><br><span class="zh" style="color:var(--muted);">微软ERP系统架构师，GoComX技术创始人，构建了连接中国制造商与北美80个以上零售渠道的完整集成基础设施。</span></p>
+        <div class="member-tags">
+          <span class="tag">D365 F&amp;O/SCM</span>
+          <span class="tag">EDI</span>
+          <span class="tag">ERP</span>
+        </div>
+      </div>
+
+      <div class="member-card">
+        <div class="member-role">CFO</div>
+        <div class="member-name">Tang Tian</div>
+        <div class="member-title">Operations &amp; Finance Executive</div>
+        <div class="member-title-zh zh">运营与财务执行官</div>
+        <hr class="member-divider">
+        <p class="member-bio">Chief Financial Officer overseeing GoComX's financial strategy and operational execution. Responsible for the financial framework supporting rapid channel expansion across North American markets.<br><br><span class="zh" style="color:var(--muted);">负责GoComX财务战略与运营执行，支撑平台在北美市场的快速渠道扩张。</span></p>
+        <div class="member-tags">
+          <span class="tag">Finance</span>
+          <span class="tag">Operations</span>
+          <span class="tag">Strategy</span>
+        </div>
+      </div>
+
+      <div class="member-card">
+        <div class="member-role">E-Commerce</div>
+        <div class="member-name">Somesh Gyan</div>
+        <div class="member-title">Senior E-Commerce &amp; Platform Operations Executive</div>
+        <div class="member-title-zh zh">资深电商与平台运营高管</div>
+        <hr class="member-divider">
+        <p class="member-bio">15+ years leading omnichannel e-commerce growth across global platforms. Driven $100M+ annual revenue in the home &amp; lifestyle category with deep P&amp;L ownership and marketplace expertise.<br><br><span class="zh" style="color:var(--muted);">拥有15年以上全渠道电商经验，在家居生活领域推动年收入超1亿美元。</span></p>
+        <div class="member-tags">
+          <span class="tag">P&amp;L</span>
+          <span class="tag">Omnichannel</span>
+          <span class="tag">$100M+ Rev</span>
+        </div>
+      </div>
+
+      <div class="member-card">
+        <div class="member-role">Secretary</div>
+        <div class="member-name">Andrew Ngo</div>
+        <div class="member-title">Corporate Secretary</div>
+        <div class="member-title-zh zh">公司秘书</div>
+        <hr class="member-divider">
+        <p class="member-bio">Responsible for corporate governance and administrative operations at GoComX — ensuring compliance, record-keeping, and organizational integrity as the company grows.<br><br><span class="zh" style="color:var(--muted);">负责公司治理与行政运营，确保合规性与组织完整性。</span></p>
+        <div class="member-tags">
+          <span class="tag">Governance</span>
+          <span class="tag">Compliance</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-copy">© 2026 Go<span>Com</span>X</div>
+  <div class="footer-info">
+    <span>📍 Irvine, CA, U.S.A</span>
+    <a href="mailto:info@gocomx.com">✉️ info@gocomx.com</a>
+  </div>
+  <div></div>
+</footer>
+
+</body>
+</html>

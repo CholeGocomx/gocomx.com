@@ -1,0 +1,3532 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GoComX — 商业模式对比</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+SC:wght@300;400;500;700;900&family=Space+Mono:wght@400;700&display=swap');
+
+:root {
+  --red:#c0392b; --dark-red:#8b0000; --gold:#e8a020;
+  --green:#4ade80; --green-dark:#1a7a40;
+  --blue:#38bdf8; --purple:#a78bfa; --orange:#fb923c;
+  --bg:#0a0a0f; --surface:#12121a; --surface2:#1a1a28;
+  --border:rgba(255,255,255,0.07); --text:#f0ece8; --muted:#666;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:'Noto Sans SC',sans-serif;overflow:hidden;width:100vw;height:100vh;user-select:none;}
+
+/* ── SLIDE SYSTEM ── */
+.slide{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding-top:16px;opacity:0;pointer-events:none;transition:opacity .7s ease;}
+.slide.active{opacity:1;pointer-events:all;}
+
+#progress-bar{position:fixed;top:0;left:0;height:3px;background:var(--red);transition:width .5s ease;z-index:200;box-shadow:0 0 14px var(--red);}
+#dots{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:200;}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--muted);cursor:pointer;transition:background .3s,transform .3s;}
+.dot.active{background:var(--red);transform:scale(1.5);}
+.nav-arrow{position:fixed;top:50%;transform:translateY(-50%);background:rgba(10,10,20,.55);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.6);width:36px;height:36px;border-radius:50%;font-size:20px;cursor:pointer;z-index:200;display:flex;align-items:center;justify-content:center;transition:all .2s;backdrop-filter:blur(4px);}
+.nav-arrow:hover{background:rgba(192,57,43,.25);border-color:var(--red);}
+#nav-prev{left:6px;}#nav-next{right:6px;}.hide-nav #nav-prev{opacity:0;pointer-events:none;}.hide-nav #nav-next{opacity:0.7 !important;pointer-events:auto !important;color:rgba(255,255,255,.7) !important;border-color:rgba(255,255,255,.3) !important;}
+#slide-counter{position:fixed;top:15px;right:20px;font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);z-index:200;letter-spacing:.1em;}
+
+/* ── SHARED ── */
+.pulse-ring{position:absolute;border-radius:50%;border:1px solid rgba(192,57,43,.12);animation:pulse 4s ease-in-out infinite;pointer-events:none;}
+.slide-header{text-align:center;margin-bottom:14px;}
+.slide-tag{display:inline-block;font-size:10px;letter-spacing:.25em;color:var(--red);border:1px solid rgba(192,57,43,.4);border-radius:20px;padding:3px 14px;margin-bottom:8px;opacity:0;animation:fadeUp .5s .1s forwards;}
+.slide-tag.green{color:var(--green);border-color:rgba(74,222,128,.35);}
+.slide-tag.blue{color:var(--blue);border-color:rgba(56,189,248,.35);}
+.slide-tag.purple{color:var(--purple);border-color:rgba(167,139,250,.35);}
+.slide-title{font-weight:900;font-size:clamp(20px,3vw,40px);opacity:0;animation:fadeUp .6s .2s forwards;line-height:1.25;}
+.slide-title em{color:var(--red);font-style:normal;}
+.slide-title .g{color:var(--green);}
+.slide-title .b{color:var(--blue);}
+.slide-title .p{color:var(--purple);}
+.slide-title .o{color:var(--orange);}
+
+/* ══════════════════════════════════════════════
+   SLIDE 0 — TITLE
+══════════════════════════════════════════════ */
+/* ── S0 Title Slide ── */
+#s0{
+  background:#08080f;
+  overflow:hidden;
+  align-items:stretch;
+  justify-content:stretch;
+  padding:0;
+}
+/* split layout */
+#s0 .s0-inner{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  width:100%;height:100%;
+}
+/* LEFT: dark red accent panel */
+#s0 .s0-left{
+  background:linear-gradient(145deg,#110408 0%,#0a0a0f 60%);
+  border-right:1px solid rgba(192,57,43,.2);
+  display:flex;flex-direction:column;
+  justify-content:center;padding:52px 56px;
+  position:relative;overflow:hidden;
+}
+#s0 .s0-left::before{
+  content:'';position:absolute;
+  top:-200px;left:-200px;
+  width:600px;height:600px;
+  background:radial-gradient(ellipse,rgba(192,57,43,.18) 0%,transparent 65%);
+  pointer-events:none;
+}
+/* RIGHT: dark teal accent panel */
+#s0 .s0-right{
+  background:linear-gradient(145deg,#030d10 0%,#0a0a0f 60%);
+  display:flex;flex-direction:column;
+  justify-content:center;padding:52px 56px;
+  position:relative;overflow:hidden;
+}
+#s0 .s0-right::before{
+  content:'';position:absolute;
+  bottom:-200px;right:-200px;
+  width:600px;height:600px;
+  background:radial-gradient(ellipse,rgba(56,189,248,.12) 0%,transparent 65%);
+  pointer-events:none;
+}
+/* eyebrow */
+#s0 .eyebrow{
+  font-family:'Space Mono',monospace;font-size:9px;
+  color:rgba(192,57,43,.7);letter-spacing:.4em;
+  text-transform:uppercase;margin-bottom:20px;
+  opacity:0;animation:fadeUp .6s .2s forwards;
+}
+/* BIG brand name */
+#s0 .s0-brand{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(72px,11vw,140px);
+  line-height:.88;letter-spacing:-.01em;
+  background:linear-gradient(130deg,#4ade80 0%,#38bdf8 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+  opacity:0;animation:fadeUp .7s .4s forwards;
+}
+/* Short punchy tagline */
+#s0 .s0-tagline{
+  margin-top:22px;
+  font-size:clamp(18px,2.2vw,28px);
+  font-weight:900;line-height:1.25;
+  color:var(--text);
+  opacity:0;animation:fadeUp .7s .65s forwards;
+}
+#s0 .s0-tagline em{color:var(--red);font-style:normal;}
+/* Descriptor line */
+#s0 .s0-desc{
+  margin-top:16px;
+  font-size:clamp(11px,1.1vw,14px);
+  color:rgba(255,255,255,.32);
+  letter-spacing:.14em;text-transform:uppercase;
+  opacity:0;animation:fadeUp .6s .85s forwards;
+}
+/* Right panel heading */
+#s0 .s0-rhead{
+  font-family:'Space Mono',monospace;
+  font-size:9px;color:rgba(56,189,248,.6);
+  letter-spacing:.3em;text-transform:uppercase;
+  margin-bottom:28px;
+  opacity:0;animation:fadeUp .6s .5s forwards;
+}
+/* stat grid */
+#s0 .s0-stats{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:14px;
+  opacity:0;animation:fadeUp .7s .7s forwards;
+}
+#s0 .s0-stat{
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:12px;padding:18px 20px;
+  position:relative;overflow:hidden;
+}
+#s0 .s0-stat::after{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  border-radius:2px 2px 0 0;
+}
+#s0 .s0-stat.c-red::after  {background:var(--red);}
+#s0 .s0-stat.c-gold::after {background:var(--gold);}
+#s0 .s0-stat.c-green::after{background:var(--green);}
+#s0 .s0-stat.c-blue::after {background:var(--blue);}
+#s0 .s0-num{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(36px,4vw,52px);
+  line-height:1;
+}
+#s0 .s0-slabel{font-size:10px;color:rgba(255,255,255,.38);margin-top:3px;letter-spacing:.05em;}
+/* bottom year badge */
+#s0 .s0-year{
+  margin-top:28px;
+  font-size:10px;color:rgba(255,255,255,.2);
+  letter-spacing:.2em;
+  opacity:0;animation:fadeUp .6s 1.0s forwards;
+}
+.tl-chip{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:20px;padding:6px 16px;font-size:12px;color:var(--muted);}
+.tl-chip b{color:var(--text);font-weight:700;}
+
+/* ══════════════════════════════════════════════
+   SLIDE 1 — CHAOS (Model 1)
+══════════════════════════════════════════════ */
+#s1{background:linear-gradient(135deg,#100505 0%,var(--bg) 100%);}
+.chaos-wrap{position:relative;width:100%;flex:1;min-height:300px;opacity:0;animation:fadeIn .8s .4s forwards;}
+.n{position:absolute;display:flex;align-items:center;gap:6px;font-size:11px;font-weight:700;white-space:nowrap;}
+.nd{width:10px;height:10px;border-radius:50%;background:var(--red);flex-shrink:0;}
+.nd.ret{background:#444;}
+.pain-row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:14px;opacity:0;animation:fadeUp .6s 1.2s forwards;}
+.pain-chip{background:rgba(192,57,43,.1);border:1px solid rgba(192,57,43,.3);border-radius:6px;padding:5px 12px;font-size:11px;color:#e07070;}
+
+/* ══════════════════════════════════════════════
+   SLIDE 2 — PAIN STATS
+══════════════════════════════════════════════ */
+#s2{background:radial-gradient(ellipse at 65% 25%,#120800 0%,var(--bg) 65%);padding:28px 48px;}
+.stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:780px;margin-top:22px;}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px 16px;text-align:center;opacity:0;transform:translateY(14px);}
+.sn{font-family:'Bebas Neue',sans-serif;font-size:38px;color:var(--gold);line-height:1;}
+.sl{font-size:12px;color:var(--muted);margin-top:6px;line-height:1.6;}
+.stat-card:nth-child(1){animation:fadeUp .5s .3s forwards;}
+.stat-card:nth-child(2){animation:fadeUp .5s .45s forwards;}
+.stat-card:nth-child(3){animation:fadeUp .5s .6s forwards;}
+.stat-card:nth-child(4){animation:fadeUp .5s .75s forwards;}
+.stat-card:nth-child(5){animation:fadeUp .5s .9s forwards;}
+.stat-card:nth-child(6){animation:fadeUp .5s 1.05s forwards;}
+
+/* ══════════════════════════════════════════════
+   SLIDE 3 — MODEL 2 FULL ARCHITECTURE
+   Manufacturers → PIM ↔ GoComX ERP → 80 Platforms
+   Sales Reps login to PIM
+══════════════════════════════════════════════ */
+#s3{background:radial-gradient(ellipse at 50% 50%,#040d0a 0%,var(--bg) 65%);padding:6px 24px;justify-content:flex-start;}
+
+.arch-canvas-wrap{
+  position:relative;
+  width:min(960px,84vw);
+  height:min(520px, calc((100vh - 190px) / 1.25));
+  margin:4px auto 0;
+  opacity:0;animation:fadeIn .7s .3s forwards;
+  overflow:hidden;
+  zoom:1.25;
+}
+
+/* Manufacturer column */
+.arch-mfr-col{position:absolute;left:0;top:16px;display:flex;flex-direction:column;gap:7px;width:95px;}
+.arch-mfr{background:var(--surface);border:1px solid rgba(192,57,43,.28);border-radius:9px;padding:8px 10px;display:flex;align-items:center;gap:7px;opacity:0;transform:translateX(-20px);}
+.arch-mfr:nth-child(1){animation:slideRight .4s .5s forwards;}
+.arch-mfr:nth-child(2){animation:slideRight .4s .62s forwards;}
+.arch-mfr:nth-child(3){animation:slideRight .4s .74s forwards;}
+.arch-mfr:nth-child(4){animation:slideRight .4s .86s forwards;}
+.arch-mfr:nth-child(5){animation:slideRight .4s .98s forwards;}
+.arch-mfr-ico{font-size:16px;flex-shrink:0;}
+.arch-mfr-info{min-width:0;}
+.arch-mfr-name{font-size:12px;font-weight:700;}
+.arch-mfr-cat{font-size:10px;color:var(--muted);margin-top:1px;}
+
+/* PIM Box */
+.arch-pim{
+  position:absolute;left:145px;top:0;width:165px;height:100%;
+  background:linear-gradient(160deg,#0d0d2e,#141438);
+  border:2px solid rgba(167,139,250,.55);
+  border-radius:16px;padding:12px 12px;
+  box-shadow:0 0 60px rgba(167,139,250,.18);
+  display:flex;flex-direction:column;gap:0;
+  opacity:0;transform:scale(.88);animation:scaleIn .6s .3s forwards;
+}
+.arch-pim-title{font-family:'Bebas Neue',sans-serif;font-size:26px;color:var(--purple);letter-spacing:.1em;text-align:center;}
+.arch-pim-sub{font-size:9px;color:rgba(167,139,250,.6);text-align:center;letter-spacing:.08em;}
+.arch-ai-badge{
+  display:block;margin:8px auto 6px;
+  background:linear-gradient(135deg,rgba(167,139,250,.2),rgba(56,189,248,.12));
+  border:1px solid rgba(167,139,250,.5);
+  border-radius:20px;padding:4px 12px;
+  font-size:10px;font-weight:700;color:var(--purple);
+  text-align:center;letter-spacing:.04em;
+  animation:glowPulse 2s ease-in-out infinite;
+}
+.arch-pim-feats{display:flex;flex-direction:column;gap:4px;margin-top:4px;}
+.arch-pf{background:rgba(167,139,250,.06);border:1px solid rgba(167,139,250,.12);border-radius:5px;padding:3px 7px;font-size:11px;color:rgba(167,139,250,.82);}
+
+/* Sales Rep login badge inside PIM */
+.rep-login-section{
+  margin-top:8px;
+  background:rgba(56,189,248,.06);
+  border:1px solid rgba(56,189,248,.2);
+  border-radius:8px;padding:6px 8px;
+}
+.rep-login-title{font-size:11px;color:var(--blue);font-weight:700;margin-bottom:5px;letter-spacing:.05em;}
+.rep-mini{display:flex;align-items:center;gap:5px;margin-bottom:3px;}
+.rep-mini:last-child{margin-bottom:0;}
+.rep-mini-dot{width:5px;height:5px;border-radius:50%;background:var(--blue);flex-shrink:0;animation:blink 2s ease-in-out infinite;}
+.rep-mini-dot:nth-child(1){animation-delay:0s;}
+.rep-mini-dot:nth-child(2){animation-delay:.4s;}
+.rep-mini-dot:nth-child(3){animation-delay:.8s;}
+.rep-mini-name{font-size:10px;color:rgba(56,189,248,.75);}
+.rep-mini-score{margin-left:auto;font-size:10px;color:var(--green);font-family:'Space Mono',monospace;background:rgba(74,222,128,.1);border-radius:3px;padding:1px 4px;}
+
+/* GoComX — Part 1: ERP Box (LEFT, side-by-side with EDI) */
+.arch-erp{
+  position:absolute;left:360px;top:4px;width:172px;height:calc(100% - 8px);
+  background:linear-gradient(145deg,#091f12,#0d2e19);
+  border:2px solid rgba(74,222,128,.55);border-radius:12px;
+  padding:10px 10px;text-align:center;z-index:20;
+  box-shadow:0 0 30px rgba(31,138,72,.25);
+  opacity:0;transform:scale(.88);animation:scaleIn .6s .5s forwards;
+  display:flex;flex-direction:column;
+}
+.arch-erp-title{font-family:'Bebas Neue',sans-serif;font-size:17px;color:var(--green);letter-spacing:.06em;}
+.arch-erp-sub{font-size:7.5px;color:rgba(74,222,128,.55);margin-top:0;letter-spacing:.05em;}
+.arch-erp-grid{margin-top:5px;display:flex;flex-direction:column;gap:4px;text-align:left;flex:1;min-height:0;}
+.arch-erp-section{border-radius:5px;padding:6px 8px;border:1px solid;flex:1;display:flex;flex-direction:column;min-height:0;}
+.arch-es-title{font-size:10px;font-weight:700;margin-bottom:1px;display:flex;align-items:center;gap:4px;}
+.arch-es-dot{width:4px;height:4px;border-radius:50%;flex-shrink:0;}
+.arch-es-items{display:flex;flex-direction:column;gap:3px;margin-top:4px;flex:1;justify-content:space-around;}
+.arch-es-item{font-size:9.5px;color:rgba(255,255,255,.55);line-height:1.4;}
+.arch-es-fo {background:rgba(56,189,248,.05);border-color:rgba(56,189,248,.25);}
+.arch-es-fo .arch-es-title{color:var(--blue);}
+.arch-es-fo .arch-es-dot{background:var(--blue);}
+.arch-es-scm{background:rgba(74,222,128,.04);border-color:rgba(74,222,128,.22);}
+.arch-es-scm .arch-es-title{color:var(--green);}
+.arch-es-scm .arch-es-dot{background:var(--green);}
+.arch-es-prc{background:rgba(251,146,60,.04);border-color:rgba(251,146,60,.22);}
+.arch-es-prc .arch-es-title{color:var(--orange);}
+.arch-es-prc .arch-es-dot{background:var(--orange);}
+
+/* GoComX — Part 2: EDI Box (RIGHT, side-by-side with ERP) */
+.arch-edi-box{
+  position:absolute;left:612px;top:4px;width:170px;height:calc(100% - 8px);
+  background:linear-gradient(145deg,#1a1200,#241800);
+  border:2px solid rgba(232,160,32,.65);border-radius:12px;
+  padding:10px 10px;text-align:center;z-index:20;
+  box-shadow:0 0 35px rgba(232,160,32,.22);
+  opacity:0;transform:scale(.88);
+  animation:scaleIn .6s .65s forwards, glowPulseGold 3s 1.5s ease-in-out infinite;
+  display:flex;flex-direction:column;
+}
+.arch-edi-title{font-family:'Bebas Neue',sans-serif;font-size:17px;color:var(--gold);letter-spacing:.08em;}
+.arch-edi-sub{font-size:7.5px;color:rgba(232,160,32,.55);margin-top:0;letter-spacing:.04em;}
+.arch-edi-stat-row{display:flex;justify-content:space-around;margin:5px 0 4px;border-top:1px solid rgba(232,160,32,.15);border-bottom:1px solid rgba(232,160,32,.15);padding:4px 0;}
+.arch-edi-stat{text-align:center;}
+.arch-edi-num{font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--gold);line-height:1;}
+.arch-edi-slabel{font-size:7px;color:rgba(232,160,32,.5);line-height:1.2;}
+.arch-edi-flows{display:flex;flex-direction:column;gap:0;text-align:left;margin-top:5px;flex:1;justify-content:space-around;min-height:0;}
+.arch-edi-flow{display:flex;align-items:center;gap:5px;font-size:9.5px;}
+.arch-edi-arrow{font-size:9px;flex-shrink:0;}
+.arch-edi-moat{flex-shrink:0;margin-top:auto;font-size:7px;color:rgba(232,160,32,.45);text-align:center;margin-top:4px;border-top:1px solid rgba(232,160,32,.1);padding-top:3px;}
+
+/* 80 Platforms column */
+.arch-plat-col{position:absolute;left:884px;top:8px;width:190px;display:flex;flex-direction:column;gap:5px;}
+.arch-plat{background:var(--surface);border:1px solid rgba(74,222,128,.2);border-radius:8px;padding:6px 10px;display:flex;align-items:center;gap:7px;opacity:0;transform:translateX(20px);}
+.arch-plat:nth-child(1){animation:slideLeft .4s .8s forwards;}
+.arch-plat:nth-child(2){animation:slideLeft .4s .9s forwards;}
+.arch-plat:nth-child(3){animation:slideLeft .4s 1.0s forwards;}
+.arch-plat:nth-child(4){animation:slideLeft .4s 1.1s forwards;}
+.arch-plat:nth-child(5){animation:slideLeft .4s 1.2s forwards;}
+.arch-plat:nth-child(6){animation:slideLeft .4s 1.3s forwards;}
+.arch-plat-name{font-size:12px;font-weight:700;}
+.arch-plat-detail{font-size:10px;color:var(--muted);margin-top:1px;}
+.plat-more{background:rgba(74,222,128,.07);border:1px dashed rgba(74,222,128,.2);border-radius:8px;padding:6px 10px;text-align:center;font-size:10px;color:rgba(74,222,128,.5);opacity:0;animation:slideLeft .4s 1.4s forwards;}
+
+/* SVG overlay for all arch lines */
+#arch-svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:5;overflow:hidden;}
+
+/* Data flow packets */
+.data-packet{
+  position:absolute;
+  font-size:9px;font-family:'Space Mono',monospace;
+  background:rgba(167,139,250,.15);
+  border:1px solid rgba(167,139,250,.4);
+  border-radius:4px;padding:2px 6px;color:var(--purple);
+  white-space:nowrap;opacity:0;
+  pointer-events:none;z-index:30;
+}
+
+/* ══════════════════════════════════════════════
+   SLIDE 4 — PIM AI MATCHING DEEP DIVE
+══════════════════════════════════════════════ */
+#s4{justify-content:flex-start;background:radial-gradient(ellipse at 50% 50%,#080818 0%,var(--bg) 70%);padding:18px 36px;}
+
+.pim-hero{width:min(920px,95vw);display:grid;grid-template-columns:1fr 215px 1fr;gap:0;margin-top:12px;position:relative;opacity:0;animation:fadeIn .7s .4s forwards;align-items:center;}
+
+.mfr-col{display:flex;flex-direction:column;gap:7px;padding-right:14px;}
+.mfr-card{background:var(--surface);border:1px solid rgba(192,57,43,.22);border-radius:10px;padding:8px 11px;display:flex;align-items:flex-start;gap:8px;opacity:0;transform:translateX(-26px);}
+.mfr-card:nth-child(1){animation:slideRight .45s .5s forwards;}
+.mfr-card:nth-child(2){animation:slideRight .45s .64s forwards;}
+.mfr-card:nth-child(3){animation:slideRight .45s .78s forwards;}
+.mfr-card:nth-child(4){animation:slideRight .45s .92s forwards;}
+.mfr-card:nth-child(5){animation:slideRight .45s 1.06s forwards;}
+.mfr-icon{font-size:17px;flex-shrink:0;margin-top:1px;}
+.mfr-info{flex:1;min-width:0;}
+.mfr-name{font-size:11px;font-weight:700;}
+.mfr-items{font-size:9px;color:var(--muted);margin-top:1px;}
+.mfr-items span{color:var(--gold);font-weight:700;}
+.mfr-products{display:flex;gap:3px;margin-top:4px;flex-wrap:wrap;}
+.prod-tag{background:rgba(232,160,32,.1);border:1px solid rgba(232,160,32,.22);border-radius:3px;padding:1px 5px;font-size:9px;color:var(--gold);}
+.upload-badge{font-size:8px;color:var(--green);background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.2);border-radius:3px;padding:1px 5px;margin-top:3px;display:inline-block;}
+
+.pim-center{display:flex;flex-direction:column;align-items:center;position:relative;z-index:10;}
+.pim-box{width:210px;background:linear-gradient(160deg,#0d0d2e,#141435);border:2px solid rgba(167,139,250,.55);border-radius:16px;padding:14px 13px;text-align:center;box-shadow:0 0 50px rgba(167,139,250,.18);opacity:0;transform:scale(.82);animation:scaleIn .6s .3s forwards;}
+.pim-label{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--purple);letter-spacing:.1em;}
+.pim-sub{font-size:9px;color:rgba(167,139,250,.65);margin-top:1px;letter-spacing:.1em;}
+.ai-badge{display:inline-block;margin:8px auto 4px;background:linear-gradient(135deg,rgba(167,139,250,.18),rgba(56,189,248,.12));border:1px solid rgba(167,139,250,.5);border-radius:20px;padding:4px 14px;font-size:10px;font-weight:700;color:var(--purple);letter-spacing:.04em;animation:glowPulse 2s ease-in-out infinite;}
+.ai-desc{font-size:9px;color:rgba(167,139,250,.6);line-height:1.7;margin-top:4px;text-align:left;}
+.pim-feats{margin-top:8px;display:flex;flex-direction:column;gap:3px;}
+.pf{background:rgba(167,139,250,.06);border:1px solid rgba(167,139,250,.13);border-radius:5px;padding:3px 7px;font-size:9px;color:rgba(167,139,250,.82);text-align:left;}
+.auto-post-badge{margin-top:8px;background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.3);border-radius:6px;padding:5px 8px;font-size:9px;color:var(--green);text-align:center;}
+.auto-post-badge b{font-size:11px;display:block;margin-bottom:1px;}
+
+.rep-col{display:flex;flex-direction:column;gap:7px;padding-left:14px;}
+.rep-card{background:var(--surface);border:1px solid rgba(56,189,248,.18);border-radius:10px;padding:7px 10px;display:flex;align-items:center;gap:8px;opacity:0;transform:translateX(26px);}
+.rep-card:nth-child(1){animation:slideLeft .45s .9s forwards;}
+.rep-card:nth-child(2){animation:slideLeft .45s 1.0s forwards;}
+.rep-card:nth-child(3){animation:slideLeft .45s 1.1s forwards;}
+.rep-card:nth-child(4){animation:slideLeft .45s 1.2s forwards;}
+.rep-card:nth-child(5){animation:slideLeft .45s 1.3s forwards;}
+.rep-card:nth-child(6){animation:slideLeft .45s 1.4s forwards;}
+.rep-avatar{font-size:16px;flex-shrink:0;}
+.rep-info{flex:1;min-width:0;}
+.rep-name{font-size:10px;font-weight:700;}
+.rep-focus{font-size:9px;color:var(--muted);margin-top:1px;}
+.rep-focus span{color:var(--blue);}
+.rep-status{font-size:8px;color:var(--green);margin-top:2px;display:flex;align-items:center;gap:3px;}
+.rep-online{width:5px;height:5px;border-radius:50%;background:var(--green);animation:blink 1.5s infinite;flex-shrink:0;}
+.match-score{font-family:'Space Mono',monospace;font-size:10px;color:var(--green);font-weight:700;white-space:nowrap;background:rgba(74,222,128,.1);border-radius:4px;padding:2px 5px;}
+
+#match-canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:5;}
+
+/* ══════════════════════════════════════════════
+   SLIDE 5 — ECOSYSTEM / FLYWHEEL
+══════════════════════════════════════════════ */
+#s5{justify-content:flex-start;background:radial-gradient(ellipse at 50% 50%,#05100a 0%,var(--bg) 65%);padding:20px 40px;}
+.eco-flow{display:grid;grid-template-columns:1fr 34px 1fr 34px 1fr 34px 1fr;gap:0;align-items:center;margin-top:14px;max-width:840px;width:100%;}
+.eco-box{background:var(--surface2);border-radius:12px;padding:13px 11px;text-align:center;border:1px solid var(--border);opacity:0;transform:translateY(14px);}
+.eco-box.b1{animation:fadeUp .5s .3s forwards;border-color:rgba(192,57,43,.3);}
+.eco-box.b2{animation:fadeUp .5s .5s forwards;border-color:rgba(232,160,32,.35);}
+.eco-box.b3{animation:fadeUp .5s .7s forwards;border-color:rgba(167,139,250,.4);}
+.eco-box.b4{animation:fadeUp .5s .9s forwards;border-color:rgba(74,222,128,.3);}
+.eco-icon{font-size:20px;margin-bottom:5px;}
+.eco-label{font-size:11px;font-weight:700;}
+.eco-sub{font-size:9px;color:var(--muted);margin-top:3px;line-height:1.6;}
+.eco-arrow{text-align:center;font-size:16px;color:var(--muted);opacity:0;animation:fadeIn .4s .8s forwards;}
+.tech-stack{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:10px;max-width:840px;width:100%;}
+.ts-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:11px 10px;text-align:center;opacity:0;transform:translateY(10px);}
+.ts-card:nth-child(1){animation:fadeUp .5s 1.1s forwards;}
+.ts-card:nth-child(2){animation:fadeUp .5s 1.25s forwards;}
+.ts-card:nth-child(3){animation:fadeUp .5s 1.4s forwards;}
+.ts-card:nth-child(4){animation:fadeUp .5s 1.55s forwards;}
+.ts-icon{font-size:17px;margin-bottom:4px;}
+.ts-label{font-size:11px;font-weight:700;}
+.ts-sub{font-size:9px;color:var(--muted);margin-top:3px;line-height:1.5;}
+.moat-bar{margin-top:10px;padding:9px 16px;max-width:840px;width:100%;background:linear-gradient(90deg,rgba(232,160,32,.04),rgba(74,222,128,.04));border:1px solid rgba(232,160,32,.13);border-radius:10px;display:flex;gap:16px;align-items:center;flex-wrap:wrap;justify-content:center;opacity:0;animation:fadeUp .5s 1.7s forwards;}
+.moat-item{font-size:11px;color:var(--muted);display:flex;align-items:center;gap:4px;}
+.moat-item b{color:var(--gold);}
+
+/* ══════════════════════════════════════════════
+   SLIDE 6 — COMPARE TABLE
+══════════════════════════════════════════════ */
+#s6{background:var(--bg);padding:16px 32px;align-items:stretch;justify-content:flex-start;}
+#s6 h2{font-weight:900;font-size:clamp(20px,3vw,38px);text-align:center;margin-bottom:12px;opacity:0;animation:fadeUp .5s .1s forwards;}
+#s6 h2 em{color:var(--red);font-style:normal;}
+.ctable{width:100%;max-width:840px;margin:0 auto;border-collapse:separate;border-spacing:0;font-size:12px;opacity:0;animation:fadeIn .7s .4s forwards;}
+.ctable th{padding:14px 14px;font-weight:700;font-size:13px;}
+.ctable th:first-child{text-align:left;color:var(--muted);font-size:11px;}
+.ctable th:nth-child(2){background:rgba(192,57,43,.1);color:#e07070;border-radius:10px 10px 0 0;text-align:center;border:1px solid rgba(192,57,43,.22);border-bottom:none;}
+.ctable th:nth-child(3){background:rgba(74,222,128,.07);color:var(--green);border-radius:10px 10px 0 0;text-align:center;border:1px solid rgba(74,222,128,.18);border-bottom:none;}
+.ctable td{padding:7px 14px;border-top:1px solid var(--border);vertical-align:middle;}
+.ctable td:first-child{color:var(--muted);font-size:10px;letter-spacing:.04em;}
+.ctable td:nth-child(2){background:rgba(192,57,43,.05);text-align:center;color:#e07070;border-left:1px solid rgba(192,57,43,.12);border-right:1px solid rgba(192,57,43,.12);}
+.ctable td:nth-child(3){background:rgba(74,222,128,.03);text-align:center;color:var(--green);border-left:1px solid rgba(74,222,128,.1);border-right:1px solid rgba(74,222,128,.1);}
+.ctable tr:last-child td:nth-child(2){border-bottom:1px solid rgba(192,57,43,.22);}
+.ctable tr:last-child td:nth-child(3){border-bottom:1px solid rgba(74,222,128,.18);}
+.tb{display:inline-block;background:rgba(192,57,43,.12);border-radius:4px;padding:2px 7px;}
+.tg{display:inline-block;background:rgba(74,222,128,.08);border-radius:4px;padding:2px 7px;}
+
+/* ══════════════════════════════════════════════
+   SLIDE 7 — CTA
+══════════════════════════════════════════════ */
+#s7{justify-content:center;background:radial-gradient(ellipse at 50% 50%,#071509 0%,var(--bg) 65%);text-align:center;}
+#s7 .big{font-family:'Bebas Neue',sans-serif;font-size:clamp(64px,13vw,148px);color:var(--green);line-height:.9;opacity:0;animation:scaleIn .8s .3s forwards;}
+#s7 .blabel{font-size:13px;color:var(--muted);letter-spacing:.15em;margin-top:10px;opacity:0;animation:fadeUp .6s .7s forwards;}
+#s7 .cta{margin-top:28px;font-weight:900;font-size:clamp(20px,2.8vw,36px);opacity:0;animation:fadeUp .6s 1s forwards;}
+#s7 .cta em{color:var(--red);font-style:normal;}
+#s7 .info{margin-top:18px;font-size:12px;color:var(--muted);opacity:0;animation:fadeUp .6s 1.3s forwards;letter-spacing:.1em;}
+.glow{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green);margin-right:7px;animation:blink 1.5s ease-in-out infinite;}
+
+/* ══ KEYFRAMES ══ */
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes scaleIn{from{opacity:0;transform:scale(.82)}to{opacity:1;transform:scale(1)}}
+@keyframes slideRight{from{opacity:0;transform:translateX(-26px)}to{opacity:1;transform:translateX(0)}}
+@keyframes slideLeft{from{opacity:0;transform:translateX(26px)}to{opacity:1;transform:translateX(0)}}
+@keyframes pulse{0%,100%{transform:translate(-50%,-50%) scale(1);opacity:.35}50%{transform:translate(-50%,-50%) scale(1.07);opacity:.12}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+@keyframes glowPulse{0%,100%{box-shadow:0 0 8px rgba(167,139,250,.3)}50%{box-shadow:0 0 22px rgba(167,139,250,.75)}}
+@keyframes drawLine{from{stroke-dashoffset:500;opacity:.55}to{stroke-dashoffset:0;opacity:.55}}
+@keyframes drawSol{from{stroke-dashoffset:400;opacity:0}to{stroke-dashoffset:0;opacity:.8}}
+@keyframes dashFlow{to{stroke-dashoffset:-30}}
+@keyframes packetMove{0%{opacity:0;transform:translate(0,0)}10%{opacity:1}90%{opacity:1}100%{opacity:0;transform:translate(var(--tx),var(--ty))}}
+</style>
+
+
+</head>
+<body>
+
+<div id="progress-bar"></div>
+<div id="slide-counter"></div>
+
+<!-- ═══ S0 TITLE ═══ -->
+<div class="slide active" id="s0">
+<div class="s0-inner">
+
+  <!-- LEFT: Brand + tagline -->
+  <div class="s0-left">
+    <div class="eyebrow">GoComX · Cross-Border Distribution OS</div>
+    <div class="s0-brand">GoComX</div>
+    <div class="s0-tagline">
+      中国制造 <em>→</em> 北美<em>80+</em>渠道<br>
+      <span style="font-size:.7em;font-weight:700;color:rgba(255,255,255,.55);">一个接口，全渠道直连</span>
+    </div>
+    <div class="s0-desc">Digital Middleware · EDI · ERP · AI Matching</div>
+    <div class="s0-year">Seed Round 2026 · Confidential</div>
+  </div>
+
+  <!-- RIGHT: Stats grid -->
+  <div class="s0-right">
+    <div class="s0-rhead">核心数据 · Verified Metrics</div>
+    <div class="s0-stats">
+      <div class="s0-stat c-red">
+        <div class="s0-num" style="color:#e07070;">80<span style="font-size:.5em">+</span></div>
+        <div class="s0-slabel">北美零售渠道</div>
+      </div>
+      <div class="s0-stat c-gold">
+        <div class="s0-num" style="color:var(--gold);">300<span style="font-size:.5em">+</span></div>
+        <div class="s0-slabel">EDI Maps 映射库</div>
+      </div>
+      <div class="s0-stat c-green">
+        <div class="s0-num" style="color:var(--green);">10万<span style="font-size:.4em">+</span></div>
+        <div class="s0-slabel">已处理订单</div>
+      </div>
+      <div class="s0-stat c-blue">
+        <div class="s0-num" style="color:var(--blue);">8<span style="font-size:.5em">年</span></div>
+        <div class="s0-slabel">深度构建验证</div>
+      </div>
+      <div class="s0-stat c-gold" style="grid-column:1/-1;">
+        <div class="s0-num" style="color:var(--gold);font-size:clamp(28px,3vw,40px);">$1,100<span style="font-size:.4em">万</span></div>
+        <div class="s0-slabel">基础设施沉淀成本 · 不可复制的数字护城河</div>
+      </div>
+    </div>
+    <div class="s0-year" style="margin-top:20px;">种子轮 $200–500万 · 目标 18个月 GMV $5000万</div>
+  </div>
+
+</div>
+</div>
+<!-- ═══ S1 — CHAOS + PAIN STATS (merged) ═══ -->
+<div class="slide" id="s1">
+<style>
+/* S1 — fully grid-driven, no flex stretching */
+#s1{ overflow:hidden; padding-top:0; }
+#s1-inner{
+  position:absolute;
+  inset:0;
+  display:grid;
+  grid-template-rows:auto 1fr;
+  padding:8px 24px 10px;
+  box-sizing:border-box;
+  gap:8px;
+  overflow:hidden;
+}
+.s1-header-wrap{ }
+.s1-body{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+  min-height:0;
+  overflow:hidden;
+}
+/* Left col: chaos takes 58%, mismatch 42% */
+.s1-left{
+  display:flex;
+  flex-direction:column;
+  gap:0;
+  min-height:0;
+  overflow:hidden;
+  height:100%;
+}
+.s1-chaos-box{
+  background:rgba(192,57,43,.04);
+  border:1px solid rgba(192,57,43,.2);
+  border-radius:12px;
+  padding:7px 10px;
+  overflow:hidden;
+  display:flex; flex-direction:column;
+  min-height:0;
+  max-height:100%;
+  flex:1;
+}
+.s1-mismatch-box{
+  background:rgba(251,146,60,.04);
+  border:1px solid rgba(251,146,60,.22);
+  border-radius:12px;
+  padding:9px 12px;
+  overflow:hidden;
+  flex-shrink:0;
+}
+/* Right col: label + grid fills everything */
+.s1-right{
+  display:grid;
+  grid-template-rows:60fr 40fr;
+  gap:8px;
+  min-height:0;
+  overflow:hidden;
+}
+.s1-right-top{
+  display:flex; flex-direction:column; gap:5px;
+  min-height:0; overflow:hidden;
+}
+.s1-right-label{ font-size:8px; font-weight:700; color:rgba(192,57,43,.6); letter-spacing:.1em; flex-shrink:0; }
+.s1-stat-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  grid-template-rows:repeat(3,1fr);
+  gap:8px;
+  flex:1;
+  min-height:0;
+  overflow:hidden;
+  align-content:stretch;
+}
+.s1-stat-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:6px 10px;
+  display:flex; flex-direction:column; justify-content:center;
+  overflow:hidden;
+  min-height:0;
+}
+.s1-stat-card .sn{ font-family:'Bebas Neue',sans-serif; font-size:clamp(28px,4.5vh,52px); line-height:1; color:var(--red); }
+.s1-stat-card .sl{ font-size:9px; color:var(--muted); margin-top:4px; line-height:1.5; }
+</style>
+
+<div id="s1-inner">
+  <div class="s1-header-wrap">
+    <div class="slide-header" style="margin-bottom:0;">
+      <div class="slide-tag">模式一 · 传统方式</div>
+      <div class="slide-title" style="font-size:clamp(13px,1.9vw,26px);">制造商<em>各自为战</em> · 销售代理<em>找不到对口产品</em> · 每条渠道<em>独立重复对接</em></div>
+    </div>
+  </div>
+  <div class="s1-body">
+
+    <!-- ══ LEFT COLUMN ══ -->
+    <div class="s1-left">
+
+      <!-- Zone 1: Manufacturers ←→ Retailers chaos -->
+      <div class="s1-chaos-box">
+        <div style="font-size:8px;font-weight:700;color:rgba(192,57,43,.7);letter-spacing:.07em;margin-bottom:5px;flex-shrink:0;">😤 制造商 vs 80+ 渠道 — 重复对接的地狱</div>
+        <div class="chaos-wrap" style="position:relative;">
+          <div class="n" style="top:25px;left:0"><div class="nd"></div>制造商 A</div>
+          <div class="n" style="top:105px;left:0"><div class="nd"></div>制造商 B</div>
+          <div class="n" style="top:185px;left:0"><div class="nd"></div>制造商 C</div>
+          <div class="n" style="top:265px;left:0"><div class="nd"></div>制造商 D</div>
+          <div class="n" style="top:345px;left:0"><div class="nd"></div>制造商 E</div>
+          <div class="n" style="top:5px;right:0;flex-direction:row-reverse;text-align:right"><div class="nd ret"></div>BestBuy</div>
+          <div class="n" style="top:65px;right:0;flex-direction:row-reverse;text-align:right"><div class="nd ret"></div>Walmart</div>
+          <div class="n" style="top:125px;right:0;flex-direction:row-reverse;text-align:right"><div class="nd ret"></div>Amazon</div>
+          <div class="n" style="top:185px;right:0;flex-direction:row-reverse;text-align:right"><div class="nd ret"></div>Costco</div>
+          <div class="n" style="top:245px;right:0;flex-direction:row-reverse;text-align:right"><div class="nd ret"></div>Target</div>
+          <div class="n" style="top:305px;right:0;flex-direction:row-reverse;text-align:right"><div class="nd ret"></div>HomeDepot</div>
+          <div class="n" style="top:365px;right:0;flex-direction:row-reverse;text-align:right"><div class="nd ret"></div>Lowes</div>
+          <svg id="chaos-svg" viewBox="0 0 680 460" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;"></svg>
+        </div>
+      </div>
+
+    </div><!-- /s1-left -->
+
+    <!-- ══ RIGHT COLUMN: Pain stats redesigned ══ -->
+    <div class="s1-right">
+      <div class="s1-right-top">
+      <div class="s1-right-label">💰 传统模式的真实代价</div>
+      <div class="s1-stat-grid">
+
+        <!-- Row 1: Cost + Time — big impact -->
+        <div class="s1-stat-card" style="border-color:rgba(192,57,43,.45);background:linear-gradient(135deg,rgba(192,57,43,.08),rgba(10,10,15,0));">
+          <div class="sn" style="color:#ff6b6b;font-size:clamp(38px,6.2vh,72px);">$50万+</div>
+          <div class="sl" style="font-size:10px;font-weight:600;color:rgba(255,180,180,.8);">前期IT接入成本</div>
+          <div style="margin-top:6px;font-size:8.5px;color:rgba(255,255,255,.35);line-height:1.5;">仅接入10个北美渠道<br>重复EDI开发 · 合规认证 · 系统集成</div>
+        </div>
+
+        <div class="s1-stat-card" style="border-color:rgba(232,160,32,.4);background:linear-gradient(135deg,rgba(232,160,32,.07),rgba(10,10,15,0));">
+          <div class="sn" style="color:var(--gold);font-size:clamp(38px,6.2vh,72px);">18个月</div>
+          <div class="sl" style="font-size:10px;font-weight:600;color:rgba(255,220,100,.8);">建设周期</div>
+          <div style="margin-top:6px;font-size:8.5px;color:rgba(255,255,255,.35);line-height:1.5;">每家渠道独立对接<br>测试认证 · 上线 · 培训 · 维护</div>
+        </div>
+
+        <!-- Row 2: EDI + Repeat -->
+        <div class="s1-stat-card" style="border-color:rgba(56,189,248,.3);background:linear-gradient(135deg,rgba(56,189,248,.06),rgba(10,10,15,0));">
+          <div class="sn" style="color:var(--blue);font-size:clamp(38px,6.2vh,72px);">300+</div>
+          <div class="sl" style="font-size:10px;font-weight:600;color:rgba(140,210,255,.8);">EDI 映射规则</div>
+          <div style="margin-top:6px;font-size:8.5px;color:rgba(255,255,255,.35);line-height:1.5;">每家零售商独立规格<br>850/856/810 各自定制</div>
+        </div>
+
+        <div class="s1-stat-card" style="border-color:rgba(251,146,60,.3);background:linear-gradient(135deg,rgba(251,146,60,.06),rgba(10,10,15,0));">
+          <div class="sn" style="color:var(--orange);font-size:clamp(38px,6.2vh,72px);">80×</div>
+          <div class="sl" style="font-size:10px;font-weight:600;color:rgba(255,185,120,.8);">重复录入</div>
+          <div style="margin-top:6px;font-size:8.5px;color:rgba(255,255,255,.35);line-height:1.5;">产品规格·图片·描述<br>每个渠道重新填写一次</div>
+        </div>
+
+        <!-- Row 3: Agents + Infrastructure -->
+        <div class="s1-stat-card" style="border-color:rgba(167,139,250,.3);background:linear-gradient(135deg,rgba(167,139,250,.06),rgba(10,10,15,0));">
+          <div class="sn" style="color:var(--purple);font-size:clamp(38px,6.2vh,72px);">150+</div>
+          <div class="sl" style="font-size:10px;font-weight:600;color:rgba(200,180,255,.8);">销售代理失联</div>
+          <div style="margin-top:6px;font-size:8.5px;color:rgba(255,255,255,.35);line-height:1.5;">专业代理找不到匹配产品<br>制造商触达不到渠道资源</div>
+        </div>
+
+        <div class="s1-stat-card" style="border-color:rgba(74,222,128,.25);background:linear-gradient(135deg,rgba(74,222,128,.06),rgba(10,10,15,0));">
+          <div class="sn" style="color:var(--green);font-size:clamp(32px,5.4vh,62px);">$1100万</div>
+          <div class="sl" style="font-size:10px;font-weight:600;color:rgba(150,255,180,.8);">GoComX 已沉淀</div>
+          <div style="margin-top:6px;font-size:8.5px;color:rgba(255,255,255,.35);line-height:1.5;">8年构建 · 不可复制<br>即插即用 · 对手无从追赶</div>
+        </div>
+
+      </div>
+      </div><!-- /s1-right-top -->
+
+
+    </div><!-- /s1-right -->
+  </div>
+</div><!-- /s1-inner -->
+</div>
+
+<!-- ═══ S3 — MODEL 2 FULL ARCHITECTURE ═══ -->
+
+<!-- ═══ S4B TRENDING PRODUCTS ═══ -->
+<div class="slide" id="s4b">
+<style>
+#s4b{background:radial-gradient(ellipse at 50% 40%,#070a04 0%,#0a0a0f 70%);padding:16px 32px;justify-content:flex-start;align-items:flex-start;}
+.trend-header{text-align:center;margin-bottom:14px;width:100%;}
+.trend-tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.15em;color:rgba(74,222,128,.6);border:1px solid rgba(74,222,128,.2);border-radius:20px;padding:3px 12px;margin-bottom:6px;}
+.trend-title{font-size:clamp(20px,2.4vw,30px);font-weight:800;color:var(--text);}
+.trend-title em{color:var(--green);font-style:normal;}
+.trend-subtitle{font-size:12px;color:var(--muted);margin-top:4px;}
+.trend-grid{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  grid-template-rows:auto auto;
+  gap:10px;
+  width:100%;
+  flex-shrink:0;
+}
+.trend-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:16px 14px;
+  display:flex;
+  flex-direction:column;
+  gap:0;
+  opacity:0;
+  transform:translateY(12px);
+  transition:border-color .3s;
+}
+.trend-card:hover{border-color:rgba(74,222,128,.4);}
+.trend-card.anim{animation:slideUp .4s forwards;}
+@keyframes slideUp{to{opacity:1;transform:translateY(0);}}
+.trend-num{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:18px;
+  line-height:1;
+  color:rgba(255,255,255,.12);
+  margin-bottom:8px;
+}
+.trend-body{min-width:0;display:flex;flex-direction:column;gap:2px;}
+.trend-icon{font-size:24px;line-height:1;margin-bottom:8px;}
+.trend-name{font-size:14px;font-weight:700;color:#ffffff;line-height:1.3;}
+.trend-desc{font-size:11px;color:rgba(255,255,255,.7);margin-top:5px;line-height:1.55;}
+.trend-badge{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.06em;padding:3px 9px;border-radius:10px;margin-top:8px;align-self:flex-start;}
+.badge-hot{background:rgba(192,57,43,.15);color:#e07070;border:1px solid rgba(192,57,43,.25);}
+.badge-grow{background:rgba(74,222,128,.1);color:var(--green);border:1px solid rgba(74,222,128,.2);}
+.badge-steady{background:rgba(56,189,248,.1);color:var(--blue);border:1px solid rgba(56,189,248,.2);}
+.badge-viral{background:rgba(167,139,250,.1);color:var(--purple);border:1px solid rgba(167,139,250,.2);}
+</style>
+  <div class="trend-header">
+    <div class="trend-tag">📦 目标市场 · GoComX 精准定位</div>
+    <div class="trend-title">北美电商 <em>高需求品类</em> · 中小制造商的出海机会</div>
+    <div class="trend-subtitle" style="max-width:860px;margin:6px auto 0;line-height:1.7;font-size:12px;color:rgba(255,255,255,.75);">
+      GoComX 专注服务 <span style="color:var(--green);font-weight:700;">有好产品、有美国库存、却缺乏销售渠道</span> 的中小制造商。
+      服装类目不在此列——Walmart/Target 已直接赴华采购，传统渠道壁垒极高。
+      我们聚焦以下 <span style="color:var(--gold);font-weight:700;">10大高需求品类</span>，帮助制造商一次对接80+北美渠道。
+    </div>
+  </div>
+  <div class="trend-grid" id="trend-grid">
+
+    <div class="trend-card" style="border-color:rgba(192,57,43,.25);animation-delay:.1s">
+      <div class="trend-num">1</div>
+      <div class="trend-body">
+        <div class="trend-icon">📱</div>
+        <div class="trend-name">手机 & 电子配件</div>
+        <div class="trend-desc">充电线 · 手机壳 · 耳机 · 移动电源<br>常青品类，年均需求稳定增长</div>
+        <span class="trend-badge badge-hot">🔥 常青热卖</span>
+      </div>
+    </div>
+
+    <div class="trend-card" style="border-color:rgba(74,222,128,.2);animation-delay:.15s">
+      <div class="trend-num">2</div>
+      <div class="trend-body">
+        <div class="trend-icon">🏠</div>
+        <div class="trend-name">智能家居 & 科技小物</div>
+        <div class="trend-desc">智能插座 · LED灯带 · 小型家电 · IoT<br>北美需求快速增长，BestBuy主力品</div>
+        <span class="trend-badge badge-grow">📈 高速增长</span>
+      </div>
+    </div>
+
+    <div class="trend-card" style="border-color:rgba(251,146,60,.2);animation-delay:.2s">
+      <div class="trend-num">3</div>
+      <div class="trend-body">
+        <div class="trend-icon">🐾</div>
+        <div class="trend-name">宠物用品</div>
+        <div class="trend-desc">宠物玩具 · 喂食器 · 梳毛工具 · 床垫<br>养宠比例上升，终身复购率高</div>
+        <span class="trend-badge badge-grow">📈 持续增长</span>
+      </div>
+    </div>
+
+    <div class="trend-card" style="border-color:rgba(56,189,248,.2);animation-delay:.25s">
+      <div class="trend-num">4</div>
+      <div class="trend-body">
+        <div class="trend-icon">💪</div>
+        <div class="trend-name">健身 & 居家健康</div>
+        <div class="trend-desc">瑜伽垫 · 阻力带 · 按摩枪 · 健身设备<br>疫情后居家健身长期趋势延续</div>
+        <span class="trend-badge badge-hot">🔥 强劲增长</span>
+      </div>
+    </div>
+
+    <div class="trend-card" style="border-color:rgba(167,139,250,.2);animation-delay:.3s">
+      <div class="trend-num">5</div>
+      <div class="trend-body">
+        <div class="trend-icon">👗</div>
+        <div class="trend-name">时尚 & 饰品配件</div>
+        <div class="trend-desc">快时尚 · 首饰 · 包袋 · 季节性服饰<br>高周转，适合多平台快速铺货</div>
+        <span class="trend-badge badge-viral">⚡ 季节爆款</span>
+      </div>
+    </div>
+
+    <div class="trend-card" style="border-color:rgba(232,160,32,.2);animation-delay:.35s">
+      <div class="trend-num">6</div>
+      <div class="trend-body">
+        <div class="trend-icon">🍳</div>
+        <div class="trend-name">厨房小工具 & 家居用品</div>
+        <div class="trend-desc">厨房神器 · 收纳工具 · 清洁用品<br>Costco / Target主力品类</div>
+        <span class="trend-badge badge-steady">📊 稳定需求</span>
+      </div>
+    </div>
+
+    <div class="trend-card" style="border-color:rgba(167,139,250,.3);animation-delay:.4s">
+      <div class="trend-num">7</div>
+      <div class="trend-body">
+        <div class="trend-icon">💄</div>
+        <div class="trend-name">美妆 & 个护设备</div>
+        <div class="trend-desc">美容仪 · 电动牙刷 · 洁面仪 · 发型工具<br>社媒病毒传播，高客单复购强</div>
+        <span class="trend-badge badge-viral">⚡ 病毒传播</span>
+      </div>
+    </div>
+
+    <div class="trend-card" style="border-color:rgba(56,189,248,.2);animation-delay:.45s">
+      <div class="trend-num">8</div>
+      <div class="trend-body">
+        <div class="trend-icon">🎮</div>
+        <div class="trend-name">玩具 · 游戏 & 兴趣爱好</div>
+        <div class="trend-desc">益智玩具 · 桌游 · 模型 · 户外运动<br>节假日旺季爆发，亚马逊最佳品</div>
+        <span class="trend-badge badge-hot">🔥 节日爆款</span>
+      </div>
+    </div>
+
+    <div class="trend-card" style="border-color:rgba(74,222,128,.15);animation-delay:.5s">
+      <div class="trend-num">9</div>
+      <div class="trend-body">
+        <div class="trend-icon">📚</div>
+        <div class="trend-name">办公 & 学习用品</div>
+        <div class="trend-desc">文具 · 收纳 · 桌面配件 · 打印耗材<br>远程办公普及，长期稳定复购</div>
+        <span class="trend-badge badge-steady">📊 长期稳定</span>
+      </div>
+    </div>
+
+    <div class="trend-card" style="border-color:rgba(56,189,248,.2);animation-delay:.55s">
+      <div class="trend-num">10</div>
+      <div class="trend-body">
+        <div class="trend-icon">🏕️</div>
+        <div class="trend-name">户外运动 & 运动装备</div>
+        <div class="trend-desc">露营装备 · 骑行配件 · 健步运动器材<br>北美户外文化盛行，Amazon增长快</div>
+        <span class="trend-badge badge-grow">📈 快速增长</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<div class="slide" id="s3">
+  <div class="slide-header">
+    <div class="slide-tag green">模式二 · GoComX 完整架构</div>
+    <div class="slide-title" style="font-size:clamp(15px,1.8vw,24px);margin-top:3px;">
+      <span class="b">制造商</span> → <span class="p">PIM</span> ↔ <span class="o">双向数据流</span> ↔ <span class="g">GoComX ERP</span> → <span class="g">80+ 渠道</span>
+    </div>
+  </div>
+
+  <div class="arch-canvas-wrap" id="arch-wrap">
+
+    <!-- Manufacturers -->
+    <div class="arch-mfr-col">
+      <div class="arch-mfr"><div class="arch-mfr-ico">🏭</div><div class="arch-mfr-info"><div class="arch-mfr-name">制造商 A</div><div class="arch-mfr-cat">家居 · 320款</div></div></div>
+      <div class="arch-mfr"><div class="arch-mfr-ico">🔧</div><div class="arch-mfr-info"><div class="arch-mfr-name">制造商 B</div><div class="arch-mfr-cat">工具 · 180款</div></div></div>
+      <div class="arch-mfr"><div class="arch-mfr-ico">💡</div><div class="arch-mfr-info"><div class="arch-mfr-name">制造商 C</div><div class="arch-mfr-cat">电子 · 450款</div></div></div>
+      <div class="arch-mfr"><div class="arch-mfr-ico">🌿</div><div class="arch-mfr-info"><div class="arch-mfr-name">制造商 D</div><div class="arch-mfr-cat">户外 · 210款</div></div></div>
+      <div class="arch-mfr"><div class="arch-mfr-ico">🍳</div><div class="arch-mfr-info"><div class="arch-mfr-name">制造商 E</div><div class="arch-mfr-cat">厨房 · 290款</div></div></div>
+    </div>
+
+    <!-- PIM -->
+    <div class="arch-pim">
+      <div class="arch-pim-title">PIM</div>
+      <div class="arch-pim-sub">产品信息管理中台</div>
+      <div class="arch-ai-badge">🤖 AI 匹配 + 智能上架</div>
+      <div class="arch-pim-feats">
+        <div class="arch-pf">📥 制造商一次录入产品数据</div>
+        <div class="arch-pf">🏷️ 自动适配80+渠道格式</div>
+        <div class="arch-pf">🔍 AI自动匹配最优销售代理</div>
+        <div class="arch-pf">📦 尺寸/规格/图片统一管理</div>
+      </div>
+      <div class="rep-login-section">
+        <div class="rep-login-title">🔑 销售代理 已登录 PIM 选品</div>
+        <div class="rep-mini"><div class="rep-mini-dot"></div><div class="rep-mini-name">Sarah M. — 家居代理</div><div class="rep-mini-score">在线</div></div>
+        <div class="rep-mini"><div class="rep-mini-dot" style="animation-delay:.5s"></div><div class="rep-mini-name">James T. — 工具代理</div><div class="rep-mini-score">在线</div></div>
+        <div class="rep-mini"><div class="rep-mini-dot" style="animation-delay:1s"></div><div class="rep-mini-name">Dmitrii K. — 电子代理</div><div class="rep-mini-score">在线</div></div>
+      </div>
+    </div>
+
+    <!-- GoComX Part 1: ERP (D365FO + SCM + Parcel) -->
+    <div class="arch-erp">
+      <div class="arch-erp-title">GoComX ERP</div>
+      <div class="arch-erp-sub">运营骨架 · Microsoft D365</div>
+      <div class="arch-erp-grid">
+        <div class="arch-erp-section arch-es-fo">
+          <div class="arch-es-title"><div class="arch-es-dot"></div>D365 FO — Finance & Operations</div>
+          <div class="arch-es-items">
+            <div class="arch-es-item">Sales Order On Hold · 防欺诈 · Credit Mgmt</div>
+            <div class="arch-es-item">80平台参数库 · Rebate · 佣金归因回流PIM</div>
+            <div class="arch-es-item" style="color:var(--gold);opacity:.7;">→ 855 ACK / 810 INV / 846 INV → EDI</div>
+            <div class="arch-es-item" style="color:#e07070;opacity:.7;">← 850 PO ← EDI</div>
+          </div>
+        </div>
+        <div class="arch-erp-section arch-es-prc">
+          <div class="arch-es-title"><div class="arch-es-dot"></div>Parcel Integration</div>
+          <div class="arch-es-items">
+            <div class="arch-es-item">UPS / FedEx 官方接口 · Small Parcel · LTL</div>
+          </div>
+        </div>
+        <div class="arch-erp-section arch-es-scm">
+          <div class="arch-es-title"><div class="arch-es-dot"></div>D365 SCM — Supply Chain</div>
+          <div class="arch-es-items">
+            <div class="arch-es-item">80平台 Packing Label · UCC-128 / GS1</div>
+            <div class="arch-es-item">Release to WMS · 海外仓代码分配</div>
+            <div class="arch-es-item" style="color:var(--green);opacity:.7;">→ 856 ASN → EDI → E-COM</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GoComX Part 2: EDI Middleware -->
+    <div class="arch-edi-box">
+      <div class="arch-edi-title">EDI Middleware</div>
+      <div class="arch-edi-sub">300+ Maps · 双向实时 · 8年验证</div>
+      <div class="arch-edi-stat-row">
+        <div class="arch-edi-stat"><div class="arch-edi-num">300<span style="font-size:11px">+</span></div><div class="arch-edi-slabel">EDI Maps</div></div>
+        <div style="width:1px;background:rgba(232,160,32,.2)"></div>
+        <div class="arch-edi-stat"><div class="arch-edi-num">80</div><div class="arch-edi-slabel">E-COM</div></div>
+        <div style="width:1px;background:rgba(232,160,32,.2)"></div>
+        <div class="arch-edi-stat"><div class="arch-edi-num">8<span style="font-size:11px">yr</span></div><div class="arch-edi-slabel">验证</div></div>
+      </div>
+      <div class="arch-edi-flows">
+        <div class="arch-edi-flow"><span class="arch-edi-arrow" style="color:#e07070">←</span><span style="color:#e07070;font-weight:700;">850 PO</span><span style="color:rgba(255,255,255,.35)">　E-COM → EDI → D365FO</span></div>
+        <div class="arch-edi-flow"><span class="arch-edi-arrow" style="color:var(--gold)">→</span><span style="color:var(--gold);font-weight:700;">855 ACK</span><span style="color:rgba(255,255,255,.35)">　D365FO → EDI → E-COM</span></div>
+        <div class="arch-edi-flow"><span class="arch-edi-arrow" style="color:var(--green)">→</span><span style="color:var(--green);font-weight:700;">856 ASN</span><span style="color:rgba(255,255,255,.35)">　D365SCM → EDI → E-COM</span></div>
+        <div class="arch-edi-flow"><span class="arch-edi-arrow" style="color:var(--orange)">→</span><span style="color:var(--orange);font-weight:700;">810 INV</span><span style="color:rgba(255,255,255,.35)">　D365FO → EDI → E-COM</span></div>
+        <div class="arch-edi-flow"><span class="arch-edi-arrow" style="color:var(--blue)">→</span><span style="color:var(--blue);font-weight:700;">846 INV</span><span style="color:rgba(255,255,255,.35)">　D365FO → EDI → E-COM</span></div>
+      </div>
+      <div class="arch-edi-moat">不可复制的数字护城河</div>
+    </div>
+
+    <!-- 80 Platforms -->
+    <div class="arch-plat-col">
+      <div class="arch-plat"><div style="font-size:14px">🛒</div><div><div class="arch-plat-name">BestBuy</div><div class="arch-plat-detail">EDI + API</div></div></div>
+      <div class="arch-plat"><div style="font-size:14px">🏪</div><div><div class="arch-plat-name">Walmart</div><div class="arch-plat-detail">EDI + Label</div></div></div>
+      <div class="arch-plat"><div style="font-size:14px">📦</div><div><div class="arch-plat-name">Amazon</div><div class="arch-plat-detail">API</div></div></div>
+      <div class="arch-plat"><div style="font-size:14px">🏬</div><div><div class="arch-plat-name">HomeDepot</div><div class="arch-plat-detail">EDI</div></div></div>
+      <div class="arch-plat"><div style="font-size:14px">🎯</div><div><div class="arch-plat-name">Target</div><div class="arch-plat-detail">EDI + DC</div></div></div>
+      <div class="arch-plat"><div style="font-size:14px">🔨</div><div><div class="arch-plat-name">Lowes</div><div class="arch-plat-detail">EDI</div></div></div>
+      <div class="plat-more">+74 个电商平台<br>自动同步上架</div>
+    </div>
+
+    <!-- SVG for all lines & animated data packets -->
+    <svg id="arch-svg" viewBox="0 0 1200 480" preserveAspectRatio="none"></svg>
+
+    <!-- Animated data flow labels -->
+    <div id="packet-container" style="position:absolute;inset:0;pointer-events:none;z-index:40;overflow:hidden;"></div>
+  </div>
+
+  <!-- legend -->
+  <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:6px;opacity:0;animation:fadeUp .5s 1.6s forwards;">
+    <div style="font-size:9px;color:var(--red);display:flex;align-items:center;gap:4px;"><div style="width:16px;height:2px;background:var(--red);"></div>产品上传</div>
+    <div style="font-size:9px;color:var(--purple);display:flex;align-items:center;gap:4px;"><div style="width:16px;height:2px;background:var(--purple);"></div>PIM→ERP 商品数据</div>
+    <div style="font-size:9px;color:var(--gold);display:flex;align-items:center;gap:4px;"><div style="width:16px;height:2px;background:var(--gold);"></div>ERP→PIM 佣金回流</div>
+    <div style="font-size:9px;color:#e07070;display:flex;align-items:center;gap:4px;"><div style="width:16px;height:2px;background:#e07070;"></div>850 PO ←</div>
+    <div style="font-size:9px;color:var(--gold);display:flex;align-items:center;gap:4px;"><div style="width:16px;height:2px;background:var(--gold);border-top:2px dashed;"></div>855 ACK →</div>
+    <div style="font-size:9px;color:var(--green);display:flex;align-items:center;gap:4px;"><div style="width:16px;height:2px;background:var(--green);"></div>856 ASN →</div>
+    <div style="font-size:9px;color:var(--orange);display:flex;align-items:center;gap:4px;"><div style="width:16px;height:2px;background:var(--orange);"></div>810 INV →</div>
+    <div style="font-size:9px;color:var(--blue);display:flex;align-items:center;gap:4px;"><div style="width:16px;height:2px;background:var(--blue);"></div>846 INV →</div>
+  </div>
+</div>
+
+
+
+<!-- ═══ RING (moved here: between S3 and S3B) ═══ -->
+<div class="slide" id="sring">
+<style>
+/* ════ RING 4-LAYER RING DIAGRAM ════ */
+#sring{ padding:4px 10px; justify-content:flex-start; background:radial-gradient(ellipse at 50% 50%,#030810 0%,#0a0a0f 70%); }
+
+.s6-wrap{
+  width:min(1100px,99vw);
+  display:grid;
+  grid-template-columns:1fr 280px;
+  gap:10px;
+  margin-top:4px;
+  align-items:start;
+  flex:1;
+}
+
+/* ── Ring diagram container ── */
+.ring-container{
+  position:relative;
+  width:100%;
+  aspect-ratio:1/1;
+  max-height:560px;
+}
+
+/* ── Layer buttons panel ── */
+.layer-btns{
+  display:flex; flex-direction:column; gap:8px; padding-top:4px;
+}
+.layer-btn{
+  border-radius:10px; padding:10px 14px; cursor:pointer;
+  border:1.5px solid; font-family:'Noto Sans SC',sans-serif;
+  font-size:11px; font-weight:700; text-align:left;
+  transition:all .25s; display:flex; align-items:center; gap:10px;
+  background:rgba(255,255,255,.03);
+}
+.layer-btn .lb-num{
+  font-family:'Bebas Neue',sans-serif; font-size:20px; line-height:1;
+  flex-shrink:0; width:22px; text-align:center;
+}
+.layer-btn .lb-content{ flex:1; }
+.layer-btn .lb-title{ font-size:11px; font-weight:700; line-height:1.2; }
+.layer-btn .lb-sub{ font-size:9px; font-weight:400; opacity:.65; margin-top:2px; line-height:1.4; }
+
+.layer-btn.L1{ border-color:rgba(192,57,43,.4); color:#e07070; }
+.layer-btn.L1.active,.layer-btn.L1:hover{ background:rgba(192,57,43,.12); border-color:rgba(192,57,43,.7); color:#ff9090; box-shadow:0 0 16px rgba(192,57,43,.2); }
+.layer-btn.L2{ border-color:rgba(251,146,60,.4); color:var(--orange); }
+.layer-btn.L2.active,.layer-btn.L2:hover{ background:rgba(251,146,60,.1); border-color:rgba(251,146,60,.7); box-shadow:0 0 16px rgba(251,146,60,.2); }
+.layer-btn.L3{ border-color:rgba(232,160,32,.4); color:var(--gold); }
+.layer-btn.L3.active,.layer-btn.L3:hover{ background:rgba(232,160,32,.1); border-color:rgba(232,160,32,.7); box-shadow:0 0 16px rgba(232,160,32,.2); }
+.layer-btn.L4{ border-color:rgba(56,189,248,.35); color:var(--blue); }
+.layer-btn.L4.active,.layer-btn.L4:hover{ background:rgba(56,189,248,.1); border-color:rgba(56,189,248,.6); box-shadow:0 0 16px rgba(56,189,248,.18); }
+
+/* ── Detail popup panel ── */
+.layer-detail{
+  border-radius:12px; padding:12px 14px;
+  border:1.5px solid; display:none; margin-top:4px;
+  font-size:10px; line-height:1.65; color:var(--muted);
+  animation:fadeIn .3s forwards;
+}
+.layer-detail.show{ display:block; }
+.layer-detail.D1{ border-color:rgba(192,57,43,.3); background:rgba(192,57,43,.05); }
+.layer-detail.D2{ border-color:rgba(232,160,32,.3); background:rgba(232,160,32,.04); }
+.layer-detail.D3{ border-color:rgba(56,189,248,.28); background:rgba(56,189,248,.04); }
+.layer-detail.D4{ border-color:rgba(167,139,250,.28); background:rgba(167,139,250,.04); }
+.layer-detail h4{ font-size:11px; font-weight:700; color:var(--text); margin-bottom:6px; }
+.ld-row{ display:flex; align-items:flex-start; gap:5px; margin-bottom:3px; }
+.ld-row::before{ content:'▸'; flex-shrink:0; margin-top:1px; }
+
+/* ── Canvas ring ── */
+#ring-canvas{ position:absolute; inset:0; width:100%; height:100%; }
+/* ── Label divs on canvas ── */
+.ring-label{
+  position:absolute; pointer-events:none;
+  font-size:8px; color:var(--muted); text-align:center;
+  transition:opacity .3s;
+}
+.ring-label.platform{
+  font-size:7px; font-weight:600; color:rgba(255,255,255,.55);
+  white-space:nowrap;
+}
+/* Animated data packets on ring */
+.ring-packet{
+  position:absolute; border-radius:8px; padding:1px 5px;
+  font-size:7px; font-family:'Space Mono',monospace; font-weight:700;
+  pointer-events:none; white-space:nowrap; opacity:0;
+}
+@keyframes rpkt{ 0%{opacity:0} 15%{opacity:1} 85%{opacity:1} 100%{opacity:0} }
+</style>
+
+  <div style="position:relative;z-index:2;width:100%;display:flex;flex-direction:column;align-items:center;padding:8px 14px 0;">
+
+    <div class="slide-header" style="margin-bottom:6px;">
+      <div class="slide-tag blue" style="animation:fadeUp .5s .1s forwards;">GoComX · 四层数字分销架构</div>
+      <div class="slide-title" style="opacity:0;animation:fadeUp .6s .2s forwards;font-size:clamp(14px,2vw,28px);">
+        <span style="color:var(--red);">电商渠道</span> ⟵ <span style="color:var(--gold);">EDI + 产品管理平台</span> ⟵ <span style="color:var(--blue);">D365 运营核心</span> ⟵ <span style="color:var(--purple);">制造商</span>
+      </div>
+    </div>
+
+    <div class="s6-wrap" id="s6-wrap">
+
+      <!-- RING CANVAS -->
+      <div class="ring-container" id="ring-container">
+        <canvas id="ring-canvas"></canvas>
+        <div id="ring-labels"></div>
+        <div id="ring-packets"></div>
+      </div>
+
+      <!-- LAYER BUTTONS + DETAIL -->
+      <div class="layer-btns" id="layer-btns">
+
+        <!-- L1: E-COM (outermost) -->
+        <div class="layer-btn L1" onclick="selectLayer(1)">
+          <div class="lb-num" style="color:#e07070;">1</div>
+          <div class="lb-content">
+            <div class="lb-title">外层 · 电商平台</div>
+            <div class="lb-sub">80+ 电商渠道 · 150+ 销售代理<br>未来 AI 采购 Agent</div>
+          </div>
+        </div>
+
+        <!-- L2: Manufacturers (between ecom and middleware) -->
+        <div class="layer-btn L2" onclick="selectLayer(2)">
+          <div class="lb-num" style="color:var(--orange);">2</div>
+          <div class="lb-content">
+            <div class="lb-title">第二层 · 制造商</div>
+            <div class="lb-sub">模式一：直面80平台（混乱）<br>模式二：经由中台（有序接入）</div>
+          </div>
+        </div>
+
+        <!-- L3: EDI + PIM middleware -->
+        <div class="layer-btn L3" onclick="selectLayer(3)">
+          <div class="lb-num" style="color:var(--gold);">3</div>
+          <div class="lb-content">
+            <div class="lb-title">第三层 · EDI + 产品管理平台</div>
+            <div class="lb-sub">300+ EDI Maps · 产品管理平台 AI 匹配<br>数字集成中台</div>
+          </div>
+        </div>
+
+        <!-- L4: D365 core (innermost) -->
+        <div class="layer-btn L4" onclick="selectLayer(4)">
+          <div class="lb-num" style="color:var(--blue);">4</div>
+          <div class="lb-content">
+            <div class="lb-title">核心层 · D365 运营骨架</div>
+            <div class="lb-sub">D365 FO (ERP) + D365 SCM<br>小包 / LTL 物流集成</div>
+          </div>
+        </div>
+
+        <!-- DATA FLOW LEGEND -->
+        <div style="border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:8px 10px;margin-top:2px;">
+          <div style="font-size:9px;font-weight:700;color:rgba(255,255,255,.4);letter-spacing:.08em;margin-bottom:6px;">EDI 数据流向</div>
+          <div style="display:flex;flex-direction:column;gap:4px;">
+            <div style="display:flex;align-items:center;gap:7px;font-size:9px;">
+              <span style="display:inline-block;width:28px;height:3px;background:#c0392b;border-radius:2px;flex-shrink:0;"></span>
+              <span style="color:#e07070;">850 PO ← 平台→EDI→D365FO</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:7px;font-size:9px;">
+              <span style="display:inline-block;width:28px;height:3px;background:#e8a020;border-radius:2px;flex-shrink:0;"></span>
+              <span style="color:var(--gold);">855 ACK → D365FO→EDI→平台</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:7px;font-size:9px;">
+              <span style="display:inline-block;width:28px;height:3px;background:#4ade80;border-radius:2px;flex-shrink:0;"></span>
+              <span style="color:var(--green);">856 ASN → D365SCM→EDI→平台</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:7px;font-size:9px;">
+              <span style="display:inline-block;width:28px;height:3px;background:#fb923c;border-radius:2px;flex-shrink:0;"></span>
+              <span style="color:var(--orange);">810 INV → D365FO→EDI→平台</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:7px;font-size:9px;">
+              <span style="display:inline-block;width:28px;height:3px;background:#38bdf8;border-radius:2px;flex-shrink:0;"></span>
+              <span style="color:var(--blue);">846 库存 → D365FO→EDI→平台</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Detail panels -->
+        <div class="layer-detail D1" id="detail-1">
+          <h4>🛒 Layer 1 — 电商平台层 (outermost)</h4>
+          <div class="ld-row">80+ 电商平台：Walmart / Target / HomeDepot / BestBuy / Wayfair 等</div>
+          <div class="ld-row">150+ 销售代理登录产品管理平台选品推单</div>
+          <div class="ld-row">未来：平台部署 AI 采购 Agent，7×24 自动扫描 KPI</div>
+          <div class="ld-row" style="color:#e07070;">发出 → 850 PO 采购订单（红色流向 EDI）</div>
+          <div class="ld-row" style="color:var(--green);">接收 ← 856 ASN 发货通知（绿色）</div>
+          <div class="ld-row" style="color:var(--gold);">接收 ← 855 ACK / 810 INV / 846 库存（金/橙/蓝）</div>
+        </div>
+
+        <div class="layer-detail D2" id="detail-2">
+          <h4>🏭 Layer 2 — 制造商层</h4>
+          <div class="ld-row" style="color:#e07070;"><b>模式一（混乱）</b>：每家厂商直接面对80个平台，500+次重复对接</div>
+          <div class="ld-row" style="color:var(--green);"><b>模式二（有序）</b>：上传产品管理平台，EDI 自动路由至全部平台</div>
+          <div class="ld-row">商品 / 图片 / 尺寸 / 视频 → 产品管理平台 → 适配80平台</div>
+          <div class="ld-row">厂商无需直接面对任何电商平台 EDI 接口</div>
+        </div>
+
+        <div class="layer-detail D3" id="detail-3">
+          <h4>⚡ Layer 3 — EDI + 产品管理平台 中台</h4>
+          <div class="ld-row"><b style="color:var(--gold);">EDI Middleware</b>：300+ 映射，8年实战验证，不可复制</div>
+          <div class="ld-row" style="color:#e07070;">850 PO：EDI 接收 → 转发 D365 FO</div>
+          <div class="ld-row" style="color:var(--gold);">855 ACK / 810 INV：D365 FO → EDI → 平台</div>
+          <div class="ld-row" style="color:var(--green);">856 ASN：D365 SCM → EDI → 平台</div>
+          <div class="ld-row" style="color:var(--blue);">846 库存：D365 FO → EDI → 平台</div>
+          <div class="ld-row"><b style="color:var(--purple);">产品管理平台</b>：商品 / 内容 / 定价 / 佣金 / 多厂商多代理匹配</div>
+        </div>
+
+        <div class="layer-detail D4" id="detail-4">
+          <h4>🔵 Layer 4 — D365 运营核心 (innermost)</h4>
+          <div class="ld-row"><b style="color:var(--blue);">D365 FO</b>：Sales Order On Hold · Credit Mgmt · 80平台参数库</div>
+          <div class="ld-row">850 PO 进入 → 创建销售订单 → Release to D365 SCM</div>
+          <div class="ld-row">D365 FO 发出 855 ACK / 810 INV / 846 库存 → EDI</div>
+          <div class="ld-row"><b style="color:var(--green);">D365 SCM</b>：80平台 Packing Label · UCC-128 · GS1</div>
+          <div class="ld-row">D365 SCM 发出 856 ASN 发货通知 → EDI → 平台</div>
+          <div class="ld-row">UPS / FedEx 官方接口 · LTL + Small Parcel · 海外仓 WMS</div>
+        </div>
+
+      </div><!-- end layer-btns -->
+    </div><!-- end s6-wrap -->
+  </div>
+
+<script>
+/* ════════════════════════════════════════
+   S6 RING DIAGRAM ENGINE
+════════════════════════════════════════ */
+const PLATFORMS = ["LIVING SPACES FURNITURE","TARGET RETAIL STORES","LOWE'S HOME CENTER LLC","WAYFAIR LLC","HAYNEEDLE","BED BATH & BEYOND","VEYER LLC","BURLINGTON MERCHANDISING","BISON OFFICE","Amazon.com (Import)","KIRKLAND'S INC","Amazon.com (Dropship)","ZULILY LLC","NATIONAL BUSINESS FURNITURE","WW GRAINGER","HOUZZ SHOP LLC","MACY'S.COM","AFW.com","AMAZON.COM CANADA","ROOMS TO GO.COM","OLD TIME POTTERY","POSTURITE LTD UK","CONN'S HOME PLUS","American Furniture Warehouse","R.C. WILLEY HOME FURNISHINGS","CONN'S APPLIANCE","OFFICE PARTNERS","SP RICHARDS","STEINHAFELS","HOME DEPOT","AAFES ARMY & AIRFORCE","CITY MILL CO LTD","COSTCO BUSINESS CENTERS","AMERICAN FURNITURE WAREHOUSE","BIWORLDWIDE","NAVY EXCHANGE","KOHL'S DEPARTMENT STORE","NEBRASKA FURNITURE MART","FARMER'S FURNITURE","HOM FURNITURE","WORTHINGTON DIRECT","COSTCO EWHSE","TARGET.COM","QVC","PRICESMART","CYMAX STORES","SAM'S CLUB.COM","DIRECT BUY HOME IMPROVEMENT","AMAZON WAREHOUSE","KOHLS.COM","SCHOOL OUTFITTERS.COM","WW GRAINGER INC","NFM.COM","WAL MART.COM","STAPLES INC","LOWE'S HOME CENTERS ONLINE","SCHOOL'S IN LLC","ITA GROUP INC","BLUESTEM BRANDS","HOME GOODS","BESTBUY.COM","TJMAXX","GRAINGER","MARSHALLS","COSTPLUS.COM","FASTENAL COMPANY","INDEPENDENT SUPPLIERS GROUP","HD SUPPLY","LAMPS PLUS"];
+
+/* ════════════════════════════════════════════════════════
+   LAYER ARCHITECTURE (outermost → innermost):
+   L1 = E-COM platforms (red)
+   L2 = Manufacturers (orange)  ← between ecom and middleware
+   L3 = EDI + PIM middleware (gold)
+   L4 = D365 FO + SCM core (blue)
+   CENTER = GoComX
+
+   DATA FLOWS (radial, animated moving dots):
+   850 PO:  L1→L3 (red)     ecom sends PO to EDI→D365FO
+   855 ACK: L4→L1 (gold)    D365FO→EDI→ecom
+   856 ASN: L4→L1 (green)   D365SCM→EDI→ecom  (crosses L3)
+   810 INV: L4→L1 (orange)  D365FO→EDI→ecom
+   846 INV: L4→L1 (blue)    D365FO→EDI→ecom
+   MFR data:L2→L3 (purple)  manufacturers→PIM
+════════════════════════════════════════════════════════ */
+
+const LAYER_COLORS = {
+  1: { stroke:'rgba(192,57,43,',   fill:'rgba(192,57,43,.08)',  text:'#e07070',   name:'电商平台层' },
+  2: { stroke:'rgba(251,146,60,',  fill:'rgba(251,146,60,.07)', text:'#fb923c',   name:'制造商层' },
+  3: { stroke:'rgba(232,160,32,',  fill:'rgba(232,160,32,.07)', text:'#e8a020',   name:'EDI + 产品管理平台' },
+  4: { stroke:'rgba(56,189,248,',  fill:'rgba(56,189,248,.07)', text:'#38bdf8',   name:'D365 运营核心' },
+};
+
+/* ── EDI data flows: each entry defines animated radial lines ──
+   from/to are layer numbers (1=outermost, 4=innermost)
+   dir 'inward'=toward center, 'outward'=away from center
+   All flows pass THROUGH L3 (EDI middleware) — it is the hub
+*/
+const EDI_FLOWS = [
+  // 850 PO: E-COM(L1) → EDI(L3) → D365FO(L4) — FULL journey L1→L4 inward
+  { label:'850 PO',  color:[192,57,43],   fromL:1, toL:4, dir:'inward',
+    angles:[0.08, 0.58] },
+  // 855 ACK: D365FO(L4) → EDI(L3) → E-COM(L1)  [gold, outward, full L4→L1]
+  { label:'855 ACK', color:[232,160,32],  fromL:4, toL:1, dir:'outward',
+    angles:[0.18, 0.68] },
+  // 856 ASN: D365SCM(L4) → EDI(L3) → E-COM(L1)  [green, outward, full L4→L1]
+  { label:'856 ASN', color:[74,222,128],  fromL:4, toL:1, dir:'outward',
+    angles:[0.28, 0.78] },
+  // 810 INV: D365FO(L4) → EDI(L3) → E-COM(L1)  [orange, outward, full L4→L1]
+  { label:'810 INV', color:[251,146,60],  fromL:4, toL:1, dir:'outward',
+    angles:[0.38, 0.88] },
+  // 846 INV: D365FO(L4) → EDI(L3) → E-COM(L1)  [blue, outward, full L4→L1]
+  { label:'846 库存', color:[56,189,248], fromL:4, toL:1, dir:'outward',
+    angles:[0.48, 0.98] },
+  // Manufacturer data → PIM/EDI  [purple, inward, L2→L3]
+  { label:'产品数据', color:[167,139,250], fromL:2, toL:3, dir:'inward',
+    angles:[0.13, 0.63] },
+];
+
+let activeLayer = 0;
+
+function selectLayer(n){
+  if(activeLayer === n){ n = 0; }
+  activeLayer = n;
+  document.querySelectorAll('.layer-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.layer-detail').forEach(d=>d.classList.remove('show'));
+  if(n > 0){
+    document.querySelector('.layer-btn.L'+n).classList.add('active');
+    document.getElementById('detail-'+n).classList.add('show');
+  }
+}
+
+function drawRing(){
+  const canvas = document.getElementById('ring-canvas');
+  if(!canvas) return;
+  const container = document.getElementById('ring-container');
+  const W = container.offsetWidth;
+  const H = container.offsetHeight;
+  if(canvas.width !== W || canvas.height !== H){
+    canvas.width = W; canvas.height = H;
+  }
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, W, H);
+
+  const cx = W/2, cy = H/2;
+  const maxR = Math.min(W, H)/2 - 6;
+
+  // Radii: R[0]=L1 outer, R[1]=L1/L2 boundary, R[2]=L2/L3 boundary,
+  //        R[3]=L3/L4 boundary, R[4]=center disc
+  const R = [maxR, maxR*0.76, maxR*0.54, maxR*0.32, maxR*0.13];
+
+  // Helper: get ring boundaries for layer n (1-4)
+  function layerR(n){ return { outer: R[n-1], inner: R[n] }; }
+
+  // ── Draw ring bands (inner to outer so outer border shows on top) ──
+  [4,3,2,1].forEach(n => {
+    const {outer, inner} = layerR(n);
+    const col = LAYER_COLORS[n];
+    const isActive = (activeLayer === 0 || activeLayer === n);
+
+    // Fill band
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(cx, cy, outer, 0, Math.PI*2);
+    ctx.arc(cx, cy, inner, 0, Math.PI*2, true);
+    ctx.fillStyle = col.stroke + (isActive ? '0.09)' : '0.03)');
+    ctx.fill();
+
+    // Outer border circle
+    ctx.beginPath();
+    ctx.arc(cx, cy, outer, 0, Math.PI*2);
+    ctx.strokeStyle = col.stroke + (isActive ? '0.7)' : '0.2)');
+    ctx.lineWidth = isActive ? 2.5 : 1;
+    if(!isActive) ctx.setLineDash([5,7]);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.restore();
+
+    // Band label (top position)
+    const bw = outer - inner;
+    const midR = (outer + inner) / 2;
+    const labelY = cy - midR;
+    ctx.save();
+    ctx.globalAlpha = isActive ? 1 : 0.35;
+    ctx.fillStyle = col.text;
+    ctx.font = 'bold ' + Math.max(8, Math.min(13, bw*0.3)) + 'px Bebas Neue, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(col.name, cx, labelY);
+    // sublabel
+    const sublabels = {
+      1:'80+ E-COM · 销售代理',
+      2:'Manufacturer (模式1=混乱 / 模式2=有序)',
+      3:'EDI 300+ Maps · 产品管理平台',
+      4:'D365 FO + SCM · UPS/FedEx'
+    };
+    ctx.font = Math.max(6, Math.min(9, bw*0.18)) + 'px Noto Sans SC, sans-serif';
+    ctx.fillStyle = col.stroke + '0.6)';
+    ctx.fillText(sublabels[n], cx, labelY + Math.max(8,bw*0.28));
+    ctx.restore();
+  });
+
+  // ── Platform names on L1 outer band ──
+  if(activeLayer === 0 || activeLayer === 1){
+    const n = PLATFORMS.length;
+    const {outer, inner} = layerR(1);
+    const rLabel = (outer + inner*1.4) / 2.4;
+    ctx.save();
+    ctx.font = '6px Noto Sans SC, sans-serif';
+    ctx.fillStyle = 'rgba(255,255,255,0.55)';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    PLATFORMS.forEach((name, i) => {
+      const angle = (i/n)*Math.PI*2 - Math.PI/2;
+      const tx = cx + rLabel * Math.cos(angle);
+      const ty = cy + rLabel * Math.sin(angle);
+      ctx.save();
+      ctx.translate(tx, ty);
+      ctx.rotate(angle + Math.PI/2);
+      const label = name.length > 18 ? name.slice(0,17)+'.' : name;
+      ctx.fillText(label, 0, 0);
+      ctx.restore();
+    });
+    // tick marks
+    ctx.strokeStyle = 'rgba(192,57,43,0.2)';
+    ctx.lineWidth = 0.7;
+    PLATFORMS.forEach((_, i) => {
+      const angle = (i/n)*Math.PI*2 - Math.PI/2;
+      ctx.beginPath();
+      ctx.moveTo(cx+(outer-3)*Math.cos(angle), cy+(outer-3)*Math.sin(angle));
+      ctx.lineTo(cx+(inner+3)*Math.cos(angle), cy+(inner+3)*Math.sin(angle));
+      ctx.stroke();
+    });
+    ctx.restore();
+  }
+
+  // ── Manufacturer segments on L2 band ──
+  if(activeLayer === 0 || activeLayer === 2){
+    const mfrs = ['厂商 A','厂商 B','厂商 C','厂商 D','厂商 E','厂商 F','厂商 G','厂商 H'];
+    const {outer, inner} = layerR(2);
+    const rLabel = (outer + inner) / 2;
+    const n = mfrs.length;
+    const mfrActive = activeLayer === 2;
+
+    // When manufacturer layer is active → draw bold highlighted ring border
+    if(mfrActive){
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(cx, cy, outer, 0, Math.PI*2);
+      ctx.strokeStyle = 'rgba(251,146,60,0.95)';
+      ctx.lineWidth = 4;
+      ctx.shadowColor = 'rgba(251,146,60,0.7)';
+      ctx.shadowBlur = 14;
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(cx, cy, inner, 0, Math.PI*2);
+      ctx.strokeStyle = 'rgba(251,146,60,0.7)';
+      ctx.lineWidth = 3;
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    ctx.save();
+    ctx.font = (mfrActive ? 'bold 10px' : 'bold 8px') + ' Noto Sans SC, sans-serif';
+    ctx.fillStyle = mfrActive ? 'rgba(251,146,60,1.0)' : 'rgba(251,146,60,0.8)';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    mfrs.forEach((name, i) => {
+      const angle = (i/n)*Math.PI*2 - Math.PI/2;
+      ctx.save();
+      ctx.translate(cx + rLabel*Math.cos(angle), cy + rLabel*Math.sin(angle));
+      ctx.rotate(angle + Math.PI/2);
+      if(mfrActive){ ctx.shadowColor='rgba(251,146,60,.6)'; ctx.shadowBlur=8; }
+      ctx.fillText(name, 0, 0);
+      ctx.restore();
+    });
+    // dividers
+    ctx.strokeStyle = mfrActive ? 'rgba(251,146,60,0.5)' : 'rgba(251,146,60,0.2)';
+    ctx.lineWidth = mfrActive ? 1.5 : 0.8;
+    mfrs.forEach((_, i) => {
+      const angle = (i/n)*Math.PI*2 - Math.PI/2;
+      ctx.beginPath();
+      ctx.moveTo(cx+(outer-2)*Math.cos(angle), cy+(outer-2)*Math.sin(angle));
+      ctx.lineTo(cx+(inner+2)*Math.cos(angle), cy+(inner+2)*Math.sin(angle));
+      ctx.stroke();
+    });
+    ctx.restore();
+  }
+
+  // ── GoComX center disc ──
+  ctx.save();
+  const cr = R[4];
+  ctx.beginPath(); ctx.arc(cx, cy, cr, 0, Math.PI*2);
+  ctx.fillStyle = 'rgba(74,222,128,0.12)'; ctx.fill();
+  ctx.strokeStyle = 'rgba(74,222,128,0.6)'; ctx.lineWidth = 1.5; ctx.stroke();
+  ctx.fillStyle = '#4ade80';
+  ctx.font = 'bold ' + Math.max(7,cr*0.5) + 'px Bebas Neue, sans-serif';
+  ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  ctx.fillText('GCX', cx, cy-2);
+  ctx.font = Math.max(5,cr*0.3) + 'px Noto Sans SC, sans-serif';
+  ctx.fillStyle = 'rgba(74,222,128,0.55)';
+  ctx.fillText('核心', cx, cy + cr*0.55);
+  ctx.restore();
+
+  // ── Animated data flow dots ──
+  const t = Date.now() / 1000;
+  EDI_FLOWS.forEach(flow => {
+    const [r,g,b] = flow.color;
+    const shouldShow = (activeLayer === 0)
+      || (activeLayer === flow.fromL)
+      || (activeLayer === flow.toL)
+      || (activeLayer === 3 && (flow.fromL===1||flow.toL===1||flow.fromL===4)); // EDI layer shows all
+
+    if(!shouldShow) return;
+
+    const rFrom = R[flow.fromL - 1] - (flow.fromL===1 ? 10 : 3);
+    const rTo   = R[flow.toL]       + (flow.toL  ===4 ? 0  : 3);
+
+    flow.angles.forEach((af, fi) => {
+      const angle = af * Math.PI * 2 - Math.PI/2;
+      const cos = Math.cos(angle), sin_a = Math.sin(angle);
+
+      const x1 = cx + rFrom * cos;
+      const y1 = cy + rFrom * sin_a;
+      const x2 = cx + rTo   * cos;
+      const y2 = cy + rTo   * sin_a;
+
+      // ── track line ──
+      ctx.save();
+      ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2);
+      const is850 = flow.label === '850 PO';
+      ctx.strokeStyle = 'rgba('+r+','+g+','+b+','+(is850 ? '0.35' : '0.18')+')';
+      ctx.lineWidth = is850 ? 2.5 : 1.8;
+      if(is850){ ctx.shadowColor='rgba('+r+','+g+','+b+',.5)'; ctx.shadowBlur=4; }
+      ctx.stroke();
+      ctx.shadowBlur=0;
+
+      // ── moving dot ──
+      const speed = flow.label==='850 PO' ? 0.55 : (flow.fromL === 4 ? 0.28 : 0.38);
+      const phase = ((t * speed + fi * 0.31 + af * 1.7) % 1);
+      // inward: x1=outer(L1), x2=inner(L4), dot moves x1→x2, so prog=phase
+      // outward: x1=inner(L4), x2=outer(L1), dot moves x1→x2, so prog=phase
+      // Both cases: prog = phase (x1→x2), but rFrom/rTo define direction
+      const prog = phase;  // always x1→x2; rFrom=source, rTo=destination
+      const dotX  = x1 + (x2-x1) * prog;
+      const dotY  = y1 + (y2-y1) * prog;
+
+      // dot glow
+      const grad = ctx.createRadialGradient(dotX, dotY, 0, dotX, dotY, 6);
+      grad.addColorStop(0, 'rgba('+r+','+g+','+b+',0.9)');
+      grad.addColorStop(1, 'rgba('+r+','+g+','+b+',0)');
+      ctx.beginPath(); ctx.arc(dotX, dotY, 6, 0, Math.PI*2);
+      ctx.fillStyle = grad; ctx.fill();
+
+      // solid dot core
+      ctx.beginPath(); ctx.arc(dotX, dotY, 3, 0, Math.PI*2);
+      ctx.fillStyle = 'rgba('+r+','+g+','+b+',1)'; ctx.fill();
+
+      // ── no per-spoke label (drawn once below per flow) ──
+
+      // arrowhead always at x2 (destination: inner for inward, outer for outward)
+      const dx = x2-x1;
+      const dy = y2-y1;
+      const len = Math.sqrt(dx*dx+dy*dy);
+      if(len < 0.01) return;
+      const ux=dx/len, uy=dy/len;
+      const ax = x2;
+      const ay = y2;
+      ctx.save();
+      ctx.beginPath();
+      ctx.moveTo(ax, ay);
+      ctx.lineTo(ax - ux*8 - uy*4, ay - uy*8 + ux*4);
+      ctx.lineTo(ax - ux*8 + uy*4, ay - uy*8 - ux*4);
+      ctx.closePath();
+      ctx.fillStyle = 'rgba('+r+','+g+','+b+',0.7)';
+      ctx.fill();
+      ctx.restore();
+
+      ctx.restore();
+    });
+
+    // ── Draw ONE label per flow on a dedicated radial spoke ──
+    // Use the first angle slot as the label position
+    const labelAngleIdx = 0;  // always use first spoke for the label
+    const labelAf = flow.angles[labelAngleIdx];
+    const labelAngle = labelAf * Math.PI * 2 - Math.PI/2;
+    const labelCos = Math.cos(labelAngle), labelSin = Math.sin(labelAngle);
+
+    // Position label at midpoint between fromL and toL on this spoke
+    const midR = (rFrom + rTo) / 2;
+    const lx = cx + midR * labelCos;
+    const ly = cy + midR * labelSin;
+
+    const fs = Math.max(7.5, Math.min(11, (rFrom - rTo) * 0.17));
+    ctx.save();
+    ctx.translate(lx, ly);
+    // Rotate text along the radial spoke direction
+    ctx.rotate(labelAngle + Math.PI/2);
+
+    // Pill background
+    const tw = flow.label.length * fs * 0.62 + 10;
+    const ph = fs + 5;
+    const px = -tw/2, py = -ph/2, pr = 3;
+    ctx.fillStyle = 'rgba(4,4,14,0.92)';
+    ctx.strokeStyle = 'rgba('+r+','+g+','+b+',0.4)';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(px + pr, py);
+    ctx.lineTo(px + tw - pr, py);
+    ctx.arcTo(px+tw, py, px+tw, py+pr, pr);
+    ctx.lineTo(px+tw, py+ph-pr);
+    ctx.arcTo(px+tw, py+ph, px+tw-pr, py+ph, pr);
+    ctx.lineTo(px+pr, py+ph);
+    ctx.arcTo(px, py+ph, px, py+ph-pr, pr);
+    ctx.lineTo(px, py+pr);
+    ctx.arcTo(px, py, px+pr, py, pr);
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+
+    // Label text
+    ctx.fillStyle = 'rgba('+r+','+g+','+b+',1.0)';
+    ctx.font = 'bold ' + fs + 'px Space Mono, monospace';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    if(flow.label==='850 PO'){ ctx.shadowColor='rgba('+r+','+g+','+b+',.9)'; ctx.shadowBlur=8; }
+    ctx.fillText(flow.label, 0, 0);
+    ctx.shadowBlur = 0;
+    ctx.restore();
+
+  });
+}
+
+let s6AnimFrame = null;
+function startRingAnim(){
+  if(s6AnimFrame) cancelAnimationFrame(s6AnimFrame);
+  function loop(){
+    if(cur !== 4){ s6AnimFrame = null; return; }
+    drawRing();
+    s6AnimFrame = requestAnimationFrame(loop);
+  }
+  loop();
+}
+
+// Called by goTo
+function drawInternals(){
+  const canvas = document.getElementById('ring-canvas');
+  if(!canvas) return;
+  const container = document.getElementById('ring-container');
+  canvas.width = container.offsetWidth;
+  canvas.height = container.offsetHeight;
+  activeLayer = 0;
+  document.querySelectorAll('.layer-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.layer-detail').forEach(d=>d.classList.remove('show'));
+  startRingAnim();
+}
+</script>
+</div>
+
+
+<!-- ═══ S3B — D365 FO + SCM + EDI DETAIL ═══ -->
+<div class="slide" id="s3b" style="justify-content:flex-start;">
+  <div class="slide-header" style="margin-bottom:8px;">
+    <div class="slide-tag green">GoComX 内部架构 · 微软 D365 全栈系统</div>
+    <div class="slide-title" style="font-size:clamp(14px,2vw,30px);margin-top:2px;">
+      <span class="b" style="color:var(--blue);">D365 FO</span> + <span style="color:var(--green);">D365 SCM</span> + <span style="color:var(--gold);">EDI</span> · <span style="color:var(--text);">北美 80 家电商垂直系统</span>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto auto;gap:10px;width:min(1100px,97vw);margin:0 auto;opacity:0;animation:fadeIn .6s .3s forwards;">
+
+    <!-- D365 FO BOX -->
+    <div style="background:linear-gradient(145deg,#040d18,#071525);border:2px solid rgba(56,189,248,.5);border-radius:14px;padding:14px 16px;">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--blue);letter-spacing:.05em;">D365 FNO — ERP</div>
+        <div style="background:rgba(56,189,248,.12);border:1px solid rgba(56,189,248,.4);border-radius:20px;padding:2px 10px;font-size:10px;font-weight:700;color:var(--blue);">Finance &amp; Operations</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+
+        <!-- Left column: E-com features -->
+        <div style="background:rgba(56,189,248,.05);border:1px solid rgba(56,189,248,.15);border-radius:8px;padding:10px;">
+          <div style="font-size:10px;font-weight:700;color:var(--blue);margin-bottom:6px;">● 电商专属定制功能</div>
+          <div style="font-size:9px;font-weight:700;color:rgba(255,255,255,.7);margin-bottom:4px;">▸ Sales Order On Hold <span style="color:#e07070;font-weight:400;">订单拦截审核机制</span></div>
+          <div style="font-size:8px;color:rgba(255,255,255,.4);line-height:1.6;margin-bottom:4px;">
+            防欺诈 · 超额用款锁定<br>
+          </div>
+          <div style="font-size:8.5px;color:rgba(255,255,255,.55);line-height:1.7;">
+            · E-Com Operation 运营管理<br>
+            · Credit Management 信用管控<br>
+            · Pricing / Release to WMS
+          </div>
+        </div>
+
+        <!-- Right column: Order mgmt -->
+        <div style="background:rgba(56,189,248,.05);border:1px solid rgba(56,189,248,.15);border-radius:8px;padding:10px;">
+          <div style="font-size:10px;font-weight:700;color:var(--blue);margin-bottom:6px;">● 订单销售管理</div>
+          <div style="font-size:8.5px;color:rgba(255,255,255,.55);line-height:1.75;">
+            · EDI 传入后自动创建 <span style="color:var(--green);font-weight:700;">Sales Order</span><br>
+            · Order Sales Management<br>
+            · SO On Hold → 审核 → Release<br>
+            · WMS 发货指令自动触发<br>
+            · 佣金 / Rebate 自动归因结算
+          </div>
+        </div>
+
+        <!-- Bottom left: 80 platform params -->
+        <div style="background:rgba(56,189,248,.05);border:1px solid rgba(56,189,248,.15);border-radius:8px;padding:10px;">
+          <div style="font-size:10px;font-weight:700;color:var(--blue);margin-bottom:6px;">● 80平台全参数配置库</div>
+          <div style="font-size:8.5px;color:rgba(255,255,255,.55);line-height:1.7;">
+            · 每家零售商 Retail Store 电商编码<br>
+            · Distribution Center 仓库代码<br>
+            · Vendor / Supplier 编号参数
+          </div>
+        </div>
+
+        <!-- Bottom right: Rebate/Carrier -->
+        <div style="background:rgba(56,189,248,.05);border:1px solid rgba(56,189,248,.15);border-radius:8px;padding:10px;">
+          <div style="font-size:10px;font-weight:700;color:var(--blue);margin-bottom:6px;">● 渠道专属 Rebate 规则</div>
+          <div style="font-size:8.5px;color:rgba(255,255,255,.55);line-height:1.7;">
+            · 各平台合规格式要求<br>
+            · Carrier Code Mapping 表<br>
+            · 返利 / 扣款自动核算
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- EDI BOX (top right) -->
+    <div style="background:linear-gradient(145deg,#1a1200,#241800);border:2px solid rgba(232,160,32,.6);border-radius:14px;padding:14px 16px;animation:glowPulseGold 3s 1s ease-in-out infinite;">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--gold);letter-spacing:.05em;">EDI 事务集</div>
+        <div style="background:rgba(232,160,32,.1);border:1px solid rgba(232,160,32,.4);border-radius:20px;padding:2px 10px;font-size:10px;font-weight:700;color:var(--gold);">300+ Maps · 8年实战验证</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">
+        <!-- EDI transaction list -->
+        <div style="background:rgba(232,160,32,.06);border:1px solid rgba(232,160,32,.2);border-radius:8px;padding:10px;">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+            <div style="text-align:center;background:rgba(192,57,43,.12);border:1px solid rgba(192,57,43,.3);border-radius:5px;padding:4px 6px;">
+              <div style="font-family:'Space Mono',monospace;font-size:11px;font-weight:700;color:#e07070;">850 PO</div>
+              <div style="font-size:7px;color:rgba(255,255,255,.4);margin-top:1px;">采购订单 ←</div>
+            </div>
+            <div style="text-align:center;background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.3);border-radius:5px;padding:4px 6px;">
+              <div style="font-family:'Space Mono',monospace;font-size:11px;font-weight:700;color:var(--green);">856 ASN</div>
+              <div style="font-size:7px;color:rgba(255,255,255,.4);margin-top:1px;">发货通知 →</div>
+            </div>
+            <div style="text-align:center;background:rgba(251,146,60,.1);border:1px solid rgba(251,146,60,.3);border-radius:5px;padding:4px 6px;">
+              <div style="font-family:'Space Mono',monospace;font-size:11px;font-weight:700;color:var(--orange);">810 INV</div>
+              <div style="font-size:7px;color:rgba(255,255,255,.4);margin-top:1px;">发票 →</div>
+            </div>
+            <div style="text-align:center;background:rgba(232,160,32,.1);border:1px solid rgba(232,160,32,.3);border-radius:5px;padding:4px 6px;">
+              <div style="font-family:'Space Mono',monospace;font-size:11px;font-weight:700;color:var(--gold);">855 ACK</div>
+              <div style="font-size:7px;color:rgba(255,255,255,.4);margin-top:1px;">确认回执 →</div>
+            </div>
+            <div style="text-align:center;background:rgba(56,189,248,.1);border:1px solid rgba(56,189,248,.3);border-radius:5px;padding:4px 6px;grid-column:1/-1;">
+              <div style="font-family:'Space Mono',monospace;font-size:11px;font-weight:700;color:var(--blue);">846 INV</div>
+              <div style="font-size:7px;color:rgba(255,255,255,.4);margin-top:1px;">库存查询 →</div>
+            </div>
+          </div>
+        </div>
+        <!-- Stats -->
+        <div style="background:rgba(232,160,32,.06);border:1px solid rgba(232,160,32,.2);border-radius:8px;padding:10px;display:flex;flex-direction:column;justify-content:space-around;text-align:center;">
+          <div>
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:36px;color:var(--gold);line-height:1;">300<span style="font-size:20px">+</span></div>
+            <div style="font-size:8px;color:rgba(232,160,32,.5);">EDI Mappings</div>
+          </div>
+          <div style="border-top:1px solid rgba(232,160,32,.15);padding-top:8px;">
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:36px;color:var(--gold);line-height:1;">80</div>
+            <div style="font-size:8px;color:rgba(232,160,32,.5);">电商平台</div>
+          </div>
+          <div style="border-top:1px solid rgba(232,160,32,.15);padding-top:8px;">
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:36px;color:var(--gold);line-height:1;">8<span style="font-size:18px">YR</span></div>
+            <div style="font-size:8px;color:rgba(232,160,32,.5);">实战验证</div>
+          </div>
+        </div>
+      </div>
+      <div style="background:rgba(232,160,32,.06);border:1px solid rgba(232,160,32,.15);border-radius:8px;padding:8px 10px;font-size:8px;color:rgba(232,160,32,.6);text-align:center;">
+        · PO 850 · ASN 856 · INV 810 · ACK 855 · Inventory 846 · 自建者 3年+，后来者无从复制
+      </div>
+    </div>
+
+    <!-- D365 SCM BOX (full width bottom) -->
+    <div style="grid-column:1/-1;background:linear-gradient(145deg,#04100a,#071a0e);border:2px solid rgba(74,222,128,.45);border-radius:14px;padding:14px 16px;">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--green);letter-spacing:.05em;">D365 SCM — 仓储物流引擎</div>
+        <div style="background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.35);border-radius:20px;padding:2px 10px;font-size:10px;font-weight:700;color:var(--green);">Supply Chain Mgmt</div>
+        <div style="margin-left:auto;font-size:9px;color:var(--green);background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.2);border-radius:5px;padding:3px 8px;">→ 856 ASN 发货通知由此发出</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
+
+        <!-- Packing Label -->
+        <div style="background:rgba(74,222,128,.05);border:1px solid rgba(74,222,128,.18);border-radius:8px;padding:10px;">
+          <div style="font-size:10px;font-weight:700;color:var(--green);margin-bottom:6px;">● 80平台 Packing LABEL</div>
+          <div style="font-size:9px;color:var(--green);font-weight:700;margin-bottom:4px;">覆盖全部80家电商平台<br>专属标签模板</div>
+          <div style="font-size:8px;color:rgba(255,255,255,.45);line-height:1.7;">
+            · UCC-128 / GS1 Barcode<br>
+            · Pallet / Carton / Unit Label<br>
+            · Target / Walmart 专属格式<br>
+            · 自动匹配 Carrier + Route
+          </div>
+        </div>
+
+        <!-- WMS Order Fulfillment -->
+        <div style="background:rgba(74,222,128,.05);border:1px solid rgba(74,222,128,.18);border-radius:8px;padding:10px;">
+          <div style="font-size:10px;font-weight:700;color:var(--green);margin-bottom:6px;">● WMS 仓储发货管理</div>
+          <div style="font-size:8.5px;color:rgba(255,255,255,.55);line-height:1.7;">
+            · D365 FO Release → SCM 接收发货指令<br>
+            · 自动分配仓库 + 拣货路径<br>
+            · 80平台专属出货规则执行
+          </div>
+          <div style="margin-top:6px;background:rgba(74,222,128,.06);border:1px solid rgba(74,222,128,.15);border-radius:5px;padding:6px 8px;">
+            <div style="font-size:8.5px;color:rgba(74,222,128,.7);">
+              · 发货完成 → 触发 856 ASN 回传<br>
+              · 海外仓 WMS Code 自动分配
+            </div>
+          </div>
+        </div>
+
+        <!-- Parcel + LTL -->
+        <div style="background:rgba(74,222,128,.05);border:1px solid rgba(74,222,128,.18);border-radius:8px;padding:10px;">
+          <div style="font-size:10px;font-weight:700;color:var(--green);margin-bottom:6px;">● 小包 + LTL 物流集成</div>
+          <div style="font-size:8.5px;color:rgba(255,255,255,.55);line-height:1.7;">
+            · UPS / FedEx 官方接口认证<br>
+            · Small Parcel 自动出单
+          </div>
+          <div style="margin-top:6px;background:rgba(74,222,128,.06);border:1px solid rgba(74,222,128,.15);border-radius:5px;padding:6px 8px;">
+            <div style="font-size:8.5px;color:rgba(74,222,128,.7);">
+              · LTL Freight 整托管理<br>
+              · 海外仓 WMS Code 自动分配
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══ S4 PIM AI MATCHING ═══ -->
+<div class="slide" id="s4">
+  <div class="slide-header">
+    <div class="slide-tag purple">核心功能 · PIM + AI 智能匹配引擎</div>
+    <div class="slide-title">
+      <span class="b">制造商上传产品</span> → <span class="p">PIM AI自动匹配</span> → <span class="g">销售代理精准选品</span> → <span class="o">自动推送80+平台</span>
+    </div>
+  </div>
+  <div class="pim-hero" id="pim-hero">
+    <div class="mfr-col">
+      <div class="mfr-card">
+        <div class="mfr-icon">🏭</div>
+        <div class="mfr-info">
+          <div class="mfr-name">制造商 A · 家居品类</div>
+          <div class="mfr-items">上传 <span>320</span> 款产品至 PIM</div>
+          <div class="mfr-products"><div class="prod-tag">沙发</div><div class="prod-tag">茶几</div><div class="prod-tag">灯具</div></div>
+          <div class="upload-badge">✅ 一次录入，免重复填写</div>
+        </div>
+      </div>
+      <div class="mfr-card">
+        <div class="mfr-icon">🔧</div>
+        <div class="mfr-info">
+          <div class="mfr-name">制造商 B · 工具品类</div>
+          <div class="mfr-items">上传 <span>180</span> 款产品至 PIM</div>
+          <div class="mfr-products"><div class="prod-tag">电钻</div><div class="prod-tag">扳手</div><div class="prod-tag">锯子</div></div>
+          <div class="upload-badge">✅ 尺寸/规格/图片统一管理</div>
+        </div>
+      </div>
+      <div class="mfr-card">
+        <div class="mfr-icon">💡</div>
+        <div class="mfr-info">
+          <div class="mfr-name">制造商 C · 电子品类</div>
+          <div class="mfr-items">上传 <span>450</span> 款产品至 PIM</div>
+          <div class="mfr-products"><div class="prod-tag">音响</div><div class="prod-tag">灯带</div><div class="prod-tag">充电器</div></div>
+          <div class="upload-badge">✅ AI自动生成各渠道描述</div>
+        </div>
+      </div>
+      <div class="mfr-card">
+        <div class="mfr-icon">🌿</div>
+        <div class="mfr-info">
+          <div class="mfr-name">制造商 D · 户外品类</div>
+          <div class="mfr-items">上传 <span>210</span> 款产品至 PIM</div>
+          <div class="mfr-products"><div class="prod-tag">花园椅</div><div class="prod-tag">帐篷</div></div>
+          <div class="upload-badge">✅ 合规标签自动适配</div>
+        </div>
+      </div>
+      <div class="mfr-card">
+        <div class="mfr-icon">🍳</div>
+        <div class="mfr-info">
+          <div class="mfr-name">制造商 E · 厨房品类</div>
+          <div class="mfr-items">上传 <span>290</span> 款产品至 PIM</div>
+          <div class="mfr-products"><div class="prod-tag">炊具</div><div class="prod-tag">刀具</div><div class="prod-tag">厨电</div></div>
+          <div class="upload-badge">✅ 零重复录入</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pim-center">
+      <div class="pim-box">
+        <div class="pim-label">PIM</div>
+        <div class="pim-sub">产品信息管理中台</div>
+        <div class="ai-badge">🤖 AI 智能引擎</div>
+        <div class="ai-desc">分析产品属性 · 匹配代理专长<br>智能推送最优组合</div>
+        <div class="pim-feats">
+          <div class="pf">📥 制造商一次录入</div>
+          <div class="pf">🔍 AI代理⟷产品匹配</div>
+          <div class="pf">🔑 代理登录自主选品</div>
+          <div class="pf">📊 销售数据自动归因</div>
+          <div class="pf">✅ 微软 ISV 认证</div>
+        </div>
+        <div class="auto-post-badge">
+          <b>🚀 自动推送至 80+ 渠道</b>
+          无需重复填写尺寸/规格/视频
+        </div>
+      </div>
+    </div>
+
+    <div class="rep-col">
+      <div class="rep-card">
+        <div class="rep-avatar">👤</div>
+        <div class="rep-info">
+          <div class="rep-name">Sarah M. — 家居 & 家具</div>
+          <div class="rep-focus">专注：<span>HomeDepot / Costco</span></div>
+          <div class="rep-status"><div class="rep-online"></div>已登录PIM · 正在选品</div>
+        </div>
+        <div class="match-score">98%</div>
+      </div>
+      <div class="rep-card">
+        <div class="rep-avatar">👤</div>
+        <div class="rep-info">
+          <div class="rep-name">James T. — 五金工具</div>
+          <div class="rep-focus">专注：<span>Lowes / HomeDepot</span></div>
+          <div class="rep-status"><div class="rep-online"></div>已登录PIM · 正在选品</div>
+        </div>
+        <div class="match-score">96%</div>
+      </div>
+      <div class="rep-card">
+        <div class="rep-avatar">👤</div>
+        <div class="rep-info">
+          <div class="rep-name">Dmitrii K. — 消费电子</div>
+          <div class="rep-focus">专注：<span>BestBuy / Amazon</span></div>
+          <div class="rep-status"><div class="rep-online"></div>已登录PIM · 正在选品</div>
+        </div>
+        <div class="match-score">94%</div>
+      </div>
+      <div class="rep-card">
+        <div class="rep-avatar">👤</div>
+        <div class="rep-info">
+          <div class="rep-name">Linda W. — 户外运动</div>
+          <div class="rep-focus">专注：<span>Target / Walmart</span></div>
+          <div class="rep-status"><div class="rep-online"></div>已登录PIM · 正在选品</div>
+        </div>
+        <div class="match-score">91%</div>
+      </div>
+      <div class="rep-card">
+        <div class="rep-avatar">👤</div>
+        <div class="rep-info">
+          <div class="rep-name">Carlos R. — 厨房 & 生活</div>
+          <div class="rep-focus">专注：<span>Costco / Target</span></div>
+          <div class="rep-status"><div class="rep-online"></div>已登录PIM · 正在选品</div>
+        </div>
+        <div class="match-score">89%</div>
+      </div>
+      <div class="rep-card">
+        <div class="rep-avatar">👤</div>
+        <div class="rep-info">
+          <div class="rep-name">Amy Z. — 综合品类</div>
+          <div class="rep-focus">专注：<span>80+ e-com 平台</span></div>
+          <div class="rep-status"><div class="rep-online"></div>已登录PIM · 正在选品</div>
+        </div>
+        <div class="match-score">87%</div>
+      </div>
+    </div>
+
+    <canvas id="match-canvas"></canvas>
+  </div>
+</div>
+
+<!-- ═══ S5 FUTURE AI AGENT EVOLUTION ═══ -->
+<div class="slide" id="s5">
+<style>
+/* ── S5 specific styles ── */
+#s5 { background: radial-gradient(ellipse at 50% 50%, #04080f 0%, var(--bg) 70%); padding: 14px 28px; justify-content: flex-start; }
+
+.evo-header { text-align:center; margin-bottom: 10px; width:100%; }
+
+.evo-stage-wrap {
+  width: min(1020px, 97vw);
+  display: grid;
+  grid-template-columns: 1fr 54px 1fr;
+  gap: 0;
+  align-items: stretch;
+  flex-shrink: 0;
+}
+
+/* ── Stage panels ── */
+.evo-panel {
+  border-radius: 16px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  opacity: 0;
+}
+.evo-panel.now {
+  background: linear-gradient(160deg, #0f1220, #141830);
+  border: 1.5px solid rgba(56,189,248,.35);
+  animation: fadeUp .6s .3s forwards;
+}
+.evo-panel.future {
+  background: linear-gradient(160deg, #0a1a0a, #0d200d);
+  border: 1.5px solid rgba(167,139,250,.4);
+  animation: fadeUp .6s .5s forwards;
+}
+
+.evo-era-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  border-radius: 20px; padding: 4px 14px; font-size: 11px; font-weight: 700;
+  letter-spacing: .06em; align-self: flex-start;
+}
+.evo-era-badge.now { background: rgba(56,189,248,.12); border: 1px solid rgba(56,189,248,.35); color: var(--blue); }
+.evo-era-badge.future { background: rgba(167,139,250,.12); border: 1px solid rgba(167,139,250,.4); color: var(--purple); }
+.era-dot { width:7px; height:7px; border-radius:50%; animation: blink 1.5s infinite; }
+.era-dot.now { background: var(--blue); }
+.era-dot.future { background: var(--purple); animation-delay: .5s; }
+
+.evo-panel-title { font-weight:900; font-size: clamp(15px,1.8vw,22px); line-height:1.2; }
+.evo-panel-title .b { color: var(--blue); }
+.evo-panel-title .p { color: var(--purple); }
+.evo-panel-title .g { color: var(--green); }
+
+/* Flow diagram inside each panel */
+.evo-flow {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+
+.evo-row {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.evo-node {
+  border-radius: 9px;
+  padding: 7px 10px;
+  font-size: 10px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.evo-node.mfr   { background: rgba(192,57,43,.12); border: 1px solid rgba(192,57,43,.3); color: #e07070; }
+.evo-node.pim   { background: rgba(167,139,250,.12); border: 1px solid rgba(167,139,250,.4); color: var(--purple); }
+.evo-node.erp   { background: rgba(74,222,128,.1); border: 1px solid rgba(74,222,128,.3); color: var(--green); }
+.evo-node.rep   { background: rgba(56,189,248,.1); border: 1px solid rgba(56,189,248,.3); color: var(--blue); }
+.evo-node.plat  { background: rgba(232,160,32,.1); border: 1px solid rgba(232,160,32,.3); color: var(--gold); }
+.evo-node.ai-agent { background: linear-gradient(135deg,rgba(167,139,250,.18),rgba(74,222,128,.12)); border: 1px solid rgba(167,139,250,.55); color: var(--purple); box-shadow: 0 0 14px rgba(167,139,250,.2); }
+.evo-node.pim-ai { background: linear-gradient(135deg,rgba(167,139,250,.2),rgba(56,189,248,.12)); border: 1.5px solid rgba(167,139,250,.6); color: var(--purple); box-shadow: 0 0 18px rgba(167,139,250,.25); animation: glowPulse 2s ease-in-out infinite; }
+
+.evo-arr { font-size: 13px; color: var(--muted); flex-shrink:0; }
+.evo-arr.bi { display:flex; flex-direction:column; align-items:center; font-size:10px; color:var(--gold); gap:0; line-height:1; }
+
+.evo-kpi-row {
+  display: flex; gap: 5px; flex-wrap: wrap; margin-top: 2px;
+}
+.kpi-chip {
+  font-size: 9px; border-radius: 4px; padding: 2px 7px;
+  background: rgba(167,139,250,.08); border: 1px solid rgba(167,139,250,.2); color: rgba(167,139,250,.8);
+}
+.kpi-chip.gold { background: rgba(232,160,32,.08); border-color: rgba(232,160,32,.2); color: var(--gold); }
+.kpi-chip.green { background: rgba(74,222,128,.08); border-color: rgba(74,222,128,.2); color: var(--green); }
+
+/* Divider arrow between panels */
+.evo-divider {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  opacity: 0;
+  animation: fadeIn .5s .7s forwards;
+}
+.evo-div-line { width: 2px; flex: 1; background: linear-gradient(to bottom, transparent, rgba(167,139,250,.4), transparent); }
+.evo-div-badge {
+  background: linear-gradient(135deg, rgba(167,139,250,.15), rgba(74,222,128,.1));
+  border: 1px solid rgba(167,139,250,.4);
+  border-radius: 10px; padding: 8px 6px;
+  font-size: 9px; font-weight: 700; color: var(--purple);
+  text-align: center; letter-spacing: .04em; writing-mode: vertical-lr;
+  text-orientation: mixed; white-space: nowrap;
+}
+
+/* Human rep rows */
+.rep-row {
+  display: flex; align-items: center; gap: 6px;
+  background: rgba(56,189,248,.06); border: 1px solid rgba(56,189,248,.15);
+  border-radius: 8px; padding: 5px 9px; font-size: 9px; color: rgba(56,189,248,.8);
+}
+.rep-row .rdot { width:5px;height:5px;border-radius:50%;background:var(--blue);animation:blink 2s infinite;flex-shrink:0; }
+.rep-row .rname { flex:1; }
+.rep-row .rscore { font-family:'Space Mono',monospace; color:var(--green); font-size:9px; background:rgba(74,222,128,.1);border-radius:3px;padding:1px 4px; }
+
+/* Agent row (future) */
+.agent-row {
+  display: flex; align-items: center; gap: 6px;
+  border-radius: 8px; padding: 5px 9px; font-size: 9px;
+  background: linear-gradient(90deg,rgba(167,139,250,.1),rgba(74,222,128,.06));
+  border: 1px solid rgba(167,139,250,.3);
+  color: rgba(167,139,250,.9);
+  opacity: 0; transform: translateX(12px);
+}
+.agent-row:nth-child(1){animation:slideLeft .4s .9s forwards;}
+.agent-row:nth-child(2){animation:slideLeft .4s 1.05s forwards;}
+.agent-row:nth-child(3){animation:slideLeft .4s 1.2s forwards;}
+.agent-row:nth-child(4){animation:slideLeft .4s 1.35s forwards;}
+.agent-row .adot { width:6px;height:6px;border-radius:50%;background:var(--purple);animation:glowPulseDot 1.5s infinite;flex-shrink:0; }
+.agent-row .aname { flex:1; }
+.agent-row .akpi { font-family:'Space Mono',monospace; color:var(--green); font-size:9px; background:rgba(74,222,128,.1);border-radius:3px;padding:1px 4px; }
+
+/* Platform AI badge */
+.plat-ai {
+  display: flex; align-items:center; gap:6px;
+  background: linear-gradient(90deg,rgba(74,222,128,.08),rgba(167,139,250,.08));
+  border: 1px solid rgba(74,222,128,.25); border-radius: 8px;
+  padding: 5px 9px; font-size: 9px; color: rgba(74,222,128,.85);
+  opacity: 0; transform: translateX(10px);
+}
+.plat-ai:nth-child(1){animation:slideLeft .4s 1.0s forwards;}
+.plat-ai:nth-child(2){animation:slideLeft .4s 1.12s forwards;}
+.plat-ai:nth-child(3){animation:slideLeft .4s 1.24s forwards;}
+.plat-ai:nth-child(4){animation:slideLeft .4s 1.36s forwards;}
+.plat-ai:nth-child(5){animation:slideLeft .4s 1.48s forwards;}
+.plat-ai .pico{font-size:13px;flex-shrink:0;}
+.plat-ai .pname{font-weight:700;flex:1;}
+.plat-ai .pmode{font-size:8px;color:var(--purple);background:rgba(167,139,250,.1);border-radius:3px;padding:1px 5px;}
+
+/* Impact callout */
+.impact-bar {
+  width: min(1020px,97vw);
+  margin-top: 8px;
+  display: grid; grid-template-columns: repeat(3,1fr); gap: 8px;
+  opacity: 0; animation: fadeUp .5s 1.5s forwards;
+  flex-shrink: 0;
+}
+.impact-card {
+  background: var(--surface2);
+  border-radius: 10px; padding: 9px 12px;
+  display: flex; align-items: flex-start; gap: 8px;
+  border: 1px solid var(--border);
+}
+.impact-ico { font-size: 18px; flex-shrink:0; }
+.impact-text { font-size: 10px; color: var(--muted); line-height: 1.55; }
+.impact-text b { color: var(--text); display:block; margin-bottom:2px; font-size:11px; }
+
+@keyframes glowPulseDot{0%,100%{box-shadow:0 0 4px rgba(167,139,250,.4)}50%{box-shadow:0 0 10px rgba(167,139,250,.9)}}
+@keyframes floatUp{0%{opacity:0;transform:translateY(6px)}20%{opacity:1}80%{opacity:1}100%{opacity:0;transform:translateY(-22px)}}
+</style>
+
+  <div class="evo-header">
+    <div class="slide-tag purple" style="animation:fadeUp .5s .1s forwards;">未来商业演进 · AI + Digital 重构跨境销售</div>
+    <div class="slide-title" style="opacity:0;animation:fadeUp .6s .2s forwards;">
+      <span class="b">当下：人工销售代理</span> &nbsp;→&nbsp; <span class="p">未来：80平台部署 AI Agent 自动采购</span>
+    </div>
+  </div>
+
+  <div class="evo-stage-wrap">
+
+    <!-- ── NOW panel ── -->
+    <div class="evo-panel now">
+      <div class="evo-era-badge now"><div class="era-dot now"></div>当下阶段 · NOW</div>
+      <div class="evo-panel-title"><span class="b">人工销售代理</span>登录 PIM 选品<br>GoComX 对接 80+ 渠道</div>
+
+      <div class="evo-flow">
+        <!-- Mfr → PIM row -->
+        <div class="evo-row">
+          <div class="evo-node mfr">🏭 制造商 A–E</div>
+          <div class="evo-arr">→</div>
+          <div class="evo-node pim-ai">🤖 PIM<br><span style="font-size:8px;font-weight:400;color:rgba(167,139,250,.6)">AI匹配引擎</span></div>
+          <div class="evo-arr bi"><span>⇄</span><span style="font-size:8px;color:var(--gold)">数据流</span></div>
+          <div class="evo-node erp">⚡ GoComX ERP</div>
+        </div>
+
+        <!-- Human reps -->
+        <div style="font-size:9px;color:var(--muted);margin-top:2px;margin-left:2px;letter-spacing:.05em;">🔑 销售代理登录 PIM 选品 →</div>
+        <div class="rep-row"><div class="rdot"></div><div class="rname">Sarah M. — 家居代理 · HomeDepot/Costco</div><div class="rscore">匹配98%</div></div>
+        <div class="rep-row"><div class="rdot" style="animation-delay:.6s"></div><div class="rname">James T. — 工具代理 · Lowes/HomeDepot</div><div class="rscore">匹配96%</div></div>
+        <div class="rep-row"><div class="rdot" style="animation-delay:1.2s"></div><div class="rname">Dmitrii K. — 电子代理 · BestBuy/Amazon</div><div class="rscore">匹配94%</div></div>
+        <div class="rep-row"><div class="rdot" style="animation-delay:1.8s"></div><div class="rname">Linda W. — 户外代理 · Target/Walmart</div><div class="rscore">匹配91%</div></div>
+
+        <!-- Rep → Platforms -->
+        <div class="evo-row" style="margin-top:4px;">
+          <div class="evo-node rep" style="flex:1;justify-content:center;">👥 150+ 人工销售代理</div>
+          <div class="evo-arr">→</div>
+          <div class="evo-node plat" style="flex:1;justify-content:center;">🏪 80+ 电商平台<br><span style="font-size:8px;font-weight:400;">人工选品上架</span></div>
+        </div>
+
+        <!-- Note -->
+        <div style="font-size:9px;color:rgba(56,189,248,.5);border:1px dashed rgba(56,189,248,.2);border-radius:6px;padding:5px 8px;margin-top:2px;">
+          ⚡ PIM 已自动推送产品格式至80+渠道<br>
+          代理无需重复填写尺寸/规格/视频/图片
+        </div>
+      </div>
+    </div>
+
+    <!-- ── DIVIDER ── -->
+    <div class="evo-divider">
+      <div class="evo-div-line"></div>
+      <div class="evo-div-badge">AI 进化<br>趋势</div>
+      <div class="evo-div-line"></div>
+    </div>
+
+    <!-- ── FUTURE panel ── -->
+    <div class="evo-panel future">
+      <div class="evo-era-badge future"><div class="era-dot future"></div>未来阶段 · NEXT</div>
+      <div class="evo-panel-title"><span class="p">平台 AI Agent</span> 自动采购<br><span class="g">PIM AI Agent</span> 主动出击投喂最优品</div>
+
+      <div class="evo-flow">
+        <!-- PIM AI Agent enhanced -->
+        <div class="evo-row">
+          <div class="evo-node mfr">🏭 制造商 A–E</div>
+          <div class="evo-arr">→</div>
+          <div class="evo-node pim-ai" style="flex-shrink:0;">
+            🧠 PIM AI Agent
+            <span style="font-size:8px;font-weight:400;color:rgba(167,139,250,.65);display:block;margin-top:1px;">KPI分析·主动投喂</span>
+          </div>
+        </div>
+
+        <!-- KPI chips -->
+        <div class="evo-kpi-row">
+          <div class="kpi-chip gold">📊 转化率排名</div>
+          <div class="kpi-chip gold">⭐ 商家评分</div>
+          <div class="kpi-chip green">🚀 GMV增速</div>
+          <div class="kpi-chip green">📦 库存周转</div>
+          <div class="kpi-chip">🏆 渠道KPI</div>
+        </div>
+
+        <!-- Platform AI Agents -->
+        <div style="font-size:9px;color:var(--muted);margin-top:3px;letter-spacing:.05em;">🤖 80+平台 AI Agent 自动扫描 PIM 采购 →</div>
+        <div class="agent-row"><div class="adot"></div><div class="aname">BestBuy AI Agent · 消费电子采购Bot</div><div class="akpi">自动下单</div></div>
+        <div class="agent-row"><div class="adot"></div><div class="aname">HomeDepot AI Agent · 家居工具采购Bot</div><div class="akpi">自动下单</div></div>
+        <div class="agent-row"><div class="adot"></div><div class="aname">Target AI Agent · 综合品类采购Bot</div><div class="akpi">自动下单</div></div>
+        <div class="agent-row"><div class="adot"></div><div class="aname">+77个平台 AI Agent · 7×24运转</div><div class="akpi">持续扫描</div></div>
+
+        <!-- Note -->
+        <div style="font-size:9px;color:rgba(167,139,250,.55);border:1px dashed rgba(167,139,250,.25);border-radius:6px;padding:5px 8px;margin-top:2px;background:rgba(167,139,250,.04);">
+          🧠 GoComX PIM AI Agent 持续优化产品KPI<br>
+          让最优品/最优厂商被平台AI <b style="color:var(--purple)">主动发现并采购</b><br>
+          <span style="color:rgba(167,139,250,.4);">人工关系锁定的销售能力将被AI KPI筛选淘汰</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Impact callout bar -->
+  <div class="impact-bar">
+    <div class="impact-card">
+      <div class="impact-ico">🔄</div>
+      <div class="impact-text">
+        <b>护城河自动加深</b>
+        PIM内积累的产品KPI数据越多，AI Agent推荐越精准，GoComX平台价值螺旋递增
+      </div>
+    </div>
+    <div class="impact-card">
+      <div class="impact-ico">⚡</div>
+      <div class="impact-text">
+        <b>先发优势不可逾越</b>
+        已接通80+渠道+10万笔订单数据，是训练PIM AI Agent的独有语料，后来者无法复制
+      </div>
+    </div>
+    <div class="impact-card">
+      <div class="impact-ico">🚀</div>
+      <div class="impact-text">
+        <b>下一步战略</b>
+        在当下人工代理网络成熟后，无缝升级为AI Agent对接层——GoComX是唯一具备此基础的平台
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating "AI" particles for atmosphere -->
+  <canvas id="s5-canvas" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1;opacity:.35;"></canvas>
+</div>
+
+<!-- ═══ S6 GOCOMX INTERNALS ═══ -->
+
+
+<!-- ═══ SLOOP — 全闭环系统 ═══ -->
+<div class="slide" id="sloop">
+<style>
+#sloop{ background:radial-gradient(ellipse at 40% 40%,#030d18 0%,#0a0a0f 65%); padding:6px 28px 4px; justify-content:flex-start; }
+.sl2-outer{ width:min(1140px,99vw); margin:3px auto 0; display:flex; flex-direction:column; gap:16px; flex:1; }
+
+/* ROW 1: Portal | Mfr+Reps | 80+ECOM */
+.sl2-r1{ display:grid; grid-template-columns:170px 1fr 170px; gap:50px; align-items:stretch; }
+
+/* ROW 2: PIM (wider) | EDI Middleware */
+.sl2-r2{ display:grid; grid-template-columns:1fr 1fr; gap:12px; align-items:stretch; }
+
+/* ROW 3: D365FO | D365SCM */
+.sl2-r3{ display:grid; grid-template-columns:1fr 1fr; gap:12px; align-items:stretch; }
+
+/* box base */
+.sl2-box{ border-radius:11px; padding:9px 12px; font-size:10px; }
+.sl2-title{ font-family:'Bebas Neue',sans-serif; letter-spacing:.05em; line-height:1; }
+.sl2-sub{ font-size:9px; opacity:.5; margin-top:1px; margin-bottom:5px; }
+.sl2-item{ background:rgba(255,255,255,.04); border-radius:4px; padding:3px 6px; font-size:10px; color:rgba(255,255,255,.6); line-height:1.5; margin-bottom:3px; }
+.sl2-pct{ font-family:'Bebas Neue',sans-serif; font-size:clamp(24px,3vw,38px); line-height:1; }
+.sl2-dcard{ border-radius:5px; padding:4px 6px; text-align:center; border:1px solid; }
+.sl2-dcard-title{ font-family:'Space Mono',monospace; font-size:11px; font-weight:700; }
+.sl2-dcard-sub{ font-size:9px; color:rgba(255,255,255,.45); margin-top:1px; }
+
+</style>
+
+  <div class="slide-header" style="margin-bottom:4px;">
+    <div class="slide-tag blue">GoComX · 全闭环订单系统</div>
+    <div class="slide-title" style="font-size:clamp(11px,1.6vw,21px);">
+      <span class="b">50% E-COM Portal</span><span style="color:rgba(255,255,255,.35);"> 直接 API → </span><span class="g">D365FO</span>
+      <span style="color:rgba(255,255,255,.35);"> ← EDI ← </span><span style="color:#e07070;">50% 80+ 电商平台</span>
+      <span style="color:rgba(255,255,255,.25)"> · </span>全程自动化闭环
+    </div>
+  </div>
+
+  <div class="sl2-outer" id="sl2-outer" style="position:relative;">
+  <svg id="sloop-svg" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:500;overflow:visible;"></svg>
+  <!-- ══ ROW 1: E-COM Portal | Mfr + Sales Reps | 80+ E-COM ══ -->
+  <div class="sl2-r1" id="sl2-r1">
+
+    <!-- E-COM PORTAL -->
+    <div class="sl2-box" id="sl2-portal" style="background:linear-gradient(145deg,#040d18,#071525);border:2px solid rgba(56,189,248,.55);opacity:0;animation:scaleIn .5s .1s forwards;">
+      <div style="font-size:14px;margin-bottom:2px;">🏬</div>
+      <div class="sl2-title" style="font-size:15px;color:var(--blue);">E-COM PORTAL</div>
+      <div class="sl2-sub" style="color:rgba(56,189,248,.45);">GoComX 自营电商平台</div>
+      <div class="sl2-item">· 顾客直接在平台下单</div>
+      <div class="sl2-item">· <b style="color:var(--blue);">API Call</b> 直连 D365FO</div>
+      <div class="sl2-item">· 无需经过 EDI 中转</div>
+      <div class="sl2-item">· Real-time SO 自动创建</div>
+      <div style="margin-top:6px;background:rgba(56,189,248,.1);border-radius:4px;padding:3px 6px;text-align:center;">
+        <div class="sl2-pct" style="color:var(--blue);">50%</div>
+        <div style="font-size:6.5px;color:rgba(56,189,248,.45);">订单来源</div>
+      </div>
+    </div>
+
+    <!-- CENTER: Mfr + Sales Reps -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:50px;">
+      <div class="sl2-box" id="sl2-mfr" style="background:rgba(251,146,60,.05);border:2px solid rgba(251,146,60,.4);opacity:0;animation:scaleIn .5s .2s forwards;">
+        <div style="font-size:13px;margin-bottom:2px;">🏭</div>
+        <div class="sl2-title" style="font-size:14px;color:var(--orange);" id="sl2-mfr-title">Manufactory</div>
+        <div class="sl2-sub" style="color:rgba(251,146,60,.45);">中国制造商</div>
+        <div class="sl2-item">· 产品数据一次录入 PIM</div>
+        <div class="sl2-item">· AI 格式适配 80+ 渠道</div>
+        <div class="sl2-item">· 无需直面各平台</div>
+      </div>
+      <div class="sl2-box" style="background:rgba(167,139,250,.05);border:2px solid rgba(167,139,250,.4);opacity:0;animation:scaleIn .5s .25s forwards;">
+        <div style="font-size:13px;margin-bottom:2px;">👥</div>
+        <div class="sl2-title" style="font-size:14px;color:var(--purple);">Sales Reps</div>
+        <div class="sl2-sub" style="color:rgba(167,139,250,.45);">150+ 代理入驻</div>
+        <div class="sl2-item">· 登录 PIM 自主选品</div>
+        <div class="sl2-item">· AI 匹配推荐</div>
+        <div class="sl2-item">· 佣金自动结算</div>
+      </div>
+    </div>
+
+    <!-- 80+ E-COM -->
+    <div class="sl2-box" id="sl2-ecom" style="background:rgba(192,57,43,.05);border:2px solid rgba(192,57,43,.45);opacity:0;animation:scaleIn .5s .15s forwards;">
+      <div style="font-size:14px;margin-bottom:2px;">🛒</div>
+      <div class="sl2-title" style="font-size:15px;color:#e07070;">80+ E-COM</div>
+      <div class="sl2-sub" style="color:rgba(192,57,43,.45);">Retail Partners</div>
+      <div class="sl2-item">· 平台接收顾客订单</div>
+      <div class="sl2-item">· 发送 <b style="color:#e07070;">850 PO</b> → EDI Middleware</div>
+      <div class="sl2-item">· 接收 <b style="color:var(--green);">856 ASN</b> ← EDI</div>
+      <div class="sl2-item">· 接收 <b style="color:var(--orange);">810 INV</b> ← EDI</div>
+      <div style="margin-top:6px;background:rgba(192,57,43,.1);border-radius:4px;padding:3px 6px;text-align:center;">
+        <div class="sl2-pct" style="color:#e07070;">50%</div>
+        <div style="font-size:6.5px;color:rgba(192,57,43,.45);">订单来源</div>
+      </div>
+    </div>
+
+  </div><!-- /r1 -->
+
+  <!-- ══ ROW 2: PIM (left) | EDI Middleware (right) — side by side ══ -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:150px;opacity:0;animation:scaleIn .5s .3s forwards;">
+
+    <!-- PIM -->
+    <div class="sl2-box" id="sl2-pim" style="background:linear-gradient(145deg,#0d0d2e,#141438);border:2px solid rgba(167,139,250,.5);">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
+        <div style="flex-shrink:0;">
+          <div class="sl2-title" style="font-size:18px;color:var(--purple);">PIM</div>
+          <div class="sl2-sub" style="color:rgba(167,139,250,.45);margin-bottom:0;">产品管理平台</div>
+        </div>
+        <div style="flex-shrink:0;text-align:center;padding:4px 10px;background:rgba(167,139,250,.08);border:1px solid rgba(167,139,250,.2);border-radius:8px;">
+          <div style="font-size:9px;color:var(--purple);font-weight:700;">AI 匹配</div>
+          <div style="font-size:7px;color:rgba(167,139,250,.4);margin-top:1px;">产品 ↔ 代理</div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;">
+        <div class="sl2-item">· 制造商一次录入产品数据</div>
+        <div class="sl2-item">· Item/Price 同步 → D365FO</div>
+        <div class="sl2-item">· 80渠道格式自动适配</div>
+        <div class="sl2-item">· 佣金归因数据回流</div>
+      </div>
+    </div>
+
+    <!-- EDI Middleware -->
+    <div class="sl2-box" id="sl2-edi" style="background:linear-gradient(145deg,#1a1200,#241800);border:2px solid rgba(232,160,32,.65);animation:glowPulseGold 3s 1.5s ease-in-out infinite;">
+      <div style="margin-bottom:6px;">
+        <div class="sl2-title" style="font-size:18px;color:var(--gold);">EDI Middleware</div>
+        <div class="sl2-sub" style="color:rgba(232,160,32,.45);margin-bottom:0;">300+ Maps · 8年实战 · 80平台B2B文档桥梁</div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:5px;margin-bottom:5px;">
+        <div style="background:rgba(192,57,43,.12);border:1px solid rgba(192,57,43,.3);border-radius:4px;padding:5px;text-align:center;">
+          <div style="font-family:'Space Mono',monospace;font-size:11px;font-weight:700;color:#e07070;">850 ←</div>
+          <div style="font-size:6.5px;color:rgba(255,255,255,.35);">PO inbound</div>
+        </div>
+        <div style="background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.25);border-radius:4px;padding:5px;text-align:center;">
+          <div style="font-family:'Space Mono',monospace;font-size:11px;font-weight:700;color:var(--green);">856 →</div>
+          <div style="font-size:6.5px;color:rgba(255,255,255,.35);">ASN outbound</div>
+        </div>
+        <div style="background:rgba(251,146,60,.08);border:1px solid rgba(251,146,60,.25);border-radius:4px;padding:5px;text-align:center;">
+          <div style="font-family:'Space Mono',monospace;font-size:11px;font-weight:700;color:var(--orange);">810 →</div>
+          <div style="font-size:6.5px;color:rgba(255,255,255,.35);">INV outbound</div>
+        </div>
+        <div style="background:rgba(232,160,32,.08);border:1px solid rgba(232,160,32,.25);border-radius:4px;padding:5px;text-align:center;">
+          <div style="font-family:'Space Mono',monospace;font-size:11px;font-weight:700;color:var(--gold);">855 →</div>
+          <div style="font-size:6.5px;color:rgba(255,255,255,.35);">ACK outbound</div>
+        </div>
+        <div style="background:rgba(56,189,248,.08);border:1px solid rgba(56,189,248,.25);border-radius:4px;padding:5px;text-align:center;">
+          <div style="font-family:'Space Mono',monospace;font-size:11px;font-weight:700;color:var(--blue);">846 →</div>
+          <div style="font-size:6.5px;color:rgba(255,255,255,.35);">库存 outbound</div>
+        </div>
+      </div>
+      <div style="font-size:6.5px;color:rgba(232,160,32,.4);text-align:center;">自建 8年，后来者无从复制 · 300+ EDI Maps 已全部实装</div>
+    </div>
+
+  </div><!-- /row 2 -->
+
+  <!-- ══ ROW 3: D365 FO (left) | D365 SCM (right) — compact, half height ══ -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:150px;opacity:0;animation:scaleIn .5s .45s forwards;">
+
+    <!-- D365 FO — compact -->
+    <div class="sl2-box" id="sl2-erp" style="background:linear-gradient(145deg,#091f12,#0d2e19);border:2px solid rgba(74,222,128,.55);box-shadow:0 0 20px rgba(74,222,128,.08);">
+      <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:7px;">
+        <div class="sl2-title" style="font-size:17px;color:var(--green);">D365 FO</div>
+        <div style="font-size:7px;color:rgba(74,222,128,.4);">Finance &amp; Operations · Central Brain · ERP Core</div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-bottom:7px;">
+        <div class="sl2-dcard" style="border-color:rgba(192,57,43,.3);background:rgba(192,57,43,.08);">
+          <div class="sl2-dcard-title" style="color:#e07070;font-size:9px;">新建 SO</div>
+          <div class="sl2-dcard-sub">EDI传入自动创建</div>
+        </div>
+        <div class="sl2-dcard" style="border-color:rgba(56,189,248,.25);background:rgba(56,189,248,.06);">
+          <div class="sl2-dcard-title" style="color:var(--blue);">API 直连</div>
+          <div class="sl2-dcard-sub">Portal → FO</div>
+        </div>
+        <div class="sl2-dcard" style="border-color:rgba(232,160,32,.25);background:rgba(232,160,32,.06);">
+          <div class="sl2-dcard-title" style="color:var(--gold);font-size:9px;">防欺诈</div>
+          <div class="sl2-dcard-sub">SO On Hold</div>
+        </div>
+        <div class="sl2-dcard" style="border-color:rgba(232,160,32,.25);background:rgba(232,160,32,.06);">
+          <div class="sl2-dcard-title" style="color:var(--gold);font-size:9px;">Credit</div>
+          <div class="sl2-dcard-sub">信用管控</div>
+        </div>
+        <div class="sl2-dcard" style="border-color:rgba(74,222,128,.2);background:rgba(74,222,128,.04);">
+          <div class="sl2-dcard-title" style="color:var(--green);font-size:9px;">WMS</div>
+          <div class="sl2-dcard-sub">Release发货</div>
+        </div>
+        <div class="sl2-dcard" style="border-color:rgba(167,139,250,.2);background:rgba(167,139,250,.04);">
+          <div class="sl2-dcard-title" style="color:var(--purple);font-size:9px;">Rebate</div>
+          <div class="sl2-dcard-sub">佣金归因</div>
+        </div>
+      </div>
+      <div style="font-size:7px;color:rgba(74,222,128,.35);border-top:1px solid rgba(74,222,128,.1);padding-top:5px;line-height:1.7;">
+        850 PO 进入 → SO 创建 → Release to SCM &nbsp;·&nbsp; 发出 855 ACK / 810 INV / 846 库存 → EDI
+      </div>
+    </div>
+
+    <!-- D365 SCM — compact -->
+    <div class="sl2-box" id="sl2-scm" style="background:linear-gradient(145deg,#04100a,#071a0e);border:2px solid rgba(74,222,128,.4);">
+      <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:7px;">
+        <div class="sl2-title" style="font-size:17px;color:var(--green);">D365 SCM</div>
+        <div style="font-size:7px;color:rgba(74,222,128,.4);">Supply Chain Mgmt</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-bottom:7px;">
+        <div class="sl2-item">· 80平台专属 Packing Label</div>
+        <div class="sl2-item">· UCC-128 / GS1 条码标准</div>
+        <div class="sl2-item">· Release to WMS · 拣货分配</div>
+        <div class="sl2-item">· UPS / FedEx · LTL Freight</div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-bottom:6px;">
+        <div style="text-align:center;background:rgba(74,222,128,.05);border:1px solid rgba(74,222,128,.15);border-radius:5px;padding:5px 3px;">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--green);line-height:1;">80+</div>
+          <div style="font-size:6.5px;color:rgba(255,255,255,.35);">平台 Label</div>
+        </div>
+        <div style="text-align:center;background:rgba(56,189,248,.05);border:1px solid rgba(56,189,248,.15);border-radius:5px;padding:5px 3px;">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--blue);line-height:1;">GS1</div>
+          <div style="font-size:6.5px;color:rgba(255,255,255,.35);">UCC-128</div>
+        </div>
+        <div style="text-align:center;background:rgba(251,146,60,.05);border:1px solid rgba(251,146,60,.15);border-radius:5px;padding:5px 3px;">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--orange);line-height:1;">LTL</div>
+          <div style="font-size:6.5px;color:rgba(255,255,255,.35);">整托 Freight</div>
+        </div>
+      </div>
+      <div style="font-size:7px;color:rgba(74,222,128,.8);font-weight:700;border-top:1px solid rgba(74,222,128,.1);padding-top:5px;">
+        → 发货完成后触发 856 ASN → EDI → 平台 &nbsp;·&nbsp; UPS ✓ FedEx ✓ USPS ✓
+      </div>
+    </div>
+
+  </div><!-- /row 3 -->
+
+  </div><!-- /sl2-outer -->
+
+    <!-- flow legend -->
+  <div style="display:flex;gap:16px;justify-content:center;margin-top:4px;flex-wrap:wrap;opacity:0;animation:fadeIn .5s 1.1s forwards;">
+    <div style="font-size:8px;color:var(--blue);display:flex;align-items:center;gap:5px;"><div style="width:20px;height:2px;background:var(--blue);border-radius:1px;"></div>API 直连 Portal → D365FO</div>
+    <div style="font-size:8px;color:#e07070;display:flex;align-items:center;gap:5px;"><div style="width:20px;height:2px;background:#e07070;border-radius:1px;"></div>850 PO: 80 E-COM → EDI → D365FO</div>
+    <div style="font-size:8px;color:var(--green);display:flex;align-items:center;gap:5px;"><div style="width:20px;height:2px;background:var(--green);border-radius:1px;"></div>856 ASN: D365FO → EDI → 80 E-COM</div>
+    <div style="font-size:8px;color:var(--orange);display:flex;align-items:center;gap:5px;"><div style="width:20px;height:2px;background:var(--orange);border-radius:1px;"></div>810 INV: D365FO → EDI → 80 E-COM</div>
+  </div>
+</div>
+
+<!-- ═══ S7 COMPARE TABLE (was S6) ═══ -->
+<div class="slide" id="s7">
+  <h2>模式一 <em>vs</em> 模式二 · 全维对比</h2>
+  <table class="ctable" style="width:min(860px,92vw);margin:0 auto;">
+    <thead>
+      <tr><th></th><th>模式一 · 传统各自为战</th><th>模式二 · GoComX</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>渠道开通成本</td><td><span class="tb">10个渠道需$50万+</span></td><td><span class="tg">SaaS订阅制</span></td></tr>
+      <tr><td>上市周期</td><td><span class="tb">12–18个月</span></td><td><span class="tg">数天即可上线</span></td></tr>
+      <tr><td>渠道覆盖数</td><td><span class="tb">3–5个（主要靠亚马逊）</span></td><td><span class="tg">80+零售渠道</span></td></tr>
+      <tr><td>产品信息录入</td><td><span class="tb">每平台重复填写80次</span></td><td><span class="tg">PIM一次录入自动适配</span></td></tr>
+      <tr><td>AI匹配销售代理</td><td><span class="tb">❌ 无此能力</span></td><td><span class="tg">✅ AI自动匹配+代理登录选品</span></td></tr>
+      <tr><td>EDI对接</td><td><span class="tb">每家零售商单独定制</span></td><td><span class="tg">300+映射预建完成</span></td></tr>
+      <tr><td>佣金结算</td><td><span class="tb">手动核对，归因模糊</span></td><td><span class="tg">ERP自动归因，实时透明</span></td></tr>
+      <tr><td>PIM↔ERP数据流</td><td><span class="tb">❌ 数据孤岛</span></td><td><span class="tg">✅ 双向实时同步</span></td></tr>
+      <tr><td>基础设施成本</td><td><span class="tb">自建需$1100万+3年</span></td><td><span class="tg">已全部构建完毕</span></td></tr>
+    </tbody>
+  </table>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;width:min(860px,92vw);margin:18px auto 0;opacity:0;animation:fadeIn .6s .9s forwards;">
+    <div style="background:rgba(192,57,43,.08);border:1px solid rgba(192,57,43,.2);border-radius:10px;padding:14px;text-align:center;">
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:28px;color:#e07070;">$50万+</div>
+      <div style="font-size:9px;color:rgba(255,255,255,.4);margin-top:4px;">传统·每10渠道初始成本</div>
+    </div>
+    <div style="background:rgba(74,222,128,.06);border:1px solid rgba(74,222,128,.18);border-radius:10px;padding:14px;text-align:center;">
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--green);">数天</div>
+      <div style="font-size:9px;color:rgba(255,255,255,.4);margin-top:4px;">GoComX · 上线周期</div>
+    </div>
+    <div style="background:rgba(74,222,128,.06);border:1px solid rgba(74,222,128,.18);border-radius:10px;padding:14px;text-align:center;">
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--green);">80+</div>
+      <div style="font-size:9px;color:rgba(255,255,255,.4);margin-top:4px;">GoComX · 北美零售渠道</div>
+    </div>
+    <div style="background:rgba(232,160,32,.07);border:1px solid rgba(232,160,32,.2);border-radius:10px;padding:14px;text-align:center;">
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--gold);">$1100万</div>
+      <div style="font-size:9px;color:rgba(255,255,255,.4);margin-top:4px;">GoComX · 已沉淀基础设施</div>
+    </div>
+  </div>
+</div>
+
+
+<button class="nav-arrow" id="nav-prev" aria-label="Previous">&#8249;</button>
+<button class="nav-arrow" id="nav-next" aria-label="Next">&#8250;</button>
+<div id="dots"></div>
+
+<script>
+const TOTAL=10;
+const slides=document.querySelectorAll('.slide');
+const dotsEl=document.getElementById('dots');
+const bar=document.getElementById('progress-bar');
+const counter=document.getElementById('slide-counter');
+let cur=0;
+
+for(let i=0;i<TOTAL;i++){
+  const d=document.createElement('div');
+  d.className='dot'+(i===0?' active':'');
+  d.dataset.i=i;d.onclick=()=>goTo(i);
+  dotsEl.appendChild(d);
+}
+
+let archTimer=null, matchTimer=null;
+
+function goTo(n){
+  if(archTimer){clearInterval(archTimer);archTimer=null;}
+  slides[cur].classList.remove('active');
+  dotsEl.children[cur].classList.remove('active');
+  cur=(n+TOTAL)%TOTAL;
+  slides[cur].classList.add('active');
+  dotsEl.children[cur].classList.add('active');
+  bar.style.width=((cur+1)/TOTAL*100)+'%';
+  counter.textContent=(cur+1)+' / '+TOTAL;
+
+  slides[cur].querySelectorAll('*').forEach(el=>{
+    const st=el.style.animation;
+    if(st){el.style.animation='none';void el.offsetWidth;el.style.animation=st;}
+  });
+
+  if(cur===1) setTimeout(drawChaos,500);
+  if(cur===2) animateTrendCards();
+  if(cur===3) setTimeout(drawArchLines,400);
+  if(cur===4) setTimeout(drawInternals,500);
+  if(cur===6) setTimeout(drawMatchLines,1600);
+  if(cur===7) setTimeout(startS5Particles,600);
+  if(cur===8) setTimeout(drawSloopFlows,800);
+  // never hide nav-prev - always allow going back
+  document.body.classList.remove('hide-nav');
+}
+
+counter.textContent='1 / '+TOTAL;
+bar.style.width=(1/TOTAL*100)+'%';
+document.getElementById('nav-next').onclick=()=>goTo(cur+1);
+document.getElementById('nav-prev').onclick=()=>goTo(cur-1);
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key==='ArrowDown') goTo(cur+1);
+  if(e.key==='ArrowLeft'||e.key==='ArrowUp') goTo(cur-1);
+});
+
+/* ────────────────────────────────────────
+   CHAOS LINES
+──────────────────────────────────────── */
+
+function animateTrendCards(){
+  const cards = document.querySelectorAll('#trend-grid .trend-card');
+  cards.forEach((c,i)=>{
+    c.style.opacity='0';
+    c.style.transform='translateY(12px)';
+    setTimeout(()=>{
+      c.style.transition='opacity .35s ease, transform .35s ease';
+      c.style.opacity='1';
+      c.style.transform='translateY(0)';
+    }, 80 + i*60);
+  });
+}
+
+function drawChaos(){
+  const svg=document.getElementById('chaos-svg');
+  svg.innerHTML='';
+  const wrap=svg.closest('.chaos-wrap');
+  const wRect=wrap.getBoundingClientRect();
+  const W=wRect.width||680, H=wRect.height||460;
+  svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
+
+  // Read actual node positions from the DOM (relative to wrap)
+  const nodeEls=wrap.querySelectorAll('.n');
+  const nodeArr=Array.from(nodeEls);
+  // First 5 are manufacturers (left), last 7 are retailers (right)
+  function midY(el){ const r=el.getBoundingClientRect(); return r.top-wRect.top+r.height/2; }
+  function rightX(el){ const r=el.getBoundingClientRect(); return r.right-wRect.left+8; }
+  function leftX(el){ const r=el.getBoundingClientRect(); return r.left-wRect.left-8; }
+  const mfrs=nodeArr.slice(0,5).map(el=>({x:rightX(el), y:midY(el)}));
+  const rets=nodeArr.slice(5).map(el=>({x:leftX(el), y:midY(el)}));
+
+  const P=[[0,0],[0,1],[0,2],[0,4],[1,0],[1,2],[1,3],[1,6],[2,1],[2,3],[2,4],[2,5],[3,0],[3,2],[3,5],[3,6],[4,1],[4,3],[4,4],[4,6]];
+  P.forEach(([mi,ri],idx)=>{
+    if(!mfrs[mi]||!rets[ri]) return;
+    const l=document.createElementNS('http://www.w3.org/2000/svg','line');
+    l.setAttribute('x1',mfrs[mi].x); l.setAttribute('y1',mfrs[mi].y);
+    l.setAttribute('x2',rets[ri].x);  l.setAttribute('y2',rets[ri].y);
+    l.setAttribute('stroke','rgba(180,40,40,0.7)');l.setAttribute('stroke-width','2');
+    l.setAttribute('stroke-dasharray','900');l.setAttribute('stroke-dashoffset','900');
+    l.style.animation=`drawLine .5s ${.1+idx*.04}s forwards`;
+    svg.appendChild(l);
+  });
+}
+
+/* ────────────────────────────────────────
+   ARCH LINES (Slide 3) + ANIMATED PACKETS
+──────────────────────────────────────── */
+function drawArchLines(){
+  const svg = document.getElementById('arch-svg');
+  svg.innerHTML = '';
+  const pc = document.getElementById('packet-container');
+  pc.innerHTML = '';
+
+  const wrap = document.getElementById('arch-wrap');
+  const W = wrap.offsetWidth  || 1200;
+  const H = wrap.offsetHeight || 710;
+
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+
+  // ── Live DOM measurements — always correct regardless of CSS layout ──
+  const ob = wrap.getBoundingClientRect();
+  function B(sel){
+    const el = wrap.querySelector(sel);
+    if(!el) return null;
+    const r = el.getBoundingClientRect();
+    return { l: r.left-ob.left, r: r.right-ob.left,
+             t: r.top-ob.top,   b: r.bottom-ob.top,
+             mx:(r.left+r.right)/2-ob.left, my:(r.top+r.bottom)/2-ob.top,
+             w: r.width, h: r.height };
+  }
+  const MFR  = B('.arch-mfr-col');
+  const PIM  = B('.arch-pim');
+  const ERP  = B('.arch-erp');
+  const EDI  = B('.arch-edi-box');
+  const PLAT = B('.arch-plat-col');
+
+  const mfrR = MFR.r;
+  const pimL = PIM.l, pimR = PIM.r;
+  const erpL = ERP.l, erpR = ERP.r;
+  const ediL = EDI.l, ediR = EDI.r;
+  const platL= PLAT.l;
+
+  const pH = v => v * (H/710);  // scale height value
+
+  const NS = 'http://www.w3.org/2000/svg';
+  function mk(tag, a){
+    const n=document.createElementNS(NS,tag);
+    for(const[k,v] of Object.entries(a)) n.setAttribute(k,String(v));
+    svg.appendChild(n); return n;
+  }
+
+  /* animated draw-in */
+  function track(d, col, w, delaySec){
+    const len=1200;
+    const n=mk('path',{d,fill:'none',stroke:col,'stroke-width':w,
+      'stroke-dasharray':len,'stroke-dashoffset':len});
+    n.style.animation=`drawSol .5s ${delaySec}s forwards`;
+    return n;
+  }
+  /* perpetual flowing dashes */
+  function flow(d, col, w, da, spd, rev, afterMs){
+    const n=mk('path',{d,fill:'none',stroke:col,'stroke-width':w,
+      'stroke-dasharray':da,'stroke-dashoffset':'0'});
+    n.style.animation=`dashFlow ${spd}s linear infinite ${rev?'reverse':''}`;
+    n.style.opacity='0';
+    setTimeout(()=>n.style.opacity='1', afterMs);
+    return n;
+  }
+  /* arrowhead */
+  function arrowAt(x,y, nx,ny, col, afterMs){
+    // nx,ny = unit direction arrow is POINTING
+    const s=9, h=4.5;
+    const pts=`${x},${y} ${x-nx*s-ny*h},${y-ny*s+nx*h} ${x-nx*s+ny*h},${y-ny*s-nx*h}`;
+    const n=mk('polygon',{points:pts,fill:col});
+    n.style.opacity='0'; n.style.transition='opacity .3s';
+    setTimeout(()=>n.style.opacity='1', afterMs);
+  }
+  /* pill label — always visible after delay */
+  function pill(txt, cx, cy, col, fs, afterMs){
+    const cw=fs*0.64, pw=txt.length*cw+10, ph=fs+8;
+    mk('rect',{x:cx-pw/2,y:cy-ph/2,width:pw,height:ph,rx:3,
+      fill:'rgba(5,5,12,.92)',stroke:col.replace(/,[\d.]+\)$/,',.4)'),'stroke-width':'0.8'});
+    const t=mk('text',{x:cx,y:cy+fs*.38,fill:col,'font-size':fs,
+      'font-family':"'Space Mono',monospace",'font-weight':'700','text-anchor':'middle'});
+    t.textContent=txt;
+    // fade in background + text — grab last 2 children
+    const kids=[...svg.children];
+    const bg=kids[kids.length-2], tx=kids[kids.length-1];
+    bg.style.opacity=tx.style.opacity='0';
+    bg.style.transition=tx.style.transition='opacity .4s';
+    setTimeout(()=>{ bg.style.opacity=tx.style.opacity='1'; }, afterMs);
+  }
+
+  /* ── mfr Y positions & PIM centre ── */
+  const mfrYs=[44,98,152,206,260].map(v=>pH(v));
+  const pimCY = pH(240);
+
+  /* ─────────────────────────────────────────
+     A. Manufacturers → PIM  (red)
+  ───────────────────────────────────────── */
+  mfrYs.forEach((y,i)=>{
+    const mx=(mfrR+pimL)/2;
+    track(`M${mfrR} ${y} C${mx} ${y} ${mx} ${pimCY} ${pimL} ${pimCY}`,
+      'rgba(192,57,43,.55)',2,.2+i*.09);
+  });
+
+  /* ─────────────────────────────────────────
+     B. PIM ↔ ERP  (purple fwd, gold back)
+  ───────────────────────────────────────── */
+  const fY1=pH(170), fY2=pH(120);
+  const fD=`M${pimR} ${fY1} C${(pimR+erpL)/2} ${fY1} ${(pimR+erpL)/2} ${fY2} ${erpL} ${fY2}`;
+  track(fD,'rgba(167,139,250,.6)',2,.8);
+  flow(fD,'rgba(167,139,250,.85)',1.8,'9 12',2.0,false,1300);
+
+  const bY1=pH(140), bY2=pH(310);
+  const bD=`M${erpL} ${bY1} C${(pimR+erpL)/2} ${bY1} ${(pimR+erpL)/2} ${bY2} ${pimR} ${bY2}`;
+  track(bD,'rgba(232,160,32,.5)',1.8,1.0);
+  flow(bD,'rgba(232,160,32,.8)',1.8,'7 10',2.0,true,1500);
+
+  /* ─────────────────────────────────────────
+     C. ERP ↔ EDI  — 5 labeled diagonal lines
+        spread evenly across the 80px gap
+        Y positions evenly spaced in box height
+
+     850 PO  : EDI→ERP  inbound  (red)
+     855 ACK : ERP→EDI  outbound (gold)
+     856 ASN : ERP→EDI  outbound (green) — from SCM
+     810 INV : ERP→EDI  outbound (orange)
+     846 INV : ERP→EDI  outbound (blue)
+  ───────────────────────────────────────── */
+  /* erpR=490, ediL=570 gap = 80px
+     Y positions in 480px design height:
+     850 PO  flows FROM ediL TO erpR  (E-COM→EDI→FO): top area  rY=.14
+     855 ACK flows FROM erpR TO ediL  (FO→EDI→ECOM):  rY=.30
+     856 ASN flows FROM erpR TO ediL  (SCM→EDI→ECOM): BOTTOM rY=.78 (SCM is at bottom)
+     810 INV flows FROM erpR TO ediL  (FO→EDI→ECOM):  rY=.55
+     846 INV flows FROM erpR TO ediL  (FO→EDI→ECOM):  rY=.66
+  */
+  const gapFlows = [
+    {lbl:'850 PO',  col:'rgba(192,57,43,.92)',  rY:.14, lY:.14, toEdi:false, spd:2.5},
+    {lbl:'855 ACK', col:'rgba(232,160,32,.92)', rY:.30, lY:.30, toEdi:true,  spd:2.2},
+    {lbl:'810 INV', col:'rgba(251,146,60,.92)', rY:.46, lY:.46, toEdi:true,  spd:2.3},
+    {lbl:'846 INV', col:'rgba(56,189,248,.92)', rY:.60, lY:.60, toEdi:true,  spd:2.4},
+    {lbl:'856 ASN', col:'rgba(74,222,128,.92)', rY:.82, lY:.82, toEdi:true,  spd:2.6},
+  ];
+  gapFlows.forEach((f,i)=>{
+    const x1=erpR, y1=pH(f.rY*480);
+    const x2=ediL, y2=pH(f.lY*480);
+    const d=`M${x1} ${y1} L${x2} ${y2}`;
+    const delay=1200+i*180;
+
+    // dim track
+    track(d, f.col.replace(/,[\d.]+\)$/,',.15)'), 1.2, (delay-300)/1000);
+    // animated flow — 850 PO reverses (flows ediL→erpR = left)
+    flow(d, f.col, 2.8, '10 6', f.spd, !f.toEdi, delay);
+    // arrowhead: 850 PO points toward erpR (left-pointing at erpR end)
+    //            others point toward ediL (right-pointing at ediL end)
+    if(f.toEdi){ arrowAt(x2,y2, 1,0, f.col, delay+200); }
+    else        { arrowAt(x1,y1,-1,0, f.col, delay+200); }
+    pill(f.lbl, (x1+x2)/2, (y1+y2)/2, f.col, 9.5, delay+300);
+  });
+
+  /* ─────────────────────────────────────────
+     D. EDI → 80 Platforms  — 7 fan-out labeled lines
+        Exit from EDI right edge at staggered Y
+        Fan to 7 platform Y positions
+        Each line labeled with its EDI doc type
+        SLOW flow, persistent labels
+  ───────────────────────────────────────── */
+  const platYs=[30,72,112,154,196,238,298].map(v=>pH(v));
+
+  // 7 doc type lines (5 types, first 2 repeated for 7 platforms)
+  const platDocs=[
+    {lbl:'850 PO',  col:'rgba(192,57,43,.88)',  da:'12 7', spd:3.5, rev:true },
+    {lbl:'855 ACK', col:'rgba(232,160,32,.88)', da:'11 7', spd:3.0, rev:false},
+    {lbl:'810 INV', col:'rgba(251,146,60,.88)', da:'10 7', spd:2.8, rev:false},
+    {lbl:'846 INV', col:'rgba(56,189,248,.88)', da:'10 6', spd:3.1, rev:false},
+    {lbl:'855 ACK', col:'rgba(232,160,32,.65)', da:'11 7', spd:3.0, rev:false},
+    {lbl:'850 PO',  col:'rgba(192,57,43,.65)',  da:'12 7', spd:3.5, rev:true },
+    {lbl:'856 ASN', col:'rgba(74,222,128,.88)', da:'11 7', spd:3.2, rev:false},
+  ];
+
+  // Source Y on EDI right — proportional fractions of H (710px baseline)
+  const ediSrcYs=[.16,.26,.45,.55,.65,.75,.85].map(v=>pH(v*710));
+
+  platYs.forEach((platY,pi)=>{
+    const doc=platDocs[pi];
+    const ey=ediSrcYs[pi];
+    const mx=(ediR+platL)/2;
+    // 850 PO: flow goes FROM platform TO edi (rev:true), so draw M platL→ediR
+    // others: flow goes FROM edi TO platform (rev:false), draw M ediR→platL
+    const d850 = doc.rev; // true = 850 PO (inbound from platform)
+    const d = d850
+      ? `M${platL} ${platY} C${mx} ${platY} ${mx} ${ey} ${ediR} ${ey}`
+      : `M${ediR} ${ey} C${mx} ${ey} ${mx} ${platY} ${platL} ${platY}`;
+    const delay=1600+pi*120;
+
+    track(d, doc.col.replace(/,[\d.]+\)$/,',.18)'), 1.5, (delay-400)/1000);
+    flow(d, doc.col, 2.6, doc.da, doc.spd, false, delay); // always forward now
+    // arrowhead: 850 PO arrives at ediR, others arrive at platL
+    if(d850){ arrowAt(ediR, ey, -1, 0, doc.col, delay+250); }
+    else     { arrowAt(platL, platY, 1, 0, doc.col, delay+250); }
+    const lx=mx, ly=(ey+platY)/2;
+    pill(doc.lbl, lx, ly, doc.col, 10, delay+400);
+  });
+
+  /* ─────────────────────────────────────────
+     E. Floating packets PIM ↔ ERP
+  ───────────────────────────────────────── */
+  const pkts=[
+    {t:'商品数据',c:'rgba(167,139,250,.9)',sx:pimR,sy:fY1,ex:erpL,ey:fY2,ms:1600,dur:2200},
+    {t:'定价配置',c:'rgba(167,139,250,.9)',sx:pimR,sy:fY1,ex:erpL,ey:fY2,ms:4400,dur:2200},
+    {t:'佣金回流',c:'rgba(232,160,32,.95)',sx:erpL,sy:bY1,ex:pimR,ey:bY2,ms:2400,dur:2200},
+    {t:'销售数据',c:'rgba(232,160,32,.95)',sx:erpL,sy:bY1,ex:pimR,ey:bY2,ms:5600,dur:2200},
+  ];
+  function spawnPkt(p){
+    const el=document.createElement('div');
+    el.className='data-packet'; el.textContent=p.t;
+    el.style.cssText=`color:${p.c};border-color:${p.c.replace(/,[\d.]+\)$/,',.4)')};`
+      +`background:${p.c.replace(/,[\d.]+\)$/,',.08)')};left:${p.sx}px;top:${p.sy-10}px;`;
+    el.style.setProperty('--tx',(p.ex-p.sx)+'px');
+    el.style.setProperty('--ty',(p.ey-p.sy)+'px');
+    el.style.animation=`packetMove ${p.dur}ms ease-in-out forwards`;
+    pc.appendChild(el);
+    setTimeout(()=>el.remove(), p.dur+200);
+  }
+  pkts.forEach(p=>{
+    (function loop(){ setTimeout(()=>{ if(cur===3){spawnPkt(p);setTimeout(loop,4800);} },p.ms); })();
+  });
+}
+
+/* ────────────────────────────────────────
+   MATCH LINES (Slide 4)
+──────────────────────────────────────── */
+function drawMatchLines(){
+  const canvas=document.getElementById('match-canvas');
+  const hero=document.getElementById('pim-hero');
+  if(!canvas||!hero) return;
+  const W=hero.offsetWidth, H=hero.offsetHeight;
+  canvas.width=W; canvas.height=H;
+  const ctx=canvas.getContext('2d');
+  ctx.clearRect(0,0,W,H);
+
+  const colW=W/3;
+  const cardH=(H-20)/5;
+  const mfrYs=Array.from({length:5},(_,i)=>10+i*cardH+cardH/2);
+  const repCardH=(H-20)/6;
+  const repYs=Array.from({length:6},(_,i)=>10+i*repCardH+repCardH/2);
+
+  const pairs=[
+    [0,0,'rgba(232,160,32,.65)'],
+    [1,1,'rgba(56,189,248,.65)'],
+    [2,2,'rgba(167,139,250,.65)'],
+    [3,3,'rgba(74,222,128,.65)'],
+    [4,4,'rgba(248,113,113,.65)'],
+    [0,5,'rgba(232,160,32,.3)'],
+    [2,5,'rgba(167,139,250,.3)'],
+    [1,3,'rgba(56,189,248,.25)'],
+  ];
+
+  const x1=colW-8, x2=colW*2+8;
+  let drawn=0;
+  function next(){
+    if(drawn>=pairs.length) return;
+    const [mi,ri,color]=pairs[drawn];
+    ctx.beginPath();
+    ctx.moveTo(x1,mfrYs[mi]);
+    ctx.bezierCurveTo(W/2,mfrYs[mi],W/2,repYs[ri],x2,repYs[ri]);
+    ctx.strokeStyle=color;ctx.lineWidth=drawn<5?2:1.2;
+    ctx.stroke();
+    [x1,x2].forEach((xp,ii)=>{
+      ctx.beginPath();ctx.arc(xp,ii===0?mfrYs[mi]:repYs[ri],3.5,0,Math.PI*2);
+      ctx.fillStyle=color;ctx.fill();
+    });
+    drawn++;setTimeout(next,130);
+  }
+  next();
+}
+
+
+/* ── S5 PARTICLE BACKGROUND ── */
+let s5AnimFrame=null;
+function startS5Particles(){
+  const canvas=document.getElementById('s5-canvas');
+  if(!canvas) return;
+  if(s5AnimFrame){cancelAnimationFrame(s5AnimFrame);s5AnimFrame=null;}
+  const W=canvas.offsetWidth||window.innerWidth;
+  const H=canvas.offsetHeight||window.innerHeight;
+  canvas.width=W; canvas.height=H;
+  const ctx=canvas.getContext('2d');
+  const mk=(n,x0,x1,col)=>Array.from({length:n},()=>({
+    x:x0+Math.random()*(x1-x0),y:Math.random()*H,
+    vx:(Math.random()-.5)*.28,vy:(Math.random()-.5)*.28,
+    r:1+Math.random()*1.8,col,ph:Math.random()*Math.PI*2
+  }));
+  const pts=[...mk(20,0,W*.46,'56,189,248'),...mk(26,W*.54,W,'167,139,250')];
+  let t=0;
+  function loop(){
+    if(cur!==6){s5AnimFrame=null;return;}
+    ctx.clearRect(0,0,W,H);t+=.012;
+    pts.forEach(p=>{
+      p.x+=p.vx;p.y+=p.vy;
+      if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;
+      const a=.25+.18*Math.sin(t+p.ph);
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(${p.col},${a})`;ctx.fill();
+    });
+    for(let i=0;i<pts.length;i++)for(let j=i+1;j<pts.length;j++){
+      const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,d=Math.sqrt(dx*dx+dy*dy);
+      if(d<85&&pts[i].col===pts[j].col){
+        ctx.beginPath();ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);
+        ctx.strokeStyle=`rgba(${pts[i].col},${.15*(1-d/85)})`;ctx.lineWidth=.5;ctx.stroke();
+      }
+    }
+    if(Math.sin(t*1.3)>.9){
+      const L=pts.filter(p=>p.col.startsWith('56')),R=pts.filter(p=>p.col.startsWith('16'));
+      if(L.length&&R.length){
+        const lp=L[Math.floor(t*3)%L.length],rp=R[Math.floor(t*2)%R.length];
+        ctx.beginPath();ctx.moveTo(lp.x,lp.y);ctx.lineTo(rp.x,rp.y);
+        ctx.strokeStyle=`rgba(232,160,32,${.1+.07*Math.sin(t*4)})`;
+        ctx.lineWidth=.8;ctx.setLineDash([3,9]);ctx.stroke();ctx.setLineDash([]);
+      }
+    }
+    s5AnimFrame=requestAnimationFrame(loop);
+  }
+  loop();
+}
+
+/* ── S6 INTERNALS SVG LINES ── */
+let autoTimer=null;
+let autoplayOn=false;
+
+function setAutoplay(on){
+  autoplayOn=on;
+  clearInterval(autoTimer);
+  autoTimer=null;
+  const btn=document.getElementById('autoplay-btn');
+  if(!btn) return;
+  if(on){
+    btn.textContent='⏸ 自动翻页';
+    btn.classList.add('active');
+    autoTimer=setInterval(()=>goTo(cur+1),8000);
+  } else {
+    btn.textContent='▶ 自动翻页';
+    btn.classList.remove('active');
+  }
+}
+
+// Remove the old click-reset listener — manual mode by default
+// document.addEventListener('click',...)  ← removed
+setTimeout(()=>{if(cur===1)drawChaos();},600);
+
+/* ══════════════════════════════════════════════
+   中文解说系统 CHINESE NARRATION SYSTEM
+══════════════════════════════════════════════ */
+
+// 每页解说词 (10 slides: s0,s1,s4b,s3,sring,s3b,s4,s5,sloop,s7)
+const NARRATION = [
+  // 0 — 标题页 (s0)
+  `欢迎了解 GoComX，中美跨境智能分销操作系统。GoComX是中国制造商通往北美80个以上电商渠道的数字化高速公路。我们通过E·D·I中台、微软D365 ERP、供应链系统与AI智能选品引擎，将整条跨境分销链路——从产品录入、订单接收、仓储发货到佣金结算——全程数字化、自动化、可追溯。系统已上线8年，累计处理超10万笔真实订单。`,
+
+  // 1 — 混乱与痛点 (s1)
+  `这张图揭示了传统跨境分销的两大核心痛点。第一，每家中国制造商必须独自面对80个分散的北美零售渠道——每条连线代表一次独立对接，建设周期长达18个月，前期成本超过50万美元，300个以上EDI映射规则需各自定制，产品信息重复录入80次。第二，150多家北美销售代理有专长却无从找到匹配产品——代理有渠道、制造商有货，但双方之间没有数字化桥梁。这正是GoComX要打破的根本矛盾。`,
+
+  // 2 — 目标品类与市场定位 (s4b)
+  `在了解GoComX解决方案之前，我们先明确目标市场。GoComX专注服务有好产品、已有美国库存或有意进入北美市场、但缺乏销售渠道的中小制造商。注意，服装类目不在我们的目标范围——Walmart、Target等大型零售商已经直接赴华批量采购服装，传统渠道壁垒极高，中小品牌几乎没有机会直接入驻。我们聚焦的是右页这9大高需求品类：手机电子配件、智能家居、宠物用品、健身器材、厨房小工具、美妆设备、玩具游戏、办公用品等。这些品类在BestBuy、HomeDepot、Amazon、Costco等渠道需求强劲，且尚未被大品牌垄断，正是中小制造商的出海黄金窗口。`,
+
+  // 3 — GoComX完整架构 (s3)
+  `这是GoComX的完整数字化架构。制造商只需一次接入，产品数据进入左侧产品管理平台PIM。PIM与中间的GoComX ERP引擎实现双向数字流——产品数据和定价向右流入D365系统，佣金归因数据向左回流PIM。右侧的E·D·I中台承担与80个以上电商平台的全部自动化订单文档处理：850采购订单从平台流入，856发货通知、810发票和855确认回执从系统流出。整条链路一次对接，全网适配，真正实现分销数字化重构。`,
+
+  // 4 — 四层环形架构 (sring)
+  `这是GoComX的四层数字分层架构图。最外层红色是80个以上电商平台和150家以上销售代理，是流量与订单的来源。第二层橙色是制造商，模式一直面80个渠道混乱对接；模式二经由GoComX中台，一次接入有序分发。第三层金色是E·D·I加产品管理平台，300个以上映射规则与AI智能匹配，处理所有B2B文档和产品适配。最内层蓝色是D365运营骨架，是整个平台的中枢神经。动态光点代表850采购订单向内流入，856发货通知、810发票等向外流出的实时数字流。`,
+
+  // 5 — D365技术架构详情 (s3b)
+  `这一页深入展示GoComX的微软D365全栈技术架构。D365财务运营系统针对电商场景深度定制：销售订单暂挂防欺诈机制确保每笔订单合规；80个平台参数库涵盖所有零售商的配送中心代码和返利规则；自动从E·D·I接收850采购订单并创建销售订单。E·D·I Middleware是GoComX最深的技术护城河：内置300个以上映射规则，支持850、856、810、855、846五种核心事务集，历经8年实战验证，80个平台零错漏。D365供应链系统SCM预置所有80个平台的打包标签模板，包括UCC-128与GS1条码格式，并负责发出856发货通知。小包与LTL物流通过UPS与FedEx官方接口直连。`,
+
+  // 6 — PIM AI匹配 (s4)
+  `这是GoComX数字化核心：产品信息管理平台加AI智能匹配引擎。左侧五家来自手机电子、户外器材、厨房等品类的制造商，只需一次将产品上传至PIM，系统自动适配80个以上渠道的格式要求，彻底告别重复录入。中间AI引擎自动分析产品属性与代理专长，将最合适的产品精准匹配给右侧销售代理，匹配分数最高达98%。选品完成后，PIM自动将SKU推送至80个以上电商平台，全程无需人工干预。`,
+
+  // 7 — 未来AI Agent演进 (s5)
+  `我们展望GoComX的AI化演进路径。当前阶段，人工销售代理登录PIM选品，GoComX通过全数字化后台对接80个渠道。未来，北美80个主流电商平台将部署AI采购Agent，7乘24小时自动扫描产品目录，根据转化率、评分与GMV增速等KPI自动下单采购。届时，GoComX的AI引擎将主动优化产品数字KPI，确保我们的产品被平台AI优先发现。传统人际关系销售将被AI驱动的数字KPI筛选逐步取代。GoComX是唯一同时具备AI引擎与全数字化基础设施的平台，先发优势不可逾越。`,
+
+  // 8 — 全闭环订单系统 (sloop)
+  `这一页展示GoComX全闭环订单系统。订单来源分两个50%：第一个50%来自GoComX自营E·COM Portal——顾客直接下单，通过API实时调用D365，无需经过E·D·I中转，这是高速纯API直连通道。第二个50%来自80个以上北美零售平台——零售商通过E·D·I Middleware发送850采购订单进入D365。两条订单流统一进入D365财务运营系统：防欺诈审核、WMS发货指令、856发货通知回传平台、810发票自动生成，D365供应链系统负责打包标签与UPS·FedEx物流。PIM向D365下发产品与定价，制造商对接一次，代理选品后佣金自动归因结算。两条入口，一个核心，全程自动化闭环。`,
+
+  // 9 — 对比表 (s7)
+  `让我们用数据做最终对比。渠道开通成本：传统模式超过50万美元，GoComX只需SaaS订阅费。上市周期：传统12到18个月，GoComX预建系统数天上线。渠道覆盖：传统3到5个，GoComX覆盖80个以上。产品录入：传统重复填写80次，GoComX一次录入自动适配所有渠道。AI代理匹配：传统完全没有，GoComX内置AI引擎。佣金结算：传统手动核对，GoComX ERP自动归因实时透明。基础设施：自建需1100万美元加8年，GoComX已全部完成，即插即用，制造商零建设成本入驻。`,
+
+  // 10 — CTA (s8)
+  `GoComX的目标是18个月内实现5000万美元GMV，启动A轮融资。系统已正式上线，月均处理2到3万笔订单，150多家销售代理就位，平台获得微软ISV认证，基础设施沉淀成本超1100万美元。我们寻求200万到500万美元种子轮融资，用于AI能力深化、品类扩张与首批标杆客户签约。GoComX不是概念，而是一套已经稳定运转的分销操作系统。我们的启动线，是别人的终点线。`
+];
+
+// ── UI 构建 ──
+const narratorBar = document.createElement('div');
+narratorBar.id = 'narrator-bar';
+narratorBar.innerHTML = `
+<style>
+#narrator-bar {
+  position: fixed;
+  bottom: 44px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(780px, 92vw);
+  z-index: 300;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  pointer-events: none;
+}
+#narrator-bubble {
+  background: rgba(10,10,18,.92);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 14px 14px 14px 4px;
+  padding: 10px 16px 10px 14px;
+  font-size: 12px;
+  line-height: 1.75;
+  color: rgba(240,236,232,.88);
+  width: 100%;
+  min-height: 42px;
+  max-height: 90px;
+  overflow: hidden;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 4px 24px rgba(0,0,0,.5);
+  display: none;
+  pointer-events: none;
+  position: relative;
+}
+#narrator-bubble .nar-highlight {
+  color: #a78bfa; font-weight: 700;
+}
+#narrator-progress-line {
+  position: absolute;
+  bottom: 0; left: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--purple), var(--blue));
+  width: 0%;
+  transition: width .2s linear;
+  border-radius: 0 0 0 14px;
+}
+#narrator-controls {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: 6px;
+  pointer-events: all;
+}
+.nar-btn {
+  background: rgba(10,10,18,.85);
+  border: 1px solid rgba(255,255,255,.12);
+  color: rgba(240,236,232,.75);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-size: 11px;
+  cursor: pointer;
+  font-family: 'Noto Sans SC', sans-serif;
+  backdrop-filter: blur(8px);
+  transition: background .2s, border-color .2s, color .2s;
+  display: flex; align-items: center; gap: 5px;
+  white-space: nowrap;
+}
+.nar-btn:hover { background: rgba(167,139,250,.2); border-color: rgba(167,139,250,.5); color: #fff; }
+.nar-btn.active { background: rgba(167,139,250,.25); border-color: var(--purple); color: var(--purple); }
+#nar-voice-select {
+  background: rgba(10,10,18,.85);
+  border: 1px solid rgba(255,255,255,.12);
+  color: rgba(240,236,232,.7);
+  border-radius: 20px;
+  padding: 5px 10px;
+  font-size: 10px;
+  cursor: pointer;
+  font-family: 'Noto Sans SC', sans-serif;
+  backdrop-filter: blur(8px);
+  outline: none;
+  max-width: 160px;
+}
+#nar-voice-select option { background: #0a0a0f; color: #f0ece8; }
+.nar-speaking-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--purple); flex-shrink:0;
+  animation: narBlink 0.6s ease-in-out infinite;
+  display: none;
+}
+@keyframes narBlink { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.3;transform:scale(.7)} }
+#nar-speed-label { font-size:10px; color:var(--muted); }
+</style>
+<div id="narrator-bubble">
+  <span id="nar-text"></span>
+  <div id="narrator-progress-line"></div>
+</div>
+<div id="narrator-controls">
+  <div class="nar-speaking-dot" id="nar-dot"></div>
+  <button class="nar-btn" id="nar-play-btn">🎙️ 开始解说</button>
+  <button class="nar-btn" id="nar-stop-btn" style="display:none">⏹ 停止</button>
+  <button class="nar-btn" id="nar-replay-btn" style="display:none">🔁 重播本页</button>
+  <div style="width:1px;height:18px;background:rgba(255,255,255,.1);flex-shrink:0;"></div>
+  <button class="nar-btn" id="autoplay-btn" title="开启后每8秒自动翻页">▶ 自动翻页</button>
+  <select id="nar-voice-select" title="选择语音"></select>
+  <span id="nar-speed-label">语速</span>
+  <button class="nar-btn" id="nar-slow-btn">慢</button>
+  <button class="nar-btn active" id="nar-normal-btn">正常</button>
+  <button class="nar-btn" id="nar-fast-btn">快</button>
+</div>
+`;
+document.body.appendChild(narratorBar);
+
+// ── TTS ENGINE ──
+let narUtterance = null;
+let narActive = false;
+let narRate = 0.9;  // CCTV anchor default — deliberate, clear Putonghua
+let narVoice = null;
+let narProgressTimer = null;
+let narCurrentSlide = -1;
+const zhVoices = [];
+
+function loadVoices() {
+  const voices = speechSynthesis.getVoices();
+  const sel = document.getElementById('nar-voice-select');
+  sel.innerHTML = '';
+  zhVoices.length = 0;
+
+  // Collect all Chinese/Mandarin voices
+  const zh = voices.filter(v =>
+    v.lang.startsWith('zh') || v.lang.startsWith('cmn') ||
+    v.name.toLowerCase().includes('chinese') ||
+    v.name.toLowerCase().includes('mandarin') ||
+    v.name.toLowerCase().includes('中文') ||
+    v.name.toLowerCase().includes('普通话')
+  );
+  const pool = zh.length > 0 ? zh : voices.filter(v => v.lang.startsWith('en')).slice(0, 6);
+
+  // CCTV-style priority: standard Mandarin female voices with flat Beijing/Putonghua accent
+  // Priority order: Tingting (macOS/iOS standard Mandarin), Yaoyao, Hanhan, Meijia (Taiwan — skip),
+  // Microsoft Yaoyao/Kangkang, Google 普通话, then any zh-CN
+  const CCTV_PRIORITY = [
+    // Tier 1 — Microsoft neural voices (closest to CCTV anchor)
+    v => /microsoft.*xiaoxiao/i.test(v.name),   // MS Xiaoxiao – warm standard Mandarin
+    v => /microsoft.*xiaoyi/i.test(v.name),     // MS Xiaoyi
+    v => /microsoft.*yunyang/i.test(v.name),    // MS Yunyang – male anchor
+    v => /microsoft.*yaoyao/i.test(v.name),     // MS Yaoyao
+    v => /microsoft.*kangkang/i.test(v.name),   // MS Kangkang – male
+    v => /microsoft.*huihui/i.test(v.name),     // MS Huihui
+    // Tier 2 — macOS/iOS standard voices
+    v => /tingting/i.test(v.name) && /zh.cn/i.test(v.lang),  // Ting-Ting zh-CN
+    v => /tingting/i.test(v.name),              // Ting-Ting any
+    v => /sinji/i.test(v.name),                // Sin-Ji (zh-HK – exclude in favour of CN)
+    // Tier 3 — Google cloud TTS
+    v => /google.*普通话|google.*mandarin|google.*zh.cn/i.test(v.name + v.lang),
+    v => /google/i.test(v.name) && v.lang === 'zh-CN',
+    // Tier 4 — any zh-CN
+    v => v.lang === 'zh-CN',
+    // Tier 5 — any zh
+    v => v.lang.startsWith('zh'),
+  ];
+
+  pool.forEach((v, i) => {
+    zhVoices.push(v);
+    const opt = document.createElement('option');
+    opt.value = i;
+    // Show lang tag for clarity
+    opt.textContent = (v.name.length > 24 ? v.name.slice(0,24)+'…' : v.name) + ' [' + v.lang + ']';
+    sel.appendChild(opt);
+  });
+
+  if (zhVoices.length > 0) {
+    narVoice = zhVoices[0];
+    // Walk priority tiers until we find a match
+    for (const test of CCTV_PRIORITY) {
+      const match = zhVoices.find(test);
+      if (match) {
+        narVoice = match;
+        sel.value = zhVoices.indexOf(match);
+        break;
+      }
+    }
+  }
+
+  // Update dropdown selection indicator
+  if (sel.options.length > 0 && narVoice) {
+    const idx = zhVoices.indexOf(narVoice);
+    if (idx >= 0) sel.value = idx;
+  }
+}
+
+if (typeof speechSynthesis !== 'undefined') {
+  speechSynthesis.onvoiceschanged = loadVoices;
+  loadVoices();
+}
+
+function narSpeak(text) {
+  if (typeof speechSynthesis === 'undefined') {
+    alert('您的浏览器不支持语音朗读功能，请使用 Chrome 或 Edge。');
+    return;
+  }
+  speechSynthesis.cancel();
+  clearInterval(narProgressTimer);
+
+  const bubble = document.getElementById('narrator-bubble');
+  const narText = document.getElementById('nar-text');
+  const progLine = document.getElementById('narrator-progress-line');
+  const dot = document.getElementById('nar-dot');
+
+  bubble.style.display = 'block';
+  narText.textContent = text;
+  progLine.style.width = '0%';
+  dot.style.display = 'block';
+
+  narUtterance = new SpeechSynthesisUtterance(text);
+  // CCTV anchor style: deliberate pace, flat standard Mandarin pitch
+  narUtterance.rate = narRate;
+  narUtterance.pitch = 1.0;      // flat, authoritative — not expressive
+  narUtterance.volume = 1.0;
+  narUtterance.lang = 'zh-CN';  // force zh-CN even if voice reports zh-TW
+  if (narVoice) narUtterance.voice = narVoice;
+
+  // Estimate duration for progress bar
+  const estDuration = (text.length / (narRate * 4.2)) * 1000;
+  let elapsed = 0;
+  narProgressTimer = setInterval(() => {
+    elapsed += 200;
+    const pct = Math.min((elapsed / estDuration) * 100, 98);
+    progLine.style.width = pct + '%';
+  }, 200);
+
+  narUtterance.onend = () => {
+    clearInterval(narProgressTimer);
+    progLine.style.width = '100%';
+    dot.style.display = 'none';
+    document.getElementById('nar-play-btn').style.display = 'flex';
+    document.getElementById('nar-stop-btn').style.display = 'none';
+    document.getElementById('nar-replay-btn').style.display = 'flex';
+    narActive = false;
+    setTimeout(() => { progLine.style.width = '0%'; }, 1200);
+  };
+
+  narUtterance.onerror = () => {
+    clearInterval(narProgressTimer);
+    dot.style.display = 'none';
+    narActive = false;
+  };
+
+  speechSynthesis.speak(narUtterance);
+  narActive = true;
+  narCurrentSlide = cur;
+
+  document.getElementById('nar-play-btn').style.display = 'none';
+  document.getElementById('nar-stop-btn').style.display = 'flex';
+  document.getElementById('nar-replay-btn').style.display = 'none';
+}
+
+function narStop() {
+  speechSynthesis.cancel();
+  clearInterval(narProgressTimer);
+  narActive = false;
+  const dot = document.getElementById('nar-dot');
+  if (dot) dot.style.display = 'none';
+  const progLine = document.getElementById('narrator-progress-line');
+  if (progLine) progLine.style.width = '0%';
+  document.getElementById('nar-play-btn').style.display = 'flex';
+  document.getElementById('nar-stop-btn').style.display = 'none';
+  document.getElementById('nar-replay-btn').style.display = 'flex';
+}
+
+// Control buttons
+document.getElementById('nar-play-btn').onclick = (e) => {
+  e.stopPropagation();
+  narSpeak(NARRATION[cur] || '');
+};
+document.getElementById('nar-stop-btn').onclick = (e) => {
+  e.stopPropagation();
+  narStop();
+};
+document.getElementById('nar-replay-btn').onclick = (e) => {
+  e.stopPropagation();
+  narSpeak(NARRATION[cur] || '');
+};
+document.getElementById('autoplay-btn').onclick = (e) => {
+  e.stopPropagation();
+  setAutoplay(!autoplayOn);
+};
+
+// Voice selector
+document.getElementById('nar-voice-select').onchange = (e) => {
+  e.stopPropagation();
+  const idx = parseInt(e.target.value);
+  if (zhVoices[idx]) narVoice = zhVoices[idx];
+};
+
+// Speed buttons
+const speedBtns = {
+  'nar-slow-btn': 0.72,
+  'nar-normal-btn': 0.9,
+  'nar-fast-btn': 1.15
+};
+Object.entries(speedBtns).forEach(([id, rate]) => {
+  document.getElementById(id).onclick = (e) => {
+    e.stopPropagation();
+    narRate = rate;
+    document.querySelectorAll('#narrator-controls .nar-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    if (narActive) narSpeak(NARRATION[cur] || '');
+  };
+});
+
+// Auto-narrate when slide changes (only if narration was playing)
+const origGoTo = goTo;
+// Patch goTo to also re-trigger narration if active
+const _patchedGoTo = (n) => {
+  const wasActive = narActive;
+  origGoTo(n);
+  if (wasActive) {
+    setTimeout(() => narSpeak(NARRATION[cur] || ''), 600);
+  }
+};
+document.getElementById('nav-next').onclick = (e) => { e.stopPropagation(); _patchedGoTo(cur+1); };
+document.getElementById('nav-prev').onclick = (e) => { e.stopPropagation(); _patchedGoTo(cur-1); };
+document.querySelectorAll('.dot').forEach(d => {
+  d.onclick = (e) => { e.stopPropagation(); _patchedGoTo(+d.dataset.i); };
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') _patchedGoTo(cur+1);
+  if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   _patchedGoTo(cur-1);
+});
+</script>
+
+<script id="sloop-js">
+function drawSloopFlows(){
+  var svg=document.getElementById('sloop-svg');
+  if(!svg)return; svg.innerHTML='';
+  var outer=document.getElementById('sl2-outer'),ecom=document.getElementById('sl2-ecom'),
+    edi=document.getElementById('sl2-edi'),erp=document.getElementById('sl2-erp'),
+    scm=document.getElementById('sl2-scm'),portal=document.getElementById('sl2-portal');
+  if(!outer||!ecom||!edi||!erp||!scm||!portal)return;
+  var ob=outer.getBoundingClientRect();
+  function R(el){var b=el.getBoundingClientRect();return{l:b.left-ob.left,r:b.right-ob.left,t:b.top-ob.top,b:b.bottom-ob.top,mx:(b.left+b.right)/2-ob.left,my:(b.top+b.bottom)/2-ob.top,w:b.width,h:b.height};}
+  var E=R(ecom),D=R(edi),F=R(erp),S=R(scm),P=R(portal);
+
+  // gap between FO right edge and EDI left edge (the column gap ~12px)
+  var gapMid = (F.r + D.l) / 2;
+  var offset = 18; // stagger lines in the center gap
+
+  var kfSet=new Set();
+  function mkKF(id,len){if(kfSet.has(id))return;kfSet.add(id);var s=document.createElement('style');s.textContent='@keyframes sf'+id+'{to{stroke-dashoffset:'+(-(len+16))+'}}';document.head.appendChild(s);}
+  var NS='http://www.w3.org/2000/svg';
+  function el(tag,attrs){var e=document.createElementNS(NS,tag);Object.keys(attrs).forEach(function(k){e.setAttribute(k,attrs[k]);});return e;}
+
+  function pathFlow(pts,color,lbl,delay,spd){
+    // pts = [[x,y],...]
+    spd=spd||1.8;
+    var d='M'+pts[0][0]+' '+pts[0][1];
+    for(var i=1;i<pts.length;i++) d+=' L'+pts[i][0]+' '+pts[i][1];
+    var g=document.createElementNS(NS,'g');
+    // track
+    var tr=el('path',{d:d,stroke:color,'stroke-opacity':'0.15','stroke-width':'2',fill:'none'});
+    g.appendChild(tr);
+    // measure total length for animation
+    var totalLen=0;
+    for(var i=1;i<pts.length;i++) totalLen+=Math.hypot(pts[i][0]-pts[i-1][0],pts[i][1]-pts[i-1][1]);
+    var uid=(lbl+''+Math.round(pts[0][0])+Math.round(pts[pts.length-1][1])).replace(/[^a-z0-9]/gi,'');
+    mkKF(uid,totalLen);
+    var an=el('path',{d:d,stroke:color,'stroke-opacity':'0.9','stroke-width':'2.5',fill:'none','stroke-dasharray':'12 '+totalLen});
+    an.style.animation='sf'+uid+' '+spd+'s '+delay+'s linear infinite';
+    g.appendChild(an);
+    // arrowhead at last point
+    var last=pts[pts.length-1],prev=pts[pts.length-2];
+    var dx=last[0]-prev[0],dy=last[1]-prev[1],ll=Math.hypot(dx,dy);
+    if(ll>0){var ux=dx/ll,uy=dy/ll;g.appendChild(el('polygon',{points:last[0]+','+last[1]+' '+(last[0]-ux*10-uy*5)+','+(last[1]-uy*10+ux*5)+' '+(last[0]-ux*10+uy*5)+','+(last[1]-uy*10-ux*5),fill:color,opacity:'0.85'}));}
+    // label at midpoint segment
+    var mi=Math.floor(pts.length/2),mx=(pts[mi][0]+pts[mi-1][0])/2,my=(pts[mi][1]+pts[mi-1][1])/2;
+    var ang=Math.atan2(pts[mi][1]-pts[mi-1][1],pts[mi][0]-pts[mi-1][0])*180/Math.PI;
+    var pg=el('g',{transform:'translate('+mx+','+my+') rotate('+ang+')'});
+    var tw=lbl.length*6+14;
+    pg.appendChild(el('rect',{x:-tw/2,y:-8,width:tw,height:14,rx:'3',fill:'rgba(2,2,10,0.93)',stroke:color,'stroke-opacity':'0.55','stroke-width':'0.8'}));
+    var tx=el('text',{x:0,y:4.5,'text-anchor':'middle','font-size':'7.5',fill:color,'font-family':'Space Mono,monospace','font-weight':'bold'});
+    tx.textContent=lbl; pg.appendChild(tx); g.appendChild(pg);
+    svg.appendChild(g);
+  }
+
+  // Measure the vertical gap between ECOM bottom and EDI top
+  var gapTop = E.b;
+  var gapBot = D.t;
+  var gapMidY = (gapTop + gapBot) / 2;
+
+  // 850 PO: ECOM → EDI inbound — straight down at ECOM left side
+  var px850 = E.l + E.w * 0.25;
+  pathFlow([[px850, E.b],[px850, D.t]], '#e07070','850 PO', 0, 1.5);
+
+  // 2. EDI → FO: create SO (right col → left col, through center gap)
+  pathFlow([[D.l,D.t+D.h*0.2],[gapMid+offset*0,D.t+D.h*0.2],[gapMid+offset*0,F.t+F.h*0.15],[F.r,F.t+F.h*0.15]], '#e07070','→ SO',0.2,1.6);
+
+  // 3. Portal → FO: API direct
+  pathFlow([[P.mx,P.b],[P.mx,F.t],[F.l+F.w*0.15,F.t]], '#38bdf8','API直连',0.1,2.2);
+
+  // 4. FO → EDI: 855 ACK (through center gap)
+  pathFlow([[F.r,F.t+F.h*0.3],[gapMid+offset*1,F.t+F.h*0.3],[gapMid+offset*1,D.t+D.h*0.35],[D.l,D.t+D.h*0.35]], '#e8a020','855 ACK',0.3,2.0);
+
+  // 5. FO → EDI: 810 INV
+  pathFlow([[F.r,F.t+F.h*0.5],[gapMid+offset*2,F.t+F.h*0.5],[gapMid+offset*2,D.t+D.h*0.55],[D.l,D.t+D.h*0.55]], '#fb923c','810 INV',0.5,2.0);
+
+  // 6. FO → EDI: 846 INV
+  pathFlow([[F.r,F.t+F.h*0.7],[gapMid+offset*3,F.t+F.h*0.7],[gapMid+offset*3,D.t+D.h*0.75],[D.l,D.t+D.h*0.75]], '#22d3ee','846 INV',0.7,2.2);
+
+  // Outbound lines from EDI/SCM → ECOM: route through the gap with horizontal stagger
+  // Use 3 clearly separated x-lanes within ECOM's width
+  var px855 = E.l + E.w * 0.35;   // 855 ACK — gold
+  var px856 = E.l + E.w * 0.52;   // 856 ASN — green
+  var px810 = E.l + E.w * 0.69;   // 810 INV — orange
+  var px846 = E.l + E.w * 0.86;   // 846 库存 — blue
+
+  // 7. EDI → ECOM: 855 ACK outbound (straight up in gap)
+  pathFlow([[px855, D.t],[px855, E.b]], '#e8a020','855 ACK', 0.5, 2.0);
+
+  // 8. SCM → ECOM: 856 ASN — exits SCM right, jogs to lane, goes up through EDI region outside, into ECOM
+  // Route: exit SCM right side → go to px856 → up past EDI top → into ECOM bottom
+  pathFlow([
+    [S.r, S.t + S.h*0.4],
+    [px856, S.t + S.h*0.4],
+    [px856, E.b]
+  ], '#4ade80','856 ASN', 0.4, 1.9);
+
+  // 9. EDI → ECOM: 810 INV outbound (straight up in gap)
+  pathFlow([[px810, D.t],[px810, E.b]], '#fb923c','810 INV', 0.7, 2.1);
+
+  // 10. EDI → ECOM: 846 库存 outbound (straight up in gap)
+  pathFlow([[px846, D.t],[px846, E.b]], '#38bdf8','846 库存', 0.9, 2.3);
+
+  // Item lane: Manufactory → PIM → D365 FO (single continuous path, purple)
+  var pim = document.getElementById('sl2-pim');
+  var mfr = document.getElementById('sl2-mfr');
+  if(pim && mfr){
+    var pimR = pim.getBoundingClientRect();
+    var mfrR = mfr.getBoundingClientRect();
+    var PI = {
+      l: pimR.left-ob.left, r: pimR.right-ob.left,
+      t: pimR.top-ob.top,   b: pimR.bottom-ob.top,
+      mx: (pimR.left+pimR.right)/2-ob.left
+    };
+    var MF = {
+      l: mfrR.left-ob.left, r: mfrR.right-ob.left,
+      t: mfrR.top-ob.top,   b: mfrR.bottom-ob.top,
+      mx: (mfrR.left+mfrR.right)/2-ob.left
+    };
+    // Single path: Mfr bottom → jog to PIM center-x → through PIM → D365 FO top
+    var itemX = PI.mx + 20;
+    pathFlow([
+      [MF.mx, MF.b],
+      [MF.mx, PI.t - 10],
+      [itemX, PI.t],
+      [itemX, PI.b],
+      [itemX, F.t]
+    ], '#a78bfa', 'Item', 0.2, 1.6);
+
+    // D365 FO → E-COM Portal: Item structured data (SKU, price, stock)
+    var laneA = P.r - 25;
+    pathFlow([
+      [F.l + (F.r-F.l)*0.10, F.t],
+      [F.l + (F.r-F.l)*0.10, F.t - 15],
+      [laneA, F.t - 15],
+      [laneA, P.my],
+      [P.r, P.my]
+    ], '#38bdf8', 'Item数据', 0.3, 2.2);
+
+    // PIM → E-COM Portal: Rich content (images, dimensions, descriptions)
+    var laneB = P.r - 55;
+    pathFlow([
+      [PI.l + (PI.r-PI.l)*0.06, PI.t],
+      [PI.l + (PI.r-PI.l)*0.06, PI.t - 15],
+      [laneB, PI.t - 15],
+      [laneB, P.my + 28],
+      [P.r, P.my + 28]
+    ], '#c084fc', '图文内容', 0.5, 2.2);
+  }
+}
+</script>
+
+<style>
+/* ═══════════════════════════════════════════
+   READABILITY ZOOM — all diagram slides
+   Scales all content 30% larger so fonts
+   are legible without browser zoom
+═══════════════════════════════════════════ */
+
+/* Ring diagram slide */
+#sring .s6-wrap {
+  zoom: 1.3;
+  width: min(846px, 76vw) !important;
+}
+
+/* D365 internal architecture slide (s3b) */
+#s3b > div:not(.slide-header) {
+  zoom: 1.3;
+  width: min(846px, 75vw) !important;
+}
+
+/* PIM / AI matching slide (s4) */
+#s4 .pim-hero {
+  zoom: 1.25;
+  width: min(960px, 79vw) !important;
+}
+
+/* Evolution / two-model comparison slide (s5) */
+#s5 .evo-stage-wrap {
+  zoom: 1.3;
+  width: min(784px, 75vw) !important;
+}
+
+/* Full loop / closed-order system slide (sloop) */
+#sloop .sl2-outer {
+  zoom: 1.15;
+  width: min(960px, 88vw) !important;
+}
+
+/* Comparison table slide (s7) */
+#s7 table.ctable {
+  zoom: 1.3;
+  width: min(660px, 71vw) !important;
+}
+#s7 > div[style] {
+  zoom: 1.3;
+  width: min(660px, 71vw) !important;
+  margin: 18px auto 0 !important;
+}
+
+/* Final metrics / seed round slide (s8) */
+#s8 > div {
+  zoom: 1.25;
+}
+</style>
+</body>
+</html>

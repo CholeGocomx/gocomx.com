@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GoComX — Cross-Border Distribution OS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --blue: #0078d4; --blue-dark: #005a9e; --blue-light: #eff6ff;
+  --text: #111827; --text2: #404040; --muted: #6b7280;
+  --bg: #f2f4f7; --card: #ffffff;
+  --shadow: 0 2px 16px rgba(0,0,0,.07);
+  --shadow-hover: 0 6px 28px rgba(0,0,0,.12);
+  --radius: 14px;
+  --fs-lg: 20px; --fs-md: 15px; --fs-sm: 13px;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--text);
+  font-family: 'Inter', sans-serif; font-size: var(--fs-md); line-height: 1.6;
+  height: 100vh; display: flex; flex-direction: column; overflow: hidden;
+}
+
+/* NAV */
+nav {
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 48px; height: 62px;
+  background: #fff; box-shadow: 0 1px 4px rgba(0,0,0,.08); z-index: 100;
+}
+.nav-brand { display: flex; align-items: center; gap: 16px; text-decoration: none; }
+.nav-logo-text { font-size: 18px; font-weight: 800; color: var(--text); letter-spacing: -.3px; }
+.nav-logo-text span { color: var(--blue); }
+.nav-tagline { font-size: 18px; color: #404040; border-left: 1px solid #e0e0e0; padding-left: 16px; font-weight: 800; letter-spacing: -.3px; }
+.nav-links { display: flex; gap: 2px; list-style: none; align-items: center; }
+.nav-links a { font-size: var(--fs-md); font-weight: 500; color: var(--muted); text-decoration: none; padding: 7px 14px; border-radius: 6px; transition: all .15s; }
+.nav-links a:hover { color: var(--text); background: #f0f0f0; }
+.nav-links a.active { color: var(--blue); font-weight: 600; }
+
+/* MAIN GRID */
+.main-grid {
+  flex: 1; overflow: hidden;
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px; padding: 20px 48px;
+}
+
+/* CARD PANEL */
+.panel {
+  background: var(--card); border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 36px 32px;
+  display: flex; flex-direction: column;
+  overflow-y: auto;
+  transition: box-shadow .2s;
+}
+.panel:hover { box-shadow: var(--shadow-hover); }
+
+.col-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: var(--fs-sm); color: var(--blue);
+  letter-spacing: .08em; text-transform: uppercase; margin-bottom: 20px;
+  display: flex; align-items: center; gap: 8px;
+}
+.col-label::before { content: ''; width: 20px; height: 2px; background: var(--blue); border-radius: 2px; }
+
+/* PANEL 1 — Brand */
+.brand-name { font-size: var(--fs-lg); font-weight: 800; letter-spacing: -.02em; line-height: 1.2; margin-bottom: 4px; }
+.brand-name span { color: var(--blue); }
+.brand-tagline { font-size: var(--fs-sm); color: var(--muted); margin-bottom: 24px; }
+.brand-desc { font-size: var(--fs-md); color: var(--text2); line-height: 1.75; margin-bottom: 10px; }
+.brand-desc-zh { font-size: var(--fs-sm); color: var(--muted); line-height: 1.65; margin-bottom: 32px; }
+.cta-group { display: flex; gap: 10px; flex-wrap: wrap; margin-top: auto; }
+.btn { display: inline-flex; align-items: center; gap: 6px; padding: 10px 22px; font-size: var(--fs-md); font-weight: 600; border-radius: 6px; text-decoration: none; cursor: pointer; font-family: inherit; transition: all .15s; border: none; }
+.btn-primary { background: #002050; color: #fff; }
+.btn-primary:hover { background: var(--blue-dark); }
+.btn-outline { background: #fff; color: var(--text); border: 1.5px solid #d0d0d0; }
+.btn-outline:hover { border-color: var(--blue); color: var(--blue); }
+
+/* PANEL 2 — Platform */
+.step-item { display: flex; gap: 16px; margin-bottom: 24px; padding-bottom: 24px; border-bottom: 1px solid #f0f0f0; }
+.step-item:last-child { border-bottom: none; padding-bottom: 0; margin-bottom: 0; }
+.step-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--blue); flex-shrink: 0; margin-top: 8px; }
+.step-heading { font-size: var(--fs-md); font-weight: 700; margin-bottom: 2px; }
+.step-heading-zh { font-size: var(--fs-sm); color: var(--muted); margin-bottom: 6px; }
+.step-text { font-size: var(--fs-sm); color: var(--text2); line-height: 1.65; }
+.step-text .zh { display: block; color: var(--muted); margin-top: 4px; }
+
+/* PANEL 3 — Stats */
+.stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+.stat-card {
+  background: #f8f9fb; border-radius: 10px;
+  padding: 16px 14px; transition: all .15s;
+  border: 1px solid #eaeaea;
+}
+.stat-card:hover { background: var(--blue-light); border-color: rgba(0,120,212,.2); }
+.stat-num { font-size: var(--fs-lg); font-weight: 800; color: var(--blue); line-height: 1; margin-bottom: 4px; }
+.stat-label { font-size: var(--fs-sm); color: var(--text2); }
+.stat-zh { font-size: var(--fs-sm); color: #b0b8c8; margin-top: 2px; }
+.badge-msft {
+  display: inline-flex; align-items: center; gap: 8px; margin-top: auto;
+  background: var(--blue-light); border: 1px solid rgba(0,120,212,.2);
+  border-radius: 8px; padding: 12px 16px;
+  font-size: var(--fs-sm); color: var(--blue); font-weight: 600;
+}
+
+/* FOOTER */
+footer {
+  flex-shrink: 0; background: #fff;
+  box-shadow: 0 -1px 4px rgba(0,0,0,.06);
+  padding: 13px 48px;
+  display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 8px;
+}
+.footer-copy { font-size: var(--fs-sm); color: #505050; font-weight: 600; }
+.footer-copy span { color: var(--blue); }
+.footer-info { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; justify-content: center; }
+.footer-info span, .footer-info a { font-size: var(--fs-sm); color: #404040; text-decoration: none; font-weight: 500; }
+.footer-info a:hover { color: var(--blue); }
+
+.zh, :lang(zh) {
+  font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-weight: 500; -webkit-font-smoothing: antialiased;
+}
+
+@media (max-width: 960px) {
+  body { overflow: auto; height: auto; }
+  .main-grid { grid-template-columns: 1fr; height: auto; overflow: visible; padding: 16px 20px; }
+  nav { padding: 0 20px; }
+  .nav-tagline { display: none; }
+  footer { padding: 14px 20px; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="index.html">
+    <span class="nav-logo-text">Go<span>Com</span>X</span>
+    <span class="nav-tagline">Cross-Border Distribution OS · 跨境智能分销系统 · Microsoft ISV Certified</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html" class="active">Home</a></li>
+    <li><a href="team.html">Team</a></li>
+    <li><a href="deck.html">How It Works</a></li>
+    <li><a href="contact.html">Contact Us</a></li>
+  </ul>
+</nav>
+
+<div class="main-grid">
+
+  <!-- Panel 1: Brand / Intro -->
+  <div class="panel">
+    <div class="col-label">Company · 公司介绍</div>
+    <div class="brand-name">Go<span>Com</span>X</div>
+    <div class="brand-tagline">Cross-Border Distribution OS</div>
+    <p class="brand-desc">
+      GoComX connects Chinese manufacturers to 80+ North American retail channels through automated EDI, Microsoft D365 ERP, and AI-powered distribution — all from a single platform.
+    </p>
+    <p class="brand-desc-zh zh">
+      GoComX 帮助中国制造商通过一次接入，打通北美80个以上零售渠道。自动化EDI对接、微软D365 ERP系统、AI智能分销，一站式解决方案。
+    </p>
+    <div class="cta-group">
+      <a href="contact.html" class="btn btn-primary">Contact Us →</a>
+      <a href="deck.html" class="btn btn-outline">How It Works</a>
+    </div>
+  </div>
+
+  <!-- Panel 2: Platform Capabilities -->
+  <div class="panel">
+    <div class="col-label">Platform · 平台能力</div>
+
+    <div class="step-item">
+      <div class="step-dot"></div>
+      <div>
+        <div class="step-heading">EDI &amp; ERP Onboarding</div>
+        <div class="step-heading-zh zh">EDI 与 ERP 系统接入</div>
+        <p class="step-text">
+          We eliminate EDI, data sync, and inventory bottlenecks — turning an 18-month integration into seamless digital onboarding. Microsoft D365 F&amp;O/SCM certified.
+          <span class="zh">帮助制造商打通EDI、数据同步与库存管理障碍，让18个月的对接周期缩短为数天。</span>
+        </p>
+      </div>
+    </div>
+
+    <div class="step-item">
+      <div class="step-dot"></div>
+      <div>
+        <div class="step-heading">80+ Channel Network</div>
+        <div class="step-heading-zh zh">80个以上零售渠道网络</div>
+        <p class="step-text">
+          Walmart, Target, Best Buy, Home Depot, Amazon and more. One connection. Every channel.
+          <span class="zh">已接通70家稳定运营，覆盖沃尔玛、塔吉特、百思买、家得宝、亚马逊等主流平台。</span>
+        </p>
+      </div>
+    </div>
+
+    <div class="step-item">
+      <div class="step-dot"></div>
+      <div>
+        <div class="step-heading">AI Distribution &amp; Settlement</div>
+        <div class="step-heading-zh zh">AI 智能分销与自动结算</div>
+        <p class="step-text">
+          AI product matching, automated commission settlement, and horizontal expansion into home appliances, lighting, and other high-value verticals.
+          <span class="zh">AI智能选品与佣金自动结算，将成熟模式复制到家电、灯具等高附加值品类。</span>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Panel 3: Numbers -->
+  <div class="panel">
+    <div class="col-label">By the Numbers · 平台数据</div>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-num">80+</div>
+        <div class="stat-label">Retail Channels</div>
+        <div class="stat-zh zh">零售渠道</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">100K+</div>
+        <div class="stat-label">Orders Processed</div>
+        <div class="stat-zh zh">累计处理订单</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">150+</div>
+        <div class="stat-label">Sales Agents</div>
+        <div class="stat-zh zh">销售代理</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">8 yrs</div>
+        <div class="stat-label">In Production</div>
+        <div class="stat-zh zh">稳定运营年数</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">$11M+</div>
+        <div class="stat-label">Infrastructure</div>
+        <div class="stat-zh zh">基础设施投入</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">300+</div>
+        <div class="stat-label">EDI Rules</div>
+        <div class="stat-zh zh">EDI 映射规则</div>
+      </div>
+    </div>
+    <div class="badge-msft">✓ Microsoft D365 F&amp;O/SCM · ISV Certified Partner</div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-copy">© 2026 Go<span>Com</span>X</div>
+  <div class="footer-info">
+    <span>📍 Irvine, CA, U.S.A</span>
+    <a href="mailto:info@gocomx.com">✉️ info@gocomx.com</a>
+  </div>
+  <div></div>
+</footer>
+
+</body>
+</html>
