@@ -3424,12 +3424,14 @@ function drawSloopFlows(){
   // 7. EDI → ECOM: 855 ACK outbound (straight up in gap)
   pathFlow([[px855, D.t],[px855, E.b]], '#e8a020','855 ACK', 0.5, 2.0);
 
-  // 8. SCM → ECOM: 856 ASN — exits SCM right, jogs to lane, goes up through EDI region outside, into ECOM
-  // Route: exit SCM right side → go to px856 → up past EDI top → into ECOM bottom
+  // 8. SCM → EDI Middleware → ECOM: 856 ASN
+  // Route: exit SCM top → enter EDI bottom → exit EDI top → into ECOM bottom
+  var scm856x = S.mx + S.w * 0.25;
   pathFlow([
-    [S.r, S.t + S.h*0.4],
-    [px856, S.t + S.h*0.4],
-    [px856, E.b]
+    [scm856x, S.t],
+    [scm856x, D.b],
+    [px856,   D.t],
+    [px856,   E.b]
   ], '#4ade80','856 ASN', 0.4, 1.9);
 
   // 9. EDI → ECOM: 810 INV outbound (straight up in gap)
