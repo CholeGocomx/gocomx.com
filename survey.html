@@ -42,8 +42,14 @@ nav {
 }
 .deck-title { font-size: var(--fs-md); font-weight: 600; color: var(--text); }
 .deck-sub { font-size: var(--fs-sm); color: #9ca3af; margin-top: 2px; }
-.qr-wrap { display: flex; align-items: center; gap: 14px; }
-.qr-wrap img { width: 100px; height: 100px; border-radius: 10px; border: 2px solid var(--blue); background: #fff; box-shadow: 0 2px 10px rgba(0,120,212,.15); }
+.qr-section {
+  flex-shrink: 0;
+  display: flex; justify-content: center; align-items: center;
+  padding: 14px 48px;
+  background: #fff; border-bottom: 1px solid var(--border);
+}
+.qr-wrap { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.qr-wrap img { width: 120px; height: 120px; border-radius: 10px; border: 2px solid var(--blue); background: #fff; box-shadow: 0 2px 12px rgba(0,120,212,.18); }
 .qr-label { font-size: var(--fs-sm); color: var(--muted); text-align: center; line-height: 1.6; font-weight: 500; }
 
 /* IFRAME */
@@ -77,9 +83,12 @@ nav {
     <div class="deck-title">Quote & Survey · 报价与调研问卷</div>
     <div class="deck-sub">Fill out the form below and our team will get back to you within one business day · 填写问卷，我们将在一个工作日内回复</div>
   </div>
+</div>
+
+<div class="qr-section">
   <div class="qr-wrap">
-    <div class="qr-label">Scan to open<br>扫码填写</div>
     <img src="survey-qr.png" alt="GoComX Survey QR Code">
+    <div class="qr-label">Scan to open on mobile · 扫码在手机上填写</div>
   </div>
 </div>
 
