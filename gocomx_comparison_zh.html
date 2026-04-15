@@ -203,7 +203,7 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans SC',sans-seri
 
 .arch-canvas-wrap{
   position:relative;
-  width:min(960px,84vw);
+  width:min(1100px,96vw);
   height:min(520px, calc((100vh - 190px) / 1.25));
   margin:4px auto 0;
   opacity:0;animation:fadeIn .7s .3s forwards;
@@ -2698,9 +2698,15 @@ function drawArchLines(){
     setTimeout(()=>{ bg.style.opacity=tx.style.opacity='1'; }, afterMs);
   }
 
-  /* ── mfr Y positions & PIM centre ── */
-  const mfrYs=[44,98,152,206,260].map(v=>pH(v));
-  const pimCY = pH(240);
+  /* ── mfr Y positions from DOM (accurate) & PIM centre ── */
+  const mfrEls = wrap.querySelectorAll('.arch-mfr');
+  const mfrYs = Array.from(mfrEls).map(el=>{
+    const r = el.getBoundingClientRect();
+    return ((r.top + r.bottom)/2 - ob.top) / zoomVal;
+  });
+  const pimEl = wrap.querySelector('.arch-pim');
+  const pimRect = pimEl ? pimEl.getBoundingClientRect() : null;
+  const pimCY = pimRect ? ((pimRect.top + pimRect.bottom)/2 - ob.top) / zoomVal : pH(240);
 
   /* ─────────────────────────────────────────
      A. Manufacturers → PIM  (red)
