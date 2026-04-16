@@ -2247,7 +2247,7 @@ function drawInternals(){
 <div class="slide" id="sloop">
 <style>
 #sloop{ background:radial-gradient(ellipse at 40% 40%,#030d18 0%,#0a0a0f 65%); padding:6px 28px 4px; justify-content:flex-start; }
-.sl2-outer{ width:min(1140px,99vw); margin:3px auto 0; display:flex; flex-direction:column; gap:24px; flex:1; }
+.sl2-outer{ width:min(1140px,99vw); margin:3px auto 0; display:flex; flex-direction:column; gap:44px; flex:1; }
 
 /* ROW 1: Portal | Mfr+Reps | 80+ECOM */
 .sl2-r1{ display:grid; grid-template-columns:170px 1fr 170px; gap:16px; align-items:stretch; }
@@ -3455,8 +3455,8 @@ function drawSloopFlows(){
   // 8. 856 ASN: SCM → 856 box in EDI (diagonal) → ECOM (diagonal)
   // Segment 1: SCM top → 856 box bottom (enters the 856 sub-box)
   pathFlow([[px856d, S.t],[px856d, D.b]], '#4ade80', '', 0.4, 1.9);
-  // Segment 2: 856 box top → bend → ECOM bottom (exits 856 box, bends right to ECOM lane)
-  pathFlow([[px856d, D.t],[px856e, D.t],[px856e, E.b]], '#4ade80', '856 ASN', 0.4, 1.9);
+  // Segment 2: 856 box top → straight up to ECOM bottom
+  pathFlow([[px856d, D.t],[px856d, E.b]], '#4ade80', '856 ASN', 0.4, 1.9);
 
   // 9. EDI → ECOM: 810 INV outbound — straight in gap
   pathFlow([[px810e, D.t],[px810e, E.b]], '#fb923c','810 INV', 0.7, 2.1);
