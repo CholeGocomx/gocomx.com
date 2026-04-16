@@ -3431,29 +3431,30 @@ function drawSloopFlows(){
   pathFlow([[F.r,F.t+F.h*0.7],[gapMid+offset*3,F.t+F.h*0.7],[gapMid+offset*3,D.t+D.h*0.75],[D.l,D.t+D.h*0.75]], '#22d3ee','846 INV',0.7,2.2);
 
   // Outbound lines from EDI/SCM → ECOM: route through the gap with horizontal stagger
-  // Use 3 clearly separated x-lanes within ECOM's width
+  // Use clearly separated x-lanes within ECOM's width
   var px855 = E.l + E.w * 0.35;   // 855 ACK — gold
-  var px856 = E.l + E.w * 0.52;   // 856 ASN — green
-  var px810 = E.l + E.w * 0.69;   // 810 INV — orange
-  var px846 = E.l + E.w * 0.86;   // 846 库存 — blue
+  var px810 = E.l + E.w * 0.55;   // 810 INV — orange
+  var px846 = E.l + E.w * 0.75;   // 846 库存 — blue
 
   // 7. EDI → ECOM: 855 ACK outbound (straight up in gap)
   pathFlow([[px855, D.t],[px855, E.b]], '#e8a020','855 ACK', 0.5, 2.0);
 
-  // 8. SCM → EDI Middleware → ECOM: 856 ASN
-  // Route: exit SCM top → enter EDI bottom → exit EDI top → into ECOM bottom
-  var scm856x = S.mx + S.w * 0.25;
+  // 8. SCM → EDI 856 box → ECOM: 856 ASN
+  // 856 box is 2nd of 5 in EDI grid (repeat(5,1fr)) → center at D.l + D.w*0.30
+  // SCM and EDI share the same column, so this x is valid for SCM too.
+  // Straight vertical: SCM top → EDI 856 box bottom → EDI 856 box top → ECOM bottom
+  var px856 = D.l + D.w * 0.30;
   pathFlow([
-    [scm856x, S.t],
-    [scm856x, D.b],
-    [px856,   D.t],
-    [px856,   E.b]
+    [px856, S.t],    // exit SCM top, aligned with 856 box
+    [px856, D.b],    // enter EDI from bottom — hits the 856 box
+    [px856, D.t],    // exit EDI top — through the 856 box
+    [px856, E.b]     // enter ECOM bottom
   ], '#4ade80','856 ASN', 0.4, 1.9);
 
-  // 9. EDI → ECOM: 810 INV outbound (straight up in gap)
+  // 9. EDI → ECOM: 810 INV outbound
   pathFlow([[px810, D.t],[px810, E.b]], '#fb923c','810 INV', 0.7, 2.1);
 
-  // 10. EDI → ECOM: 846 库存 outbound (straight up in gap)
+  // 10. EDI → ECOM: 846 库存 outbound
   pathFlow([[px846, D.t],[px846, E.b]], '#38bdf8','846 库存', 0.9, 2.3);
 
   // Item lane: Manufactory → PIM → D365 FO (single continuous path, purple)
