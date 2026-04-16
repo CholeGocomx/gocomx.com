@@ -3367,9 +3367,9 @@ function drawSloopFlows(){
     scm=document.getElementById('sl2-scm'),portal=document.getElementById('sl2-portal');
   if(!outer||!ecom||!edi||!erp||!scm||!portal)return;
   var ob=outer.getBoundingClientRect();
-  // Set viewBox to viewport pixel dimensions so SVG coords = getBoundingClientRect offsets
-  // This eliminates all CSS-zoom coordinate mismatch issues
+  // viewBox = viewport pixel dimensions → SVG coords = raw getBoundingClientRect offsets (no zoom math)
   svg.setAttribute('viewBox','0 0 '+ob.width+' '+ob.height);
+  var zv=1; // all coords now in viewport px, zv=1 keeps legacy code below working correctly
   function R(el){var b=el.getBoundingClientRect();return{l:b.left-ob.left,r:b.right-ob.left,t:b.top-ob.top,b:b.bottom-ob.top,mx:(b.left+b.right)/2-ob.left,my:(b.top+b.bottom)/2-ob.top,w:b.width,h:b.height};}
   var E=R(ecom),D=R(edi),F=R(erp),S=R(scm),P=R(portal);
 
