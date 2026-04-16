@@ -2268,6 +2268,9 @@ function drawInternals(){
 .sl2-dcard-title{ font-family:'Space Mono',monospace; font-size:11px; font-weight:700; }
 .sl2-dcard-sub{ font-size:9px; color:rgba(255,255,255,.45); margin-top:1px; }
 
+/* Static keyframes for ECOM↔EDI gap flow lines — dash period = 26px */
+@keyframes gapFlow { 0%{stroke-dashoffset:0} 100%{stroke-dashoffset:-26} }
+
 </style>
 
   <div class="slide-header" style="margin-bottom:4px;">
@@ -2369,25 +2372,25 @@ function drawInternals(){
         <div class="sl2-sub" style="color:rgba(232,160,32,.45);margin-bottom:0;">300+ Maps · 8年实战 · 80平台B2B文档桥梁</div>
       </div>
       <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:5px;margin-bottom:5px;">
-        <div id="sl2-edi-850" style="background:rgba(192,57,43,.12);border:1px solid rgba(192,57,43,.3);border-radius:4px;padding:5px;text-align:center;">
-          <div style="font-family:'Space Mono',monospace;font-size:11px;font-weight:700;color:#e07070;">850 ←</div>
-          <div style="font-size:6.5px;color:rgba(255,255,255,.35);">PO inbound</div>
+        <div id="sl2-edi-850" style="background:rgba(192,57,43,.12);border:1px solid rgba(192,57,43,.3);border-radius:4px;padding:4px 3px;text-align:center;min-width:0;">
+          <div style="font-family:'Space Mono',monospace;font-size:10px;font-weight:700;color:#e07070;white-space:nowrap;">850 ←</div>
+          <div style="font-size:6px;color:rgba(255,255,255,.35);">PO in</div>
         </div>
-        <div id="sl2-edi-855" style="background:rgba(232,160,32,.08);border:1px solid rgba(232,160,32,.25);border-radius:4px;padding:5px;text-align:center;">
-          <div style="font-family:'Space Mono',monospace;font-size:11px;font-weight:700;color:var(--gold);">855 →</div>
-          <div style="font-size:6.5px;color:rgba(255,255,255,.35);">ACK outbound</div>
+        <div id="sl2-edi-855" style="background:rgba(232,160,32,.08);border:1px solid rgba(232,160,32,.25);border-radius:4px;padding:4px 3px;text-align:center;min-width:0;">
+          <div style="font-family:'Space Mono',monospace;font-size:10px;font-weight:700;color:var(--gold);white-space:nowrap;">855 →</div>
+          <div style="font-size:6px;color:rgba(255,255,255,.35);">ACK out</div>
         </div>
-        <div id="sl2-edi-856" style="background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.25);border-radius:4px;padding:5px;text-align:center;">
-          <div style="font-family:'Space Mono',monospace;font-size:11px;font-weight:700;color:var(--green);">856 →</div>
-          <div style="font-size:6.5px;color:rgba(255,255,255,.35);">ASN outbound</div>
+        <div id="sl2-edi-856" style="background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.25);border-radius:4px;padding:4px 3px;text-align:center;min-width:0;">
+          <div style="font-family:'Space Mono',monospace;font-size:10px;font-weight:700;color:var(--green);white-space:nowrap;">856 →</div>
+          <div style="font-size:6px;color:rgba(255,255,255,.35);">ASN out</div>
         </div>
-        <div id="sl2-edi-846" style="background:rgba(56,189,248,.08);border:1px solid rgba(56,189,248,.25);border-radius:4px;padding:5px;text-align:center;">
-          <div style="font-family:'Space Mono',monospace;font-size:11px;font-weight:700;color:var(--blue);">846 →</div>
-          <div style="font-size:6.5px;color:rgba(255,255,255,.35);">库存 outbound</div>
+        <div id="sl2-edi-846" style="background:rgba(56,189,248,.08);border:1px solid rgba(56,189,248,.25);border-radius:4px;padding:4px 3px;text-align:center;min-width:0;">
+          <div style="font-family:'Space Mono',monospace;font-size:10px;font-weight:700;color:var(--blue);white-space:nowrap;">846 →</div>
+          <div style="font-size:6px;color:rgba(255,255,255,.35);">库存 out</div>
         </div>
-        <div id="sl2-edi-810" style="background:rgba(251,146,60,.08);border:1px solid rgba(251,146,60,.25);border-radius:4px;padding:5px;text-align:center;">
-          <div style="font-family:'Space Mono',monospace;font-size:11px;font-weight:700;color:var(--orange);">810 →</div>
-          <div style="font-size:6.5px;color:rgba(255,255,255,.35);">INV outbound</div>
+        <div id="sl2-edi-810" style="background:rgba(251,146,60,.08);border:1px solid rgba(251,146,60,.25);border-radius:4px;padding:4px 3px;text-align:center;min-width:0;">
+          <div style="font-family:'Space Mono',monospace;font-size:10px;font-weight:700;color:var(--orange);white-space:nowrap;">810 →</div>
+          <div style="font-size:6px;color:rgba(255,255,255,.35);">INV out</div>
         </div>
       </div>
       <div style="font-size:6.5px;color:rgba(232,160,32,.4);text-align:center;">自建 8年，后来者无从复制 · 300+ EDI Maps 已全部实装</div>
@@ -3471,45 +3474,41 @@ function drawSloopFlows(){
 
   function gapLine(x,yTop,yBot,color,lbl,delay,spd){
     var g=document.createElementNS(NS,'g');
-    // static track
+    // static track — always visible guide line
     var tr=document.createElementNS(NS,'line');
     tr.setAttribute('x1',x);tr.setAttribute('y1',yTop);tr.setAttribute('x2',x);tr.setAttribute('y2',yBot);
     tr.setAttribute('stroke',color);tr.setAttribute('stroke-opacity','0.25');tr.setAttribute('stroke-width','2');
     g.appendChild(tr);
-    // animated glowing dash
+    // animated dash — uses static @keyframes gapFlow (12 on, 14 off = 26px period)
     var pathD='M'+x+' '+yTop+' L'+x+' '+yBot;
-    var uid=('gap'+lbl+Math.round(x)).replace(/[^a-z0-9]/gi,'');
-    var gapH=yBot-yTop;
-    if(!document._sfKF) document._sfKF={};
-    if(!document._sfKF[uid]){
-      document._sfKF[uid]=1;
-      var s=document.createElement('style');
-      s.textContent='@keyframes '+uid+'{0%{stroke-dashoffset:0}100%{stroke-dashoffset:-'+(gapH+14)+'}}';
-      document.head.appendChild(s);
-    }
     var an=document.createElementNS(NS,'path');
-    an.setAttribute('d',pathD);an.setAttribute('stroke',color);an.setAttribute('stroke-opacity','1');
-    an.setAttribute('stroke-width','4');an.setAttribute('fill','none');
-    an.setAttribute('stroke-dasharray','12 '+(gapH+2));
+    an.setAttribute('d',pathD);
+    an.setAttribute('stroke',color);
+    an.setAttribute('stroke-opacity','1');
+    an.setAttribute('stroke-width','4');
+    an.setAttribute('fill','none');
+    an.setAttribute('stroke-dasharray','12 14');
+    an.setAttribute('stroke-dashoffset','0');
     an.setAttribute('filter','url(#glow)');
-    an.style.animation=uid+' '+spd+'s '+delay+'s linear infinite';
+    an.setAttribute('style','animation:gapFlow '+spd+'s '+delay+'s linear infinite');
     g.appendChild(an);
-    // label next to midpoint (offset 10px to left to avoid overlap)
+    // label beside midpoint
     var midY=(yTop+yBot)/2;
     var bg=document.createElementNS(NS,'rect');
-    bg.setAttribute('x',x-22);bg.setAttribute('y',midY-6);bg.setAttribute('width',21);bg.setAttribute('height',12);
-    bg.setAttribute('rx','3');bg.setAttribute('fill','rgba(2,2,10,0.9)');bg.setAttribute('stroke',color);bg.setAttribute('stroke-opacity','0.6');bg.setAttribute('stroke-width','0.8');
+    bg.setAttribute('x',x+4);bg.setAttribute('y',midY-6);bg.setAttribute('width',24);bg.setAttribute('height',12);
+    bg.setAttribute('rx','3');bg.setAttribute('fill','rgba(2,2,10,0.92)');bg.setAttribute('stroke',color);bg.setAttribute('stroke-opacity','0.6');bg.setAttribute('stroke-width','0.8');
     g.appendChild(bg);
     var tx=document.createElementNS(NS,'text');
-    tx.setAttribute('x',x-11);tx.setAttribute('y',midY+4);tx.setAttribute('text-anchor','middle');
+    tx.setAttribute('x',x+16);tx.setAttribute('y',midY+4);tx.setAttribute('text-anchor','middle');
     tx.setAttribute('font-size','7');tx.setAttribute('fill',color);tx.setAttribute('font-family','Space Mono,monospace');tx.setAttribute('font-weight','bold');
     tx.textContent=lbl;g.appendChild(tx);
     svg.appendChild(g);
   }
 
+  // All 5 gap lines use ECOM-column x-positions so they align with the ECOM box above
   gapLine(px850e, E.b, D.t, '#e07070','850↓', 0,   1.5);
   gapLine(px855e, D.t, E.b, '#e8a020','855↑', 0.5, 2.0);
-  gapLine(px856d, D.t, E.b, '#4ade80','856↑', 0.4, 1.9);
+  gapLine(px856e, D.t, E.b, '#4ade80','856↑', 0.4, 1.9);  // was px856d (EDI box), now px856e (ECOM col)
   gapLine(px810e, D.t, E.b, '#fb923c','810↑', 0.7, 2.1);
   gapLine(px846e, D.t, E.b, '#38bdf8','846↑', 0.9, 2.3);
 
