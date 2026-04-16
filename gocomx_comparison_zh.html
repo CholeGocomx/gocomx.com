@@ -3477,35 +3477,34 @@ function drawSloopFlows(){
   // Two moving circle dots per line (cy updated via rAF) — most reliable animation.
   var _dots=[];
 
-  function directLink(ediId, color, lbl, delay, spd){
+  // inbound=true → dots travel ECOM→EDI (downward, e.g. 850 PO order arriving)
+  // inbound=false → dots travel EDI→ECOM (upward, e.g. 855/856/810/846 outbound)
+  function directLink(ediId, color, lbl, delay, spd, inbound){
     var ediEl=document.getElementById(ediId);
     if(!ediEl) return;
     var eb=ediEl.getBoundingClientRect();
-    // top-center of EDI sub-box
-    var x2=(eb.left+eb.right)/2 - ob.left;
-    var y2=eb.top - ob.top;
-    // bottom of ECOM box — nearest point on ECOM
-    var ex=Math.max(E.l, Math.min(x2, E.r)); // clamp x to ECOM width
-    var y1=E.b;
+    var xEdi=(eb.left+eb.right)/2 - ob.left;       // top-center of EDI sub-box
+    var yEdi=eb.top - ob.top;
+    var xEcom=Math.max(E.l, Math.min(xEdi, E.r));  // nearest x on ECOM box
+    var yEcom=E.b;                                   // bottom of ECOM box
 
     var g=document.createElementNS(NS,'g');
-    // static track line
+    // static track line (always ECOM bottom ↔ EDI sub-box top)
     var tr=document.createElementNS(NS,'line');
-    tr.setAttribute('x1',x2);tr.setAttribute('y1',y2);
-    tr.setAttribute('x2',ex);tr.setAttribute('y2',y1);
+    tr.setAttribute('x1',xEdi);tr.setAttribute('y1',yEdi);
+    tr.setAttribute('x2',xEcom);tr.setAttribute('y2',yEcom);
     tr.setAttribute('stroke',color);tr.setAttribute('stroke-opacity','0.30');tr.setAttribute('stroke-width','1.5');
     g.appendChild(tr);
-    // arrowhead at ECOM end
-    var dx=ex-x2, dy=y1-y2, ll=Math.hypot(dx,dy);
-    if(ll>0){
-      var ux=dx/ll,uy=dy/ll;
+    // arrowhead at destination end
+    var ax=inbound?xEdi:xEcom, ay=inbound?yEdi:yEcom;   // arrow tip
+    var bx=inbound?xEcom:xEdi, by=inbound?yEcom:yEdi;    // arrow base
+    var dx=ax-bx,dy=ay-by,ll=Math.hypot(dx,dy);
+    if(ll>0){var ux=dx/ll,uy=dy/ll;
       g.appendChild(el('polygon',{
-        points:ex+','+y1+' '+(ex-ux*8-uy*4)+','+(y1-uy*8+ux*4)+' '+(ex-ux*8+uy*4)+','+(y1-uy*8-ux*4),
-        fill:color,opacity:'0.8'
-      }));
-    }
+        points:ax+','+ay+' '+(ax-ux*8-uy*4)+','+(ay-uy*8+ux*4)+' '+(ax-ux*8+uy*4)+','+(ay-uy*8-ux*4),
+        fill:color,opacity:'0.85'}));}
     // label at midpoint
-    var mx=(x2+ex)/2, my=(y2+y1)/2;
+    var mx=(xEdi+xEcom)/2, my=(yEdi+yEcom)/2;
     var tw=lbl.length*5.5+10;
     var bg=document.createElementNS(NS,'rect');
     bg.setAttribute('x',mx-tw/2);bg.setAttribute('y',my-6);bg.setAttribute('width',tw);bg.setAttribute('height',12);
@@ -3517,23 +3516,25 @@ function drawSloopFlows(){
     tx.setAttribute('font-size','7');tx.setAttribute('fill',color);
     tx.setAttribute('font-family','Space Mono,monospace');tx.setAttribute('font-weight','bold');
     tx.textContent=lbl; g.appendChild(tx);
-    // 2 moving dots along the line
+    // 2 moving dots — direction controlled by inbound flag
+    var dx0=inbound?xEcom:xEdi, dy0=inbound?yEcom:yEdi; // start
+    var dx1=inbound?xEdi:xEcom, dy1=inbound?yEdi:yEcom; // end
     for(var d=0;d<2;d++){
       var dot=document.createElementNS(NS,'circle');
       dot.setAttribute('r','3.5');dot.setAttribute('fill',color);
-      dot.setAttribute('cx',x2);dot.setAttribute('cy',y2);
+      dot.setAttribute('cx',dx0);dot.setAttribute('cy',dy0);
       dot.setAttribute('filter','url(#glow)');
       g.appendChild(dot);
-      _dots.push({dot:dot,x0:x2,y0:y2,x1:ex,y1:y1,spd:spd,delay:delay+d*spd*0.5});
+      _dots.push({dot:dot,x0:dx0,y0:dy0,x1:dx1,y1:dy1,spd:spd,delay:delay+d*spd*0.5});
     }
     svg.appendChild(g);
   }
 
-  directLink('sl2-edi-850','#e07070','850 PO', 0,   1.5);
-  directLink('sl2-edi-855','#e8a020','855 ACK',0.5, 2.0);
-  directLink('sl2-edi-856','#4ade80','856 ASN',0.4, 1.9);
-  directLink('sl2-edi-846','#38bdf8','846 库存',0.9, 2.3);
-  directLink('sl2-edi-810','#fb923c','810 INV',0.7, 2.1);
+  directLink('sl2-edi-850','#e07070','850 PO', 0,   1.5, true);  // inbound: ECOM→EDI ↓
+  directLink('sl2-edi-855','#e8a020','855 ACK',0.5, 2.0, false); // outbound: EDI→ECOM ↑
+  directLink('sl2-edi-856','#4ade80','856 ASN',0.4, 1.9, false); // outbound: EDI→ECOM ↑
+  directLink('sl2-edi-846','#38bdf8','846 库存',0.9, 2.3, false); // outbound: EDI→ECOM ↑
+  directLink('sl2-edi-810','#fb923c','810 INV',0.7, 2.1, false); // outbound: EDI→ECOM ↑
 
   // rAF: move dots by setting cx/cy attributes each frame
   if(window._gapRaf) cancelAnimationFrame(window._gapRaf);
