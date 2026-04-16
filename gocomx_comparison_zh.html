@@ -2247,7 +2247,7 @@ function drawInternals(){
 <div class="slide" id="sloop">
 <style>
 #sloop{ background:radial-gradient(ellipse at 40% 40%,#030d18 0%,#0a0a0f 65%); padding:6px 28px 4px; justify-content:flex-start; }
-.sl2-outer{ width:min(1140px,99vw); margin:3px auto 0; display:flex; flex-direction:column; gap:16px; flex:1; }
+.sl2-outer{ width:min(1140px,99vw); margin:3px auto 0; display:flex; flex-direction:column; gap:24px; flex:1; }
 
 /* ROW 1: Portal | Mfr+Reps | 80+ECOM */
 .sl2-r1{ display:grid; grid-template-columns:170px 1fr 170px; gap:16px; align-items:stretch; }
@@ -2366,25 +2366,25 @@ function drawInternals(){
         <div class="sl2-sub" style="color:rgba(232,160,32,.45);margin-bottom:0;">300+ Maps · 8年实战 · 80平台B2B文档桥梁</div>
       </div>
       <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:5px;margin-bottom:5px;">
-        <div style="background:rgba(192,57,43,.12);border:1px solid rgba(192,57,43,.3);border-radius:4px;padding:5px;text-align:center;">
+        <div id="sl2-edi-850" style="background:rgba(192,57,43,.12);border:1px solid rgba(192,57,43,.3);border-radius:4px;padding:5px;text-align:center;">
           <div style="font-family:'Space Mono',monospace;font-size:11px;font-weight:700;color:#e07070;">850 ←</div>
           <div style="font-size:6.5px;color:rgba(255,255,255,.35);">PO inbound</div>
+        </div>
+        <div id="sl2-edi-855" style="background:rgba(232,160,32,.08);border:1px solid rgba(232,160,32,.25);border-radius:4px;padding:5px;text-align:center;">
+          <div style="font-family:'Space Mono',monospace;font-size:11px;font-weight:700;color:var(--gold);">855 →</div>
+          <div style="font-size:6.5px;color:rgba(255,255,255,.35);">ACK outbound</div>
         </div>
         <div id="sl2-edi-856" style="background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.25);border-radius:4px;padding:5px;text-align:center;">
           <div style="font-family:'Space Mono',monospace;font-size:11px;font-weight:700;color:var(--green);">856 →</div>
           <div style="font-size:6.5px;color:rgba(255,255,255,.35);">ASN outbound</div>
         </div>
-        <div style="background:rgba(251,146,60,.08);border:1px solid rgba(251,146,60,.25);border-radius:4px;padding:5px;text-align:center;">
-          <div style="font-family:'Space Mono',monospace;font-size:11px;font-weight:700;color:var(--orange);">810 →</div>
-          <div style="font-size:6.5px;color:rgba(255,255,255,.35);">INV outbound</div>
-        </div>
-        <div style="background:rgba(232,160,32,.08);border:1px solid rgba(232,160,32,.25);border-radius:4px;padding:5px;text-align:center;">
-          <div style="font-family:'Space Mono',monospace;font-size:11px;font-weight:700;color:var(--gold);">855 →</div>
-          <div style="font-size:6.5px;color:rgba(255,255,255,.35);">ACK outbound</div>
-        </div>
-        <div style="background:rgba(56,189,248,.08);border:1px solid rgba(56,189,248,.25);border-radius:4px;padding:5px;text-align:center;">
+        <div id="sl2-edi-846" style="background:rgba(56,189,248,.08);border:1px solid rgba(56,189,248,.25);border-radius:4px;padding:5px;text-align:center;">
           <div style="font-family:'Space Mono',monospace;font-size:11px;font-weight:700;color:var(--blue);">846 →</div>
           <div style="font-size:6.5px;color:rgba(255,255,255,.35);">库存 outbound</div>
+        </div>
+        <div id="sl2-edi-810" style="background:rgba(251,146,60,.08);border:1px solid rgba(251,146,60,.25);border-radius:4px;padding:5px;text-align:center;">
+          <div style="font-family:'Space Mono',monospace;font-size:11px;font-weight:700;color:var(--orange);">810 →</div>
+          <div style="font-size:6.5px;color:rgba(255,255,255,.35);">INV outbound</div>
         </div>
       </div>
       <div style="font-size:6.5px;color:rgba(232,160,32,.4);text-align:center;">自建 8年，后来者无从复制 · 300+ EDI Maps 已全部实装</div>
@@ -3411,9 +3411,8 @@ function drawSloopFlows(){
   var gapBot = D.t;
   var gapMidY = (gapTop + gapBot) / 2;
 
-  // 850 PO: ECOM → EDI inbound — straight down at ECOM left side
-  var px850 = E.l + E.w * 0.25;
-  pathFlow([[px850, E.b],[px850, D.t]], '#e07070','850 PO', 0, 1.5);
+  // 850 PO: ECOM → EDI inbound — aligned with 850 box in EDI
+  // (px850 will be defined below with all EDI box positions)
 
   // 2. EDI → FO: create SO (right col → left col, through center gap)
   pathFlow([[D.l,D.t+D.h*0.2],[gapMid+offset*0,D.t+D.h*0.2],[gapMid+offset*0,F.t+F.h*0.15],[F.r,F.t+F.h*0.15]], '#e07070','→ SO',0.2,1.6);
@@ -3430,31 +3429,29 @@ function drawSloopFlows(){
   // 6. FO → EDI: 846 INV
   pathFlow([[F.r,F.t+F.h*0.7],[gapMid+offset*3,F.t+F.h*0.7],[gapMid+offset*3,D.t+D.h*0.75],[D.l,D.t+D.h*0.75]], '#22d3ee','846 INV',0.7,2.2);
 
-  // Outbound lines from EDI/SCM → ECOM: route through the gap with horizontal stagger
-  // Use clearly separated x-lanes within ECOM's width
-  var px855 = E.l + E.w * 0.35;   // 855 ACK — gold
-  var px810 = E.l + E.w * 0.55;   // 810 INV — orange
-  var px846 = E.l + E.w * 0.75;   // 846 库存 — blue
+  // Helper: get center-x of an EDI sub-box by ID
+  function ediBoxX(id){
+    var el=document.getElementById(id);
+    if(!el) return null;
+    var b=el.getBoundingClientRect();
+    return ((b.left+b.right)/2 - ob.left)/zv;
+  }
 
-  // 7. EDI → ECOM: 855 ACK outbound (straight up in gap)
+  var px850 = ediBoxX('sl2-edi-850') || (E.l + E.w*0.10);
+  var px855 = ediBoxX('sl2-edi-855') || (E.l + E.w*0.30);
+  var px856 = ediBoxX('sl2-edi-856') || (E.l + E.w*0.50);
+  var px846 = ediBoxX('sl2-edi-846') || (E.l + E.w*0.70);
+  var px810 = ediBoxX('sl2-edi-810') || (E.l + E.w*0.90);
+
+  // 850 PO: ECOM → EDI inbound (aligned with 850 box)
+  pathFlow([[px850, E.b],[px850, D.t]], '#e07070','850 PO', 0, 1.5);
+
+  // 7. EDI → ECOM: 855 ACK outbound
   pathFlow([[px855, D.t],[px855, E.b]], '#e8a020','855 ACK', 0.5, 2.0);
 
-  // 8. SCM → EDI 856 box → ECOM: 856 ASN
-  // Use actual DOM position of the 856 box for pixel-perfect alignment
-  var edi856el = document.getElementById('sl2-edi-856');
-  var px856 = edi856el
-    ? ((edi856el.getBoundingClientRect().left + edi856el.getBoundingClientRect().right) / 2 - ob.left) / zv
-    : D.l + D.w * 0.30;
-  // Segment 1: SCM top → EDI 856 box bottom (no label — keeps EDI interior clean)
-  pathFlow([
-    [px856, S.t],
-    [px856, D.b]
-  ], '#4ade80', '', 0.4, 1.9);
-  // Segment 2: EDI 856 box top → ECOM bottom (label in gap above EDI, same as 855/810/846)
-  pathFlow([
-    [px856, D.t],
-    [px856, E.b]
-  ], '#4ade80', '856 ASN', 0.4, 1.9);
+  // 8. SCM → EDI 856 box → ECOM: 856 ASN (two segments: SCM→EDI no label, EDI→ECOM with label)
+  pathFlow([[px856, S.t],[px856, D.b]], '#4ade80', '', 0.4, 1.9);
+  pathFlow([[px856, D.t],[px856, E.b]], '#4ade80', '856 ASN', 0.4, 1.9);
 
   // 9. EDI → ECOM: 810 INV outbound
   pathFlow([[px810, D.t],[px810, E.b]], '#fb923c','810 INV', 0.7, 2.1);
