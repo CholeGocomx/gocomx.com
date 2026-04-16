@@ -2372,8 +2372,8 @@ function drawInternals(){
         <div class="sl2-sub" style="color:rgba(232,160,32,.45);margin-bottom:0;">300+ Maps · 8年实战 · 80平台B2B文档桥梁</div>
       </div>
       <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:5px;margin-bottom:5px;">
-        <div id="sl2-edi-850" style="background:rgba(192,57,43,.12);border:1px solid rgba(192,57,43,.3);border-radius:4px;padding:4px 3px;text-align:center;">
-          <div style="font-family:'Space Mono',monospace;font-size:11px;font-weight:700;color:#e07070;">850</div>
+        <div id="sl2-edi-850" style="background:rgba(192,57,43,.12);border:1px solid rgba(192,57,43,.3);border-radius:4px;padding:4px 3px;text-align:center;min-width:0;overflow:hidden;">
+          <div style="font-family:'Space Mono',monospace;font-size:11px;font-weight:700;color:#e07070;white-space:nowrap;">850</div>
           <div style="font-size:6px;color:rgba(192,57,43,.6);font-weight:700;letter-spacing:.04em;">PO IN</div>
         </div>
         <div id="sl2-edi-855" style="background:rgba(232,160,32,.08);border:1px solid rgba(232,160,32,.25);border-radius:4px;padding:4px 3px;text-align:center;min-width:0;">
@@ -3472,75 +3472,78 @@ function drawSloopFlows(){
   var n2=document.createElementNS(NS,'feMergeNode');n2.setAttribute('in','SourceGraphic');
   feM.appendChild(n1);feM.appendChild(n2);flt.appendChild(fe);flt.appendChild(feM);defs.appendChild(flt);svg.appendChild(defs);
 
-  // ── Direct lines: each EDI sub-box → 80+ECOM box ──────────────
-  // Simple approach: measure each EDI sub-box, draw line straight up to ECOM bottom.
-  // Two moving circle dots per line (cy updated via rAF) — most reliable animation.
+  // ── Gap lines: 80+ECOM ↔ EDI Middleware (5 pure-vertical animated lines) ──────
+  // Lines live in the gap between E.b (ECOM bottom) and D.t (EDI top).
+  // X positions are evenly spread across the ECOM column — no sub-box targeting.
+  // 850 PO = inbound (dots travel DOWN: ECOM→EDI).  All others = outbound (UP).
   var _dots=[];
 
-  // inbound=true → dots travel ECOM→EDI (downward, e.g. 850 PO order arriving)
-  // inbound=false → dots travel EDI→ECOM (upward, e.g. 855/856/810/846 outbound)
-  // xEdiOverride: if provided, use this x instead of the sub-box center
-  // (used for 850 to avoid a huge diagonal — keeps line near-vertical)
-  function directLink(ediId, color, lbl, delay, spd, inbound, xEdiOverride){
-    var ediEl=document.getElementById(ediId);
-    if(!ediEl) return;
-    var eb=ediEl.getBoundingClientRect();
-    var yEdi=eb.top - ob.top;
-    // xEdi: use override if given, else sub-box center
-    var xEdi = (xEdiOverride !== undefined) ? xEdiOverride : (eb.left+eb.right)/2 - ob.left;
-    var xEcom=Math.max(E.l, Math.min(xEdi, E.r));  // nearest x on ECOM box
-    var yEcom=E.b;                                   // bottom of ECOM box
+  function gapLine(xFrac, color, lbl, delay, spd, inbound){
+    var x  = E.l + E.w * xFrac;
+    var yT = E.b;   // top of gap  = bottom of ECOM box
+    var yB = D.t;   // bot of gap  = top of EDI Middleware box
 
     var g=document.createElementNS(NS,'g');
-    // static track line (always ECOM bottom ↔ EDI sub-box top)
+
+    // — track (dim static line) —
     var tr=document.createElementNS(NS,'line');
-    tr.setAttribute('x1',xEdi);tr.setAttribute('y1',yEdi);
-    tr.setAttribute('x2',xEcom);tr.setAttribute('y2',yEcom);
-    tr.setAttribute('stroke',color);tr.setAttribute('stroke-opacity','0.30');tr.setAttribute('stroke-width','1.5');
+    tr.setAttribute('x1',x); tr.setAttribute('y1',yT);
+    tr.setAttribute('x2',x); tr.setAttribute('y2',yB);
+    tr.setAttribute('stroke',color);
+    tr.setAttribute('stroke-opacity','0.28');
+    tr.setAttribute('stroke-width','1.5');
     g.appendChild(tr);
-    // arrowhead at destination end
-    var ax=inbound?xEdi:xEcom, ay=inbound?yEdi:yEcom;   // arrow tip
-    var bx=inbound?xEcom:xEdi, by=inbound?yEcom:yEdi;    // arrow base
-    var dx=ax-bx,dy=ay-by,ll=Math.hypot(dx,dy);
-    if(ll>0){var ux=dx/ll,uy=dy/ll;
-      g.appendChild(el('polygon',{
-        points:ax+','+ay+' '+(ax-ux*8-uy*4)+','+(ay-uy*8+ux*4)+' '+(ax-ux*8+uy*4)+','+(ay-uy*8-ux*4),
-        fill:color,opacity:'0.85'}));}
-    // label at midpoint — generous width so text is never clipped
-    var mx=(xEdi+xEcom)/2, my=(yEdi+yEcom)/2;
-    var tw=lbl.length*8+18; // wider: 8px per char + 18px padding
+
+    // — arrowhead (triangle at destination tip) —
+    var tipY = inbound ? yB : yT;   // tip = where dot arrives
+    var uy   = inbound ? 1  : -1;   // pointing direction
+    g.appendChild(el('polygon',{
+      points: x+','+tipY+' '+(x-4)+','+(tipY-uy*9)+' '+(x+4)+','+(tipY-uy*9),
+      fill:color, opacity:'0.80'}));
+
+    // — label (centered in the gap, on the line) —
+    var my = (yT+yB)/2;
+    var tw = lbl.length*7+12;
     var bg=document.createElementNS(NS,'rect');
-    bg.setAttribute('x',mx-tw/2);bg.setAttribute('y',my-7);bg.setAttribute('width',tw);bg.setAttribute('height',14);
-    bg.setAttribute('rx','3');bg.setAttribute('fill','rgba(2,2,10,0.95)');
-    bg.setAttribute('stroke',color);bg.setAttribute('stroke-opacity','0.8');bg.setAttribute('stroke-width','1');
+    bg.setAttribute('x', x-tw/2); bg.setAttribute('y', my-6);
+    bg.setAttribute('width', tw); bg.setAttribute('height', 12);
+    bg.setAttribute('rx','3');
+    bg.setAttribute('fill','rgba(2,2,12,0.93)');
+    bg.setAttribute('stroke',color);
+    bg.setAttribute('stroke-opacity','0.65');
+    bg.setAttribute('stroke-width','0.8');
     g.appendChild(bg);
     var tx=document.createElementNS(NS,'text');
-    tx.setAttribute('x',mx);tx.setAttribute('y',my+4.5);tx.setAttribute('text-anchor','middle');
-    tx.setAttribute('font-size','8.5');tx.setAttribute('fill',color);
-    tx.setAttribute('font-family','Space Mono,monospace');tx.setAttribute('font-weight','bold');
-    tx.textContent=lbl; g.appendChild(tx);
-    // 2 moving dots — direction controlled by inbound flag
-    var dx0=inbound?xEcom:xEdi, dy0=inbound?yEcom:yEdi; // start
-    var dx1=inbound?xEdi:xEcom, dy1=inbound?yEdi:yEcom; // end
+    tx.setAttribute('x',x); tx.setAttribute('y',my+4);
+    tx.setAttribute('text-anchor','middle');
+    tx.setAttribute('font-size','8'); tx.setAttribute('fill',color);
+    tx.setAttribute('font-family','Space Mono,monospace');
+    tx.setAttribute('font-weight','bold');
+    tx.textContent=lbl;
+    g.appendChild(tx);
+
+    // — 2 moving glow dots —
+    var y0=inbound?yT:yB, y1=inbound?yB:yT;
     for(var d=0;d<2;d++){
       var dot=document.createElementNS(NS,'circle');
-      dot.setAttribute('r','3.5');dot.setAttribute('fill',color);
-      dot.setAttribute('cx',dx0);dot.setAttribute('cy',dy0);
+      dot.setAttribute('r','3.5'); dot.setAttribute('fill',color);
+      dot.setAttribute('cx',x);   dot.setAttribute('cy',y0);
       dot.setAttribute('filter','url(#glow)');
       g.appendChild(dot);
-      _dots.push({dot:dot,x0:dx0,y0:dy0,x1:dx1,y1:dy1,spd:spd,delay:delay+d*spd*0.5});
+      _dots.push({dot:dot, x:x, y0:y0, y1:y1, spd:spd, delay:delay+d*spd*0.5});
     }
     svg.appendChild(g);
   }
 
-  // 850: force x into ECOM column so line is near-vertical (sub-box is far left = huge diagonal otherwise)
-  directLink('sl2-edi-850','#e07070','850 PO', 0,   1.5, true, E.l+E.w*0.3);
-  directLink('sl2-edi-855','#e8a020','855 ACK',0.5, 2.0, false); // outbound: EDI→ECOM ↑
-  directLink('sl2-edi-856','#4ade80','856 ASN',0.4, 1.9, false); // outbound: EDI→ECOM ↑
-  directLink('sl2-edi-846','#38bdf8','846 库存',0.9, 2.3, false); // outbound: EDI→ECOM ↑
-  directLink('sl2-edi-810','#fb923c','810 INV',0.7, 2.1, false); // outbound: EDI→ECOM ↑
+  // 850 PO  — inbound ↓  (e-com portal sends purchase order DOWN to EDI)
+  gapLine(0.15, '#e07070','850↓', 0,   1.5, true);
+  // Outbound ↑  (EDI sends responses back UP to e-com portal)
+  gapLine(0.35, '#e8a020','855↑', 0.5, 2.0, false);
+  gapLine(0.52, '#4ade80','856↑', 0.4, 1.9, false);
+  gapLine(0.70, '#38bdf8','846↑', 0.9, 2.3, false);
+  gapLine(0.88, '#fb923c','810↑', 0.7, 2.1, false);
 
-  // rAF: move dots by setting cx/cy attributes each frame
+  // rAF: animate dots (only cy changes — x is fixed per line)
   if(window._gapRaf) cancelAnimationFrame(window._gapRaf);
   var _t0=performance.now();
   (function _tick(now){
@@ -3548,7 +3551,6 @@ function drawSloopFlows(){
     for(var i=0;i<_dots.length;i++){
       var a=_dots[i];
       var ph=((t-a.delay)/a.spd)%1; if(ph<0)ph+=1;
-      a.dot.setAttribute('cx', a.x0+(a.x1-a.x0)*ph);
       a.dot.setAttribute('cy', a.y0+(a.y1-a.y0)*ph);
     }
     window._gapRaf=requestAnimationFrame(_tick);
