@@ -3445,12 +3445,16 @@ function drawSloopFlows(){
   var px856 = edi856el
     ? ((edi856el.getBoundingClientRect().left + edi856el.getBoundingClientRect().right) / 2 - ob.left) / zv
     : D.l + D.w * 0.30;
+  // Segment 1: SCM top → EDI 856 box bottom (no label — keeps EDI interior clean)
   pathFlow([
-    [px856, S.t],    // exit SCM top, aligned with actual 856 box center
-    [px856, D.b],    // enter EDI bottom — passes through 856 box
-    [px856, D.t],    // exit EDI top
-    [px856, E.b]     // enter ECOM bottom
-  ], '#4ade80','856 ASN', 0.4, 1.9);
+    [px856, S.t],
+    [px856, D.b]
+  ], '#4ade80', '', 0.4, 1.9);
+  // Segment 2: EDI 856 box top → ECOM bottom (label in gap above EDI, same as 855/810/846)
+  pathFlow([
+    [px856, D.t],
+    [px856, E.b]
+  ], '#4ade80', '856 ASN', 0.4, 1.9);
 
   // 9. EDI → ECOM: 810 INV outbound
   pathFlow([[px810, D.t],[px810, E.b]], '#fb923c','810 INV', 0.7, 2.1);
