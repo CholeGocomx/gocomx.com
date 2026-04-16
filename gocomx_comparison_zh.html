@@ -3364,8 +3364,10 @@ function drawSloopFlows(){
     scm=document.getElementById('sl2-scm'),portal=document.getElementById('sl2-portal');
   if(!outer||!ecom||!edi||!erp||!scm||!portal)return;
   var ob=outer.getBoundingClientRect();
-  var zv=parseFloat(getComputedStyle(outer).zoom)||1;
-  function R(el){var b=el.getBoundingClientRect();return{l:(b.left-ob.left)/zv,r:(b.right-ob.left)/zv,t:(b.top-ob.top)/zv,b:(b.bottom-ob.top)/zv,mx:((b.left+b.right)/2-ob.left)/zv,my:((b.top+b.bottom)/2-ob.top)/zv,w:b.width/zv,h:b.height/zv};}
+  // Set viewBox to viewport pixel dimensions so SVG coords = getBoundingClientRect offsets
+  // This eliminates all CSS-zoom coordinate mismatch issues
+  svg.setAttribute('viewBox','0 0 '+ob.width+' '+ob.height);
+  function R(el){var b=el.getBoundingClientRect();return{l:b.left-ob.left,r:b.right-ob.left,t:b.top-ob.top,b:b.bottom-ob.top,mx:(b.left+b.right)/2-ob.left,my:(b.top+b.bottom)/2-ob.top,w:b.width,h:b.height};}
   var E=R(ecom),D=R(edi),F=R(erp),S=R(scm),P=R(portal);
 
   // gap between FO right edge and EDI left edge (the column gap ~12px)
@@ -3436,10 +3438,10 @@ function drawSloopFlows(){
 
   // Helper: get center-x of an EDI sub-box by ID (for routing THROUGH boxes)
   function ediBoxX(id){
-    var el=document.getElementById(id);
-    if(!el) return null;
-    var b=el.getBoundingClientRect();
-    return ((b.left+b.right)/2 - ob.left)/zv;
+    var e2=document.getElementById(id);
+    if(!e2) return null;
+    var b=e2.getBoundingClientRect();
+    return (b.left+b.right)/2 - ob.left;
   }
 
   // For vertical gap lines (EDI top ↔ ECOM bottom), use ECOM-based x
@@ -3453,23 +3455,66 @@ function drawSloopFlows(){
   // DOM x of 856 box inside EDI (used for routing through the box)
   var px856d = ediBoxX('sl2-edi-856') || (D.l + D.w * 0.50);
 
-  // 850 PO: ECOM → EDI inbound
-  pathFlow([[px850e, E.b],[px850e, D.t]], '#e07070','850 PO', 0, 1.5);
+  // ── ECOM ↔ EDI vertical gap lines ──────────────────────────────
+  // All x-positions are within the 80+ECOM column (rightmost 170px of row1)
+  // E.b = bottom of ECOM box, D.t = top of EDI box — gap between them
 
-  // 7. EDI → ECOM: 855 ACK outbound — straight in gap
-  pathFlow([[px855e, D.t],[px855e, E.b]], '#e8a020','855 ACK', 0.5, 2.0);
+  // Add a glow filter to SVG for these bright lines
+  var defs=document.createElementNS(NS,'defs');
+  var flt=document.createElementNS(NS,'filter');
+  flt.setAttribute('id','glow');flt.setAttribute('x','-50%');flt.setAttribute('y','-50%');flt.setAttribute('width','200%');flt.setAttribute('height','200%');
+  var fe=document.createElementNS(NS,'feGaussianBlur');fe.setAttribute('stdDeviation','2');fe.setAttribute('result','blur');
+  var feM=document.createElementNS(NS,'feMerge');
+  var n1=document.createElementNS(NS,'feMergeNode');n1.setAttribute('in','blur');
+  var n2=document.createElementNS(NS,'feMergeNode');n2.setAttribute('in','SourceGraphic');
+  feM.appendChild(n1);feM.appendChild(n2);flt.appendChild(fe);flt.appendChild(feM);defs.appendChild(flt);svg.appendChild(defs);
 
-  // 8. 856 ASN: SCM → 856 box in EDI (diagonal) → ECOM (diagonal)
-  // Segment 1: SCM top → 856 box bottom (enters the 856 sub-box)
+  function gapLine(x,yTop,yBot,color,lbl,delay,spd){
+    var g=document.createElementNS(NS,'g');
+    // static track
+    var tr=document.createElementNS(NS,'line');
+    tr.setAttribute('x1',x);tr.setAttribute('y1',yTop);tr.setAttribute('x2',x);tr.setAttribute('y2',yBot);
+    tr.setAttribute('stroke',color);tr.setAttribute('stroke-opacity','0.25');tr.setAttribute('stroke-width','2');
+    g.appendChild(tr);
+    // animated glowing dash
+    var pathD='M'+x+' '+yTop+' L'+x+' '+yBot;
+    var uid=('gap'+lbl+Math.round(x)).replace(/[^a-z0-9]/gi,'');
+    var gapH=yBot-yTop;
+    if(!document._sfKF) document._sfKF={};
+    if(!document._sfKF[uid]){
+      document._sfKF[uid]=1;
+      var s=document.createElement('style');
+      s.textContent='@keyframes '+uid+'{0%{stroke-dashoffset:0}100%{stroke-dashoffset:-'+(gapH+14)+'}}';
+      document.head.appendChild(s);
+    }
+    var an=document.createElementNS(NS,'path');
+    an.setAttribute('d',pathD);an.setAttribute('stroke',color);an.setAttribute('stroke-opacity','1');
+    an.setAttribute('stroke-width','4');an.setAttribute('fill','none');
+    an.setAttribute('stroke-dasharray','12 '+(gapH+2));
+    an.setAttribute('filter','url(#glow)');
+    an.style.animation=uid+' '+spd+'s '+delay+'s linear infinite';
+    g.appendChild(an);
+    // label next to midpoint (offset 10px to left to avoid overlap)
+    var midY=(yTop+yBot)/2;
+    var bg=document.createElementNS(NS,'rect');
+    bg.setAttribute('x',x-22);bg.setAttribute('y',midY-6);bg.setAttribute('width',21);bg.setAttribute('height',12);
+    bg.setAttribute('rx','3');bg.setAttribute('fill','rgba(2,2,10,0.9)');bg.setAttribute('stroke',color);bg.setAttribute('stroke-opacity','0.6');bg.setAttribute('stroke-width','0.8');
+    g.appendChild(bg);
+    var tx=document.createElementNS(NS,'text');
+    tx.setAttribute('x',x-11);tx.setAttribute('y',midY+4);tx.setAttribute('text-anchor','middle');
+    tx.setAttribute('font-size','7');tx.setAttribute('fill',color);tx.setAttribute('font-family','Space Mono,monospace');tx.setAttribute('font-weight','bold');
+    tx.textContent=lbl;g.appendChild(tx);
+    svg.appendChild(g);
+  }
+
+  gapLine(px850e, E.b, D.t, '#e07070','850↓', 0,   1.5);
+  gapLine(px855e, D.t, E.b, '#e8a020','855↑', 0.5, 2.0);
+  gapLine(px856d, D.t, E.b, '#4ade80','856↑', 0.4, 1.9);
+  gapLine(px810e, D.t, E.b, '#fb923c','810↑', 0.7, 2.1);
+  gapLine(px846e, D.t, E.b, '#38bdf8','846↑', 0.9, 2.3);
+
+  // 856 SCM→EDI segment (below EDI)
   pathFlow([[px856d, S.t],[px856d, D.b]], '#4ade80', '', 0.4, 1.9);
-  // Segment 2: 856 box top → straight up to ECOM bottom
-  pathFlow([[px856d, D.t],[px856d, E.b]], '#4ade80', '856 ASN', 0.4, 1.9);
-
-  // 9. EDI → ECOM: 810 INV outbound — straight in gap
-  pathFlow([[px810e, D.t],[px810e, E.b]], '#fb923c','810 INV', 0.7, 2.1);
-
-  // 10. EDI → ECOM: 846 库存 outbound — straight in gap
-  pathFlow([[px846e, D.t],[px846e, E.b]], '#38bdf8','846 库存', 0.9, 2.3);
 
   // Item lane: Manufactory → PIM → D365 FO (single continuous path, purple)
   var pim = document.getElementById('sl2-pim');
