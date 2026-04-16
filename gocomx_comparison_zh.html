@@ -2372,9 +2372,9 @@ function drawInternals(){
         <div class="sl2-sub" style="color:rgba(232,160,32,.45);margin-bottom:0;">300+ Maps · 8年实战 · 80平台B2B文档桥梁</div>
       </div>
       <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:5px;margin-bottom:5px;">
-        <div id="sl2-edi-850" style="background:rgba(192,57,43,.12);border:1px solid rgba(192,57,43,.3);border-radius:4px;padding:4px 3px;text-align:center;min-width:0;">
-          <div style="font-family:'Space Mono',monospace;font-size:10px;font-weight:700;color:#e07070;white-space:nowrap;">850 ←</div>
-          <div style="font-size:6px;color:rgba(255,255,255,.35);">PO in</div>
+        <div id="sl2-edi-850" style="background:rgba(192,57,43,.12);border:1px solid rgba(192,57,43,.3);border-radius:4px;padding:4px 3px;text-align:center;">
+          <div style="font-family:'Space Mono',monospace;font-size:11px;font-weight:700;color:#e07070;">850</div>
+          <div style="font-size:6px;color:rgba(192,57,43,.6);font-weight:700;letter-spacing:.04em;">PO IN</div>
         </div>
         <div id="sl2-edi-855" style="background:rgba(232,160,32,.08);border:1px solid rgba(232,160,32,.25);border-radius:4px;padding:4px 3px;text-align:center;min-width:0;">
           <div style="font-family:'Space Mono',monospace;font-size:10px;font-weight:700;color:var(--gold);white-space:nowrap;">855 →</div>
@@ -3472,45 +3472,61 @@ function drawSloopFlows(){
   var n2=document.createElementNS(NS,'feMergeNode');n2.setAttribute('in','SourceGraphic');
   feM.appendChild(n1);feM.appendChild(n2);flt.appendChild(fe);flt.appendChild(feM);defs.appendChild(flt);svg.appendChild(defs);
 
+  var _gapAnims=[]; // collect animated paths for JS rAF loop
+
   function gapLine(x,yTop,yBot,color,lbl,delay,spd){
     var g=document.createElementNS(NS,'g');
-    // static track — always visible guide line
+    // static track — always-visible faint guide
     var tr=document.createElementNS(NS,'line');
     tr.setAttribute('x1',x);tr.setAttribute('y1',yTop);tr.setAttribute('x2',x);tr.setAttribute('y2',yBot);
-    tr.setAttribute('stroke',color);tr.setAttribute('stroke-opacity','0.25');tr.setAttribute('stroke-width','2');
+    tr.setAttribute('stroke',color);tr.setAttribute('stroke-opacity','0.28');tr.setAttribute('stroke-width','2');
     g.appendChild(tr);
-    // animated dash — uses static @keyframes gapFlow (12 on, 14 off = 26px period)
-    var pathD='M'+x+' '+yTop+' L'+x+' '+yBot;
+    // animated dash path — dashoffset driven by JS rAF (not CSS animation)
     var an=document.createElementNS(NS,'path');
-    an.setAttribute('d',pathD);
-    an.setAttribute('stroke',color);
-    an.setAttribute('stroke-opacity','1');
-    an.setAttribute('stroke-width','4');
-    an.setAttribute('fill','none');
-    an.setAttribute('stroke-dasharray','12 14');
+    an.setAttribute('d','M'+x+' '+yTop+' L'+x+' '+yBot);
+    an.setAttribute('stroke',color);an.setAttribute('stroke-opacity','1');
+    an.setAttribute('stroke-width','4');an.setAttribute('fill','none');
+    an.setAttribute('stroke-dasharray','12 14'); // 26px period
     an.setAttribute('stroke-dashoffset','0');
     an.setAttribute('filter','url(#glow)');
-    an.setAttribute('style','animation:gapFlow '+spd+'s '+delay+'s linear infinite');
     g.appendChild(an);
-    // label beside midpoint
+    _gapAnims.push({el:an, spd:spd, delay:delay, dir:(yBot>yTop?1:-1)});
+    // label beside mid-point
     var midY=(yTop+yBot)/2;
     var bg=document.createElementNS(NS,'rect');
     bg.setAttribute('x',x+4);bg.setAttribute('y',midY-6);bg.setAttribute('width',24);bg.setAttribute('height',12);
-    bg.setAttribute('rx','3');bg.setAttribute('fill','rgba(2,2,10,0.92)');bg.setAttribute('stroke',color);bg.setAttribute('stroke-opacity','0.6');bg.setAttribute('stroke-width','0.8');
+    bg.setAttribute('rx','3');bg.setAttribute('fill','rgba(2,2,10,0.92)');
+    bg.setAttribute('stroke',color);bg.setAttribute('stroke-opacity','0.6');bg.setAttribute('stroke-width','0.8');
     g.appendChild(bg);
     var tx=document.createElementNS(NS,'text');
     tx.setAttribute('x',x+16);tx.setAttribute('y',midY+4);tx.setAttribute('text-anchor','middle');
-    tx.setAttribute('font-size','7');tx.setAttribute('fill',color);tx.setAttribute('font-family','Space Mono,monospace');tx.setAttribute('font-weight','bold');
-    tx.textContent=lbl;g.appendChild(tx);
+    tx.setAttribute('font-size','7');tx.setAttribute('fill',color);
+    tx.setAttribute('font-family','Space Mono,monospace');tx.setAttribute('font-weight','bold');
+    tx.textContent=lbl; g.appendChild(tx);
     svg.appendChild(g);
   }
 
-  // All 5 gap lines use ECOM-column x-positions so they align with the ECOM box above
   gapLine(px850e, E.b, D.t, '#e07070','850↓', 0,   1.5);
   gapLine(px855e, D.t, E.b, '#e8a020','855↑', 0.5, 2.0);
-  gapLine(px856e, D.t, E.b, '#4ade80','856↑', 0.4, 1.9);  // was px856d (EDI box), now px856e (ECOM col)
+  gapLine(px856e, D.t, E.b, '#4ade80','856↑', 0.4, 1.9);
   gapLine(px810e, D.t, E.b, '#fb923c','810↑', 0.7, 2.1);
   gapLine(px846e, D.t, E.b, '#38bdf8','846↑', 0.9, 2.3);
+
+  // JS requestAnimationFrame loop — directly sets stroke-dashoffset every frame
+  // This guarantees smooth animation regardless of CSS animation support
+  if(window._gapRaf) cancelAnimationFrame(window._gapRaf);
+  var _gapStart=performance.now();
+  function _animGap(now){
+    var t=(now-_gapStart)/1000;
+    for(var i=0;i<_gapAnims.length;i++){
+      var a=_gapAnims[i];
+      var elapsed=t-a.delay; if(elapsed<0)elapsed=0;
+      var phase=(elapsed/a.spd)%1;
+      a.el.setAttribute('stroke-dashoffset', -(phase*26)*a.dir);
+    }
+    window._gapRaf=requestAnimationFrame(_animGap);
+  }
+  window._gapRaf=requestAnimationFrame(_animGap);
 
   // 856 SCM→EDI segment (below EDI)
   pathFlow([[px856d, S.t],[px856d, D.b]], '#4ade80', '', 0.4, 1.9);
