@@ -3472,61 +3472,82 @@ function drawSloopFlows(){
   var n2=document.createElementNS(NS,'feMergeNode');n2.setAttribute('in','SourceGraphic');
   feM.appendChild(n1);feM.appendChild(n2);flt.appendChild(fe);flt.appendChild(feM);defs.appendChild(flt);svg.appendChild(defs);
 
-  var _gapAnims=[]; // collect animated paths for JS rAF loop
+  // ── Direct lines: each EDI sub-box → 80+ECOM box ──────────────
+  // Simple approach: measure each EDI sub-box, draw line straight up to ECOM bottom.
+  // Two moving circle dots per line (cy updated via rAF) — most reliable animation.
+  var _dots=[];
 
-  function gapLine(x,yTop,yBot,color,lbl,delay,spd){
+  function directLink(ediId, color, lbl, delay, spd){
+    var ediEl=document.getElementById(ediId);
+    if(!ediEl) return;
+    var eb=ediEl.getBoundingClientRect();
+    // top-center of EDI sub-box
+    var x2=(eb.left+eb.right)/2 - ob.left;
+    var y2=eb.top - ob.top;
+    // bottom of ECOM box — nearest point on ECOM
+    var ex=Math.max(E.l, Math.min(x2, E.r)); // clamp x to ECOM width
+    var y1=E.b;
+
     var g=document.createElementNS(NS,'g');
-    // static track — always-visible faint guide
+    // static track line
     var tr=document.createElementNS(NS,'line');
-    tr.setAttribute('x1',x);tr.setAttribute('y1',yTop);tr.setAttribute('x2',x);tr.setAttribute('y2',yBot);
-    tr.setAttribute('stroke',color);tr.setAttribute('stroke-opacity','0.28');tr.setAttribute('stroke-width','2');
+    tr.setAttribute('x1',x2);tr.setAttribute('y1',y2);
+    tr.setAttribute('x2',ex);tr.setAttribute('y2',y1);
+    tr.setAttribute('stroke',color);tr.setAttribute('stroke-opacity','0.30');tr.setAttribute('stroke-width','1.5');
     g.appendChild(tr);
-    // animated dash path — dashoffset driven by JS rAF (not CSS animation)
-    var an=document.createElementNS(NS,'path');
-    an.setAttribute('d','M'+x+' '+yTop+' L'+x+' '+yBot);
-    an.setAttribute('stroke',color);an.setAttribute('stroke-opacity','1');
-    an.setAttribute('stroke-width','4');an.setAttribute('fill','none');
-    an.setAttribute('stroke-dasharray','12 14'); // 26px period
-    an.setAttribute('stroke-dashoffset','0');
-    an.setAttribute('filter','url(#glow)');
-    g.appendChild(an);
-    _gapAnims.push({el:an, spd:spd, delay:delay, dir:(yBot>yTop?1:-1)});
-    // label beside mid-point
-    var midY=(yTop+yBot)/2;
+    // arrowhead at ECOM end
+    var dx=ex-x2, dy=y1-y2, ll=Math.hypot(dx,dy);
+    if(ll>0){
+      var ux=dx/ll,uy=dy/ll;
+      g.appendChild(el('polygon',{
+        points:ex+','+y1+' '+(ex-ux*8-uy*4)+','+(y1-uy*8+ux*4)+' '+(ex-ux*8+uy*4)+','+(y1-uy*8-ux*4),
+        fill:color,opacity:'0.8'
+      }));
+    }
+    // label at midpoint
+    var mx=(x2+ex)/2, my=(y2+y1)/2;
+    var tw=lbl.length*5.5+10;
     var bg=document.createElementNS(NS,'rect');
-    bg.setAttribute('x',x+4);bg.setAttribute('y',midY-6);bg.setAttribute('width',24);bg.setAttribute('height',12);
+    bg.setAttribute('x',mx-tw/2);bg.setAttribute('y',my-6);bg.setAttribute('width',tw);bg.setAttribute('height',12);
     bg.setAttribute('rx','3');bg.setAttribute('fill','rgba(2,2,10,0.92)');
     bg.setAttribute('stroke',color);bg.setAttribute('stroke-opacity','0.6');bg.setAttribute('stroke-width','0.8');
     g.appendChild(bg);
     var tx=document.createElementNS(NS,'text');
-    tx.setAttribute('x',x+16);tx.setAttribute('y',midY+4);tx.setAttribute('text-anchor','middle');
+    tx.setAttribute('x',mx);tx.setAttribute('y',my+4);tx.setAttribute('text-anchor','middle');
     tx.setAttribute('font-size','7');tx.setAttribute('fill',color);
     tx.setAttribute('font-family','Space Mono,monospace');tx.setAttribute('font-weight','bold');
     tx.textContent=lbl; g.appendChild(tx);
+    // 2 moving dots along the line
+    for(var d=0;d<2;d++){
+      var dot=document.createElementNS(NS,'circle');
+      dot.setAttribute('r','3.5');dot.setAttribute('fill',color);
+      dot.setAttribute('cx',x2);dot.setAttribute('cy',y2);
+      dot.setAttribute('filter','url(#glow)');
+      g.appendChild(dot);
+      _dots.push({dot:dot,x0:x2,y0:y2,x1:ex,y1:y1,spd:spd,delay:delay+d*spd*0.5});
+    }
     svg.appendChild(g);
   }
 
-  gapLine(px850e, E.b, D.t, '#e07070','850↓', 0,   1.5);
-  gapLine(px855e, D.t, E.b, '#e8a020','855↑', 0.5, 2.0);
-  gapLine(px856e, D.t, E.b, '#4ade80','856↑', 0.4, 1.9);
-  gapLine(px810e, D.t, E.b, '#fb923c','810↑', 0.7, 2.1);
-  gapLine(px846e, D.t, E.b, '#38bdf8','846↑', 0.9, 2.3);
+  directLink('sl2-edi-850','#e07070','850 PO', 0,   1.5);
+  directLink('sl2-edi-855','#e8a020','855 ACK',0.5, 2.0);
+  directLink('sl2-edi-856','#4ade80','856 ASN',0.4, 1.9);
+  directLink('sl2-edi-846','#38bdf8','846 库存',0.9, 2.3);
+  directLink('sl2-edi-810','#fb923c','810 INV',0.7, 2.1);
 
-  // JS requestAnimationFrame loop — directly sets stroke-dashoffset every frame
-  // This guarantees smooth animation regardless of CSS animation support
+  // rAF: move dots by setting cx/cy attributes each frame
   if(window._gapRaf) cancelAnimationFrame(window._gapRaf);
-  var _gapStart=performance.now();
-  function _animGap(now){
-    var t=(now-_gapStart)/1000;
-    for(var i=0;i<_gapAnims.length;i++){
-      var a=_gapAnims[i];
-      var elapsed=t-a.delay; if(elapsed<0)elapsed=0;
-      var phase=(elapsed/a.spd)%1;
-      a.el.setAttribute('stroke-dashoffset', -(phase*26)*a.dir);
+  var _t0=performance.now();
+  (function _tick(now){
+    var t=(now-_t0)/1000;
+    for(var i=0;i<_dots.length;i++){
+      var a=_dots[i];
+      var ph=((t-a.delay)/a.spd)%1; if(ph<0)ph+=1;
+      a.dot.setAttribute('cx', a.x0+(a.x1-a.x0)*ph);
+      a.dot.setAttribute('cy', a.y0+(a.y1-a.y0)*ph);
     }
-    window._gapRaf=requestAnimationFrame(_animGap);
-  }
-  window._gapRaf=requestAnimationFrame(_animGap);
+    window._gapRaf=requestAnimationFrame(_tick);
+  })(performance.now());
 
   // 856 SCM→EDI segment (below EDI)
   pathFlow([[px856d, S.t],[px856d, D.b]], '#4ade80', '', 0.4, 1.9);
