@@ -2370,7 +2370,7 @@ function drawInternals(){
           <div style="font-family:'Space Mono',monospace;font-size:11px;font-weight:700;color:#e07070;">850 ←</div>
           <div style="font-size:6.5px;color:rgba(255,255,255,.35);">PO inbound</div>
         </div>
-        <div style="background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.25);border-radius:4px;padding:5px;text-align:center;">
+        <div id="sl2-edi-856" style="background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.25);border-radius:4px;padding:5px;text-align:center;">
           <div style="font-family:'Space Mono',monospace;font-size:11px;font-weight:700;color:var(--green);">856 →</div>
           <div style="font-size:6.5px;color:rgba(255,255,255,.35);">ASN outbound</div>
         </div>
@@ -3440,14 +3440,15 @@ function drawSloopFlows(){
   pathFlow([[px855, D.t],[px855, E.b]], '#e8a020','855 ACK', 0.5, 2.0);
 
   // 8. SCM → EDI 856 box → ECOM: 856 ASN
-  // 856 box is 2nd of 5 in EDI grid (repeat(5,1fr)) → center at D.l + D.w*0.30
-  // SCM and EDI share the same column, so this x is valid for SCM too.
-  // Straight vertical: SCM top → EDI 856 box bottom → EDI 856 box top → ECOM bottom
-  var px856 = D.l + D.w * 0.30;
+  // Use actual DOM position of the 856 box for pixel-perfect alignment
+  var edi856el = document.getElementById('sl2-edi-856');
+  var px856 = edi856el
+    ? ((edi856el.getBoundingClientRect().left + edi856el.getBoundingClientRect().right) / 2 - ob.left) / zv
+    : D.l + D.w * 0.30;
   pathFlow([
-    [px856, S.t],    // exit SCM top, aligned with 856 box
-    [px856, D.b],    // enter EDI from bottom — hits the 856 box
-    [px856, D.t],    // exit EDI top — through the 856 box
+    [px856, S.t],    // exit SCM top, aligned with actual 856 box center
+    [px856, D.b],    // enter EDI bottom — passes through 856 box
+    [px856, D.t],    // exit EDI top
     [px856, E.b]     // enter ECOM bottom
   ], '#4ade80','856 ASN', 0.4, 1.9);
 
