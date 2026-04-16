@@ -1012,6 +1012,7 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans SC',sans-seri
 /* ── Layer buttons panel ── */
 .layer-btns{
   display:flex; flex-direction:column; gap:8px; padding-top:4px;
+  overflow-y:auto; max-height:100%;
 }
 .layer-btn{
   border-radius:10px; padding:10px 14px; cursor:pointer;
@@ -1037,20 +1038,20 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans SC',sans-seri
 .layer-btn.L4{ border-color:rgba(56,189,248,.35); color:var(--blue); }
 .layer-btn.L4.active,.layer-btn.L4:hover{ background:rgba(56,189,248,.1); border-color:rgba(56,189,248,.6); box-shadow:0 0 16px rgba(56,189,248,.18); }
 
-/* ── Detail popup panel ── */
-.layer-detail{
+/* ── Floating detail popup (right side of ring) ── */
+#ring-detail-popup{
+  position:absolute; right:14px; top:50%; transform:translateY(-50%);
+  width:230px; max-height:78%; overflow-y:auto;
+  background:rgba(8,8,18,0.93); border:1.5px solid rgba(255,255,255,.15);
   border-radius:12px; padding:12px 14px;
-  border:1.5px solid; display:none; margin-top:4px;
   font-size:10px; line-height:1.65; color:var(--muted);
+  backdrop-filter:blur(10px);
+  display:none; z-index:50;
   animation:fadeIn .3s forwards;
 }
-.layer-detail.show{ display:block; }
-.layer-detail.D1{ border-color:rgba(192,57,43,.3); background:rgba(192,57,43,.05); }
-.layer-detail.D2{ border-color:rgba(232,160,32,.3); background:rgba(232,160,32,.04); }
-.layer-detail.D3{ border-color:rgba(56,189,248,.28); background:rgba(56,189,248,.04); }
-.layer-detail.D4{ border-color:rgba(167,139,250,.28); background:rgba(167,139,250,.04); }
-.layer-detail h4{ font-size:11px; font-weight:700; color:var(--text); margin-bottom:6px; }
-.ld-row{ display:flex; align-items:flex-start; gap:5px; margin-bottom:3px; }
+#ring-detail-popup.show{ display:block; }
+#ring-detail-popup h4{ font-size:11px; font-weight:700; color:var(--text); margin-bottom:8px; }
+.ld-row{ display:flex; align-items:flex-start; gap:5px; margin-bottom:4px; }
 .ld-row::before{ content:'▸'; flex-shrink:0; margin-top:1px; }
 
 /* ── Canvas ring ── */
@@ -1090,6 +1091,7 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans SC',sans-seri
         <canvas id="ring-canvas"></canvas>
         <div id="ring-labels"></div>
         <div id="ring-packets"></div>
+        <div id="ring-detail-popup"></div>
       </div>
 
       <!-- LAYER BUTTONS + DETAIL -->
@@ -1104,7 +1106,7 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans SC',sans-seri
           </div>
         </div>
 
-        <!-- L2: Manufacturers (between ecom and middleware) -->
+        <!-- L2: Manufacturers -->
         <div class="layer-btn L2" onclick="selectLayer(2)">
           <div class="lb-num" style="color:var(--orange);">2</div>
           <div class="lb-content">
@@ -1156,45 +1158,6 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans SC',sans-seri
               <span style="color:var(--blue);">846 库存 → D365FO→EDI→平台</span>
             </div>
           </div>
-        </div>
-
-        <!-- Detail panels -->
-        <div class="layer-detail D1" id="detail-1">
-          <h4>🛒 Layer 1 — 电商平台层 (outermost)</h4>
-          <div class="ld-row">80+ 电商平台：Walmart / Target / HomeDepot / BestBuy / Wayfair 等</div>
-          <div class="ld-row">150+ 销售代理登录产品管理平台选品推单</div>
-          <div class="ld-row">未来：平台部署 AI 采购 Agent，7×24 自动扫描 KPI</div>
-          <div class="ld-row" style="color:#e07070;">发出 → 850 PO 采购订单（红色流向 EDI）</div>
-          <div class="ld-row" style="color:var(--green);">接收 ← 856 ASN 发货通知（绿色）</div>
-          <div class="ld-row" style="color:var(--gold);">接收 ← 855 ACK / 810 INV / 846 库存（金/橙/蓝）</div>
-        </div>
-
-        <div class="layer-detail D2" id="detail-2">
-          <h4>🏭 Layer 2 — 制造商层</h4>
-          <div class="ld-row" style="color:#e07070;"><b>模式一（混乱）</b>：每家厂商直接面对80个平台，500+次重复对接</div>
-          <div class="ld-row" style="color:var(--green);"><b>模式二（有序）</b>：上传产品管理平台，EDI 自动路由至全部平台</div>
-          <div class="ld-row">商品 / 图片 / 尺寸 / 视频 → 产品管理平台 → 适配80平台</div>
-          <div class="ld-row">厂商无需直接面对任何电商平台 EDI 接口</div>
-        </div>
-
-        <div class="layer-detail D3" id="detail-3">
-          <h4>⚡ Layer 3 — EDI + 产品管理平台 中台</h4>
-          <div class="ld-row"><b style="color:var(--gold);">EDI Middleware</b>：300+ 映射，8年实战验证，不可复制</div>
-          <div class="ld-row" style="color:#e07070;">850 PO：EDI 接收 → 转发 D365 FO</div>
-          <div class="ld-row" style="color:var(--gold);">855 ACK / 810 INV：D365 FO → EDI → 平台</div>
-          <div class="ld-row" style="color:var(--green);">856 ASN：D365 SCM → EDI → 平台</div>
-          <div class="ld-row" style="color:var(--blue);">846 库存：D365 FO → EDI → 平台</div>
-          <div class="ld-row"><b style="color:var(--purple);">产品管理平台</b>：商品 / 内容 / 定价 / 佣金 / 多厂商多代理匹配</div>
-        </div>
-
-        <div class="layer-detail D4" id="detail-4">
-          <h4>🔵 Layer 4 — D365 运营核心 (innermost)</h4>
-          <div class="ld-row"><b style="color:var(--blue);">D365 FO</b>：Sales Order On Hold · Credit Mgmt · 80平台参数库</div>
-          <div class="ld-row">850 PO 进入 → 创建销售订单 → Release to D365 SCM</div>
-          <div class="ld-row">D365 FO 发出 855 ACK / 810 INV / 846 库存 → EDI</div>
-          <div class="ld-row"><b style="color:var(--green);">D365 SCM</b>：80平台 Packing Label · UCC-128 · GS1</div>
-          <div class="ld-row">D365 SCM 发出 856 ASN 发货通知 → EDI → 平台</div>
-          <div class="ld-row">UPS / FedEx 官方接口 · LTL + Small Parcel · 海外仓 WMS</div>
         </div>
 
       </div><!-- end layer-btns -->
@@ -1259,14 +1222,62 @@ const EDI_FLOWS = [
 
 let activeLayer = 0;
 
+const LAYER_DETAIL_DATA = {
+  1: {
+    border:'rgba(192,57,43,.55)', bg:'rgba(192,57,43,.08)',
+    html:`<h4>🛒 Layer 1 — 电商平台层</h4>
+      <div class="ld-row">80+ 电商平台：Walmart / Target / HomeDepot / BestBuy / Wayfair 等</div>
+      <div class="ld-row">150+ 销售代理登录产品管理平台选品推单</div>
+      <div class="ld-row">未来：平台部署 AI 采购 Agent，7×24 自动扫描 KPI</div>
+      <div class="ld-row" style="color:#e07070;">发出 → 850 PO 采购订单（红色）</div>
+      <div class="ld-row" style="color:#4ade80;">接收 ← 856 ASN 发货通知（绿色）</div>
+      <div class="ld-row" style="color:#e8a020;">接收 ← 855 ACK / 810 INV / 846 库存</div>`
+  },
+  2: {
+    border:'rgba(251,146,60,.55)', bg:'rgba(251,146,60,.07)',
+    html:`<h4>🏭 Layer 2 — 制造商层</h4>
+      <div class="ld-row" style="color:#e07070;"><b>模式一（混乱）</b>：每家厂商直接面对80个平台，500+次重复对接</div>
+      <div class="ld-row" style="color:#4ade80;"><b>模式二（有序）</b>：上传产品管理平台，EDI 自动路由至全部平台</div>
+      <div class="ld-row">商品 / 图片 / 尺寸 / 视频 → 产品管理平台 → 适配80平台</div>
+      <div class="ld-row">厂商无需直接面对任何电商平台 EDI 接口</div>`
+  },
+  3: {
+    border:'rgba(56,189,248,.55)', bg:'rgba(56,189,248,.07)',
+    html:`<h4>⚡ Layer 3 — EDI + 产品管理平台</h4>
+      <div class="ld-row"><b style="color:#e8a020;">EDI Middleware</b>：300+ 映射，8年实战验证，不可复制</div>
+      <div class="ld-row" style="color:#e07070;">850 PO：EDI 接收 → 转发 D365 FO</div>
+      <div class="ld-row" style="color:#e8a020;">855 ACK / 810 INV：D365 FO → EDI → 平台</div>
+      <div class="ld-row" style="color:#4ade80;">856 ASN：D365 SCM → EDI → 平台</div>
+      <div class="ld-row" style="color:#38bdf8;">846 库存：D365 FO → EDI → 平台</div>
+      <div class="ld-row"><b style="color:#a78bfa;">产品管理平台</b>：商品 / 内容 / 定价 / 佣金 / 多厂商多代理匹配</div>`
+  },
+  4: {
+    border:'rgba(167,139,250,.55)', bg:'rgba(167,139,250,.07)',
+    html:`<h4>🔵 Layer 4 — D365 运营核心</h4>
+      <div class="ld-row"><b style="color:#38bdf8;">D365 FO</b>：Sales Order On Hold · Credit Mgmt · 80平台参数库</div>
+      <div class="ld-row">850 PO 进入 → 创建销售订单 → Release to D365 SCM</div>
+      <div class="ld-row">D365 FO 发出 855 ACK / 810 INV / 846 库存 → EDI</div>
+      <div class="ld-row"><b style="color:#4ade80;">D365 SCM</b>：80平台 Packing Label · UCC-128 · GS1</div>
+      <div class="ld-row">D365 SCM 发出 856 ASN 发货通知 → EDI → 平台</div>
+      <div class="ld-row">UPS / FedEx 官方接口 · LTL + Small Parcel · 海外仓 WMS</div>`
+  }
+};
+
 function selectLayer(n){
   if(activeLayer === n){ n = 0; }
   activeLayer = n;
   document.querySelectorAll('.layer-btn').forEach(b=>b.classList.remove('active'));
-  document.querySelectorAll('.layer-detail').forEach(d=>d.classList.remove('show'));
+  const popup = document.getElementById('ring-detail-popup');
   if(n > 0){
     document.querySelector('.layer-btn.L'+n).classList.add('active');
-    document.getElementById('detail-'+n).classList.add('show');
+    const d = LAYER_DETAIL_DATA[n];
+    popup.style.borderColor = d.border;
+    popup.style.background = 'rgba(8,8,18,0.93)';
+    popup.style.boxShadow = '0 0 24px ' + d.border;
+    popup.innerHTML = d.html;
+    popup.className = 'show';
+  } else {
+    popup.className = '';
   }
 }
 
@@ -1591,7 +1602,8 @@ function drawInternals(){
   canvas.height = container.offsetHeight;
   activeLayer = 0;
   document.querySelectorAll('.layer-btn').forEach(b=>b.classList.remove('active'));
-  document.querySelectorAll('.layer-detail').forEach(d=>d.classList.remove('show'));
+  const popup = document.getElementById('ring-detail-popup');
+  if(popup) popup.className = '';
   startRingAnim();
 }
 </script>
