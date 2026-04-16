@@ -3503,17 +3503,17 @@ function drawSloopFlows(){
       g.appendChild(el('polygon',{
         points:ax+','+ay+' '+(ax-ux*8-uy*4)+','+(ay-uy*8+ux*4)+' '+(ax-ux*8+uy*4)+','+(ay-uy*8-ux*4),
         fill:color,opacity:'0.85'}));}
-    // label at midpoint
+    // label at midpoint — generous width so text is never clipped
     var mx=(xEdi+xEcom)/2, my=(yEdi+yEcom)/2;
-    var tw=lbl.length*5.5+10;
+    var tw=lbl.length*8+18; // wider: 8px per char + 18px padding
     var bg=document.createElementNS(NS,'rect');
-    bg.setAttribute('x',mx-tw/2);bg.setAttribute('y',my-6);bg.setAttribute('width',tw);bg.setAttribute('height',12);
-    bg.setAttribute('rx','3');bg.setAttribute('fill','rgba(2,2,10,0.92)');
-    bg.setAttribute('stroke',color);bg.setAttribute('stroke-opacity','0.6');bg.setAttribute('stroke-width','0.8');
+    bg.setAttribute('x',mx-tw/2);bg.setAttribute('y',my-7);bg.setAttribute('width',tw);bg.setAttribute('height',14);
+    bg.setAttribute('rx','3');bg.setAttribute('fill','rgba(2,2,10,0.95)');
+    bg.setAttribute('stroke',color);bg.setAttribute('stroke-opacity','0.8');bg.setAttribute('stroke-width','1');
     g.appendChild(bg);
     var tx=document.createElementNS(NS,'text');
-    tx.setAttribute('x',mx);tx.setAttribute('y',my+4);tx.setAttribute('text-anchor','middle');
-    tx.setAttribute('font-size','7');tx.setAttribute('fill',color);
+    tx.setAttribute('x',mx);tx.setAttribute('y',my+4.5);tx.setAttribute('text-anchor','middle');
+    tx.setAttribute('font-size','8.5');tx.setAttribute('fill',color);
     tx.setAttribute('font-family','Space Mono,monospace');tx.setAttribute('font-weight','bold');
     tx.textContent=lbl; g.appendChild(tx);
     // 2 moving dots — direction controlled by inbound flag
