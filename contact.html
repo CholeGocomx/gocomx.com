@@ -143,6 +143,33 @@ nav {
   padding: 0 12px; font-size: var(--fs-sm); color: var(--muted);
 }
 
+/* Contact Form */
+.form-row { margin-bottom: 11px; }
+.form-label { font-size: var(--fs-sm); font-weight: 600; color: var(--text); margin-bottom: 5px; display: block; }
+.form-input, .form-textarea {
+  width: 100%; padding: 9px 13px;
+  border: 1.5px solid #e0e0e0; border-radius: 8px;
+  font-size: var(--fs-sm); font-family: 'Inter', sans-serif;
+  color: var(--text); background: #fff;
+  outline: none; transition: border-color .15s;
+}
+.form-input:focus, .form-textarea:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(0,120,212,.08); }
+.form-textarea { resize: vertical; min-height: 80px; }
+.form-submit {
+  width: 100%; padding: 11px; font-size: var(--fs-md); font-weight: 700;
+  background: var(--blue); color: #fff; border: none; border-radius: 8px;
+  cursor: pointer; font-family: 'Inter', sans-serif; transition: background .15s; margin-top: 2px;
+}
+.form-submit:hover { background: var(--blue-dark); }
+.form-submit:disabled { background: #93afc8; cursor: not-allowed; }
+.form-success {
+  display: none; text-align: center; padding: 18px 12px;
+  background: #f0fdf4; border: 1.5px solid #86efac; border-radius: 10px; margin-top: 10px;
+}
+.form-success-icon { font-size: 28px; margin-bottom: 6px; }
+.form-success-title { font-size: var(--fs-md); font-weight: 700; color: #16a34a; }
+.form-success-sub { font-size: var(--fs-sm); color: #404040; margin-top: 3px; }
+
 
 /* FOOTER */
 footer {
@@ -312,6 +339,32 @@ footer {
       </div>
     </div>
 
+    <!-- Contact Form -->
+    <div class="form-divider"><span>Or send a message · 或直接留言</span></div>
+    <form id="contact-form">
+      <input type="hidden" name="access_key" value="ad194318-36b1-401b-8df8-4d1ca90574c8">
+      <input type="hidden" name="subject" value="GoComX Website Inquiry">
+      <input type="hidden" name="from_name" value="GoComX Website">
+      <div class="form-row">
+        <label class="form-label">Name · 姓名</label>
+        <input type="text" name="name" class="form-input" placeholder="Your name" required>
+      </div>
+      <div class="form-row">
+        <label class="form-label">Email · 邮箱</label>
+        <input type="email" name="email" class="form-input" placeholder="your@email.com" required>
+      </div>
+      <div class="form-row">
+        <label class="form-label">Message · 留言</label>
+        <textarea name="message" class="form-textarea" placeholder="Tell us about your business · 请简单介绍您的业务需求" required></textarea>
+      </div>
+      <button type="submit" class="form-submit" id="submit-btn">Send Message · 发送留言</button>
+      <div class="form-success" id="form-success">
+        <div class="form-success-icon">✅</div>
+        <div class="form-success-title">Message Sent!</div>
+        <div class="form-success-sub">We'll reply within one business day · 一个工作日内回复</div>
+      </div>
+    </form>
+
   </div>
 
 </div>
@@ -326,6 +379,33 @@ footer {
 </footer>
 
 <script>
+// Web3Forms AJAX submission
+document.getElementById('contact-form').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  var btn = document.getElementById('submit-btn');
+  btn.disabled = true;
+  btn.textContent = 'Sending...';
+  try {
+    var res = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      body: new FormData(this)
+    });
+    var data = await res.json();
+    if (data.success) {
+      document.getElementById('form-success').style.display = 'block';
+      this.reset();
+      btn.textContent = 'Send Message · 发送留言';
+      btn.disabled = false;
+    } else {
+      btn.textContent = 'Failed — Try Again';
+      btn.disabled = false;
+    }
+  } catch(err) {
+    btn.textContent = 'Error — Try Again';
+    btn.disabled = false;
+  }
+});
+
 function copyEmail(el) {
   navigator.clipboard.writeText('info@gocomx.com').then(function() {
     const indicator = document.getElementById('copy-indicator');
