@@ -170,7 +170,7 @@ nav {
 .ticker-wrap {
   height: 260px; overflow: hidden; position: relative;
   border-radius: 10px; border: 1px solid #e2e8f0;
-  background: linear-gradient(160deg,#f0f7ff 0%,#e8f0fe 100%);
+  background: #f8faff;
   margin-bottom: 14px;
 }
 .ticker-wrap::before, .ticker-wrap::after {
@@ -185,16 +185,16 @@ nav {
 }
 .ticker-list:hover { animation-play-state: paused; }
 .ticker-item {
-  display: inline-flex; align-items: center; gap: 7px;
-  padding: 5px 12px; border-radius: 20px;
-  font-size: 12px; font-weight: 600; white-space: nowrap;
-  border: 1px solid rgba(0,120,212,.25);
-  background: #eff6ff; color: #0078d4;
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 4px 12px;
+  font-size: 13px; font-weight: 600; white-space: nowrap;
+  color: #1e40af; background: none; border: none;
   transition: transform .15s;
 }
-.ticker-item:hover { transform: translateX(3px); }
-.ticker-item.odd { background:#0078d4; color:#ffffff; border-color:#005a9e; }
+.ticker-item:hover { transform: translateX(4px); }
+.ticker-item.odd { color: #0078d4; }
 .ticker-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; background: currentColor; opacity: .7; }
+.ticker-logo { width: 16px; height: 16px; border-radius: 3px; object-fit: contain; flex-shrink: 0; background: #fff; }
 @keyframes tickerUp {
   0%   { transform: translateY(0); }
   100% { transform: translateY(-50%); }
@@ -264,63 +264,62 @@ footer {
     </div>
     <div class="ticker-wrap">
       <div class="ticker-list" id="ticker-list">
-        <div class="ticker-item"><span class="ticker-dot"></span>Amazon</div>
-        <div class="ticker-item odd"><span class="ticker-dot"></span>Walmart</div>
-        <div class="ticker-item"><span class="ticker-dot"></span>Target</div>
-        <div class="ticker-item odd"><span class="ticker-dot"></span>The Home Depot</div>
-        <div class="ticker-item"><span class="ticker-dot"></span>Lowe's</div>
-        <div class="ticker-item odd"><span class="ticker-dot"></span>Best Buy</div>
-        <div class="ticker-item"><span class="ticker-dot"></span>Wayfair</div>
-        <div class="ticker-item odd"><span class="ticker-dot"></span>Macy's</div>
-        <div class="ticker-item"><span class="ticker-dot"></span>Kohl's</div>
-        <div class="ticker-item odd"><span class="ticker-dot"></span>Sam's Club</div>
-        <div class="ticker-item"><span class="ticker-dot"></span>Costco</div>
-        <div class="ticker-item odd"><span class="ticker-dot"></span>Costco Business Center</div>
-        <div class="ticker-item"><span class="ticker-dot"></span>QVC</div>
-        <div class="ticker-item odd"><span class="ticker-dot"></span>Grainger</div>
-        <div class="ticker-item"><span class="ticker-dot"></span>Zoro</div>
-        <div class="ticker-item odd"><span class="ticker-dot"></span>HD Supply</div>
-        <div class="ticker-item"><span class="ticker-dot"></span>Staples</div>
-        <div class="ticker-item odd"><span class="ticker-dot"></span>Houzz</div>
-        <div class="ticker-item"><span class="ticker-dot"></span>Hayneedle</div>
-        <div class="ticker-item odd"><span class="ticker-dot"></span>Zulily</div>
-        <div class="ticker-item"><span class="ticker-dot"></span>HomeGoods</div>
-        <div class="ticker-item odd"><span class="ticker-dot"></span>TJ Maxx</div>
-        <div class="ticker-item"><span class="ticker-dot"></span>Marshalls</div>
-        <div class="ticker-item odd"><span class="ticker-dot"></span>Burlington</div>
-        <div class="ticker-item"><span class="ticker-dot"></span>Nebraska Furniture Mart</div>
-        <div class="ticker-item odd"><span class="ticker-dot"></span>Living Spaces</div>
-        <div class="ticker-item"><span class="ticker-dot"></span>American Furniture Warehouse</div>
-        <div class="ticker-item odd"><span class="ticker-dot"></span>RC Willey</div>
-        <div class="ticker-item"><span class="ticker-dot"></span>HOM Furniture</div>
-        <div class="ticker-item odd"><span class="ticker-dot"></span>Rooms To Go</div>
-        <div class="ticker-item"><span class="ticker-dot"></span>Steinhafels</div>
-        <div class="ticker-item odd"><span class="ticker-dot"></span>Conn's HomePlus</div>
-        <div class="ticker-item"><span class="ticker-dot"></span>Lamps Plus</div>
-        <div class="ticker-item odd"><span class="ticker-dot"></span>Old Time Pottery</div>
-        <div class="ticker-item"><span class="ticker-dot"></span>Kirkland's</div>
-        <div class="ticker-item odd"><span class="ticker-dot"></span>Bed Bath &amp; Beyond</div>
-        <div class="ticker-item"><span class="ticker-dot"></span>National Business Furniture</div>
-        <div class="ticker-item odd"><span class="ticker-dot"></span>Worthington Direct</div>
-        <div class="ticker-item"><span class="ticker-dot"></span>Cymax</div>
-        <div class="ticker-item odd"><span class="ticker-dot"></span>School Outfitters</div>
-        <div class="ticker-item"><span class="ticker-dot"></span>DirectBuy</div>
-        <div class="ticker-item odd"><span class="ticker-dot"></span>Cost Plus World Market</div>
-        <div class="ticker-item"><span class="ticker-dot"></span>PriceSmart</div>
-        <div class="ticker-item odd"><span class="ticker-dot"></span>Amazon Canada</div>
-        <div class="ticker-item"><span class="ticker-dot"></span>S.P. Richards</div>
-        <div class="ticker-item odd"><span class="ticker-dot"></span>Veyer</div>
-        <div class="ticker-item"><span class="ticker-dot"></span>Bluestem Brands</div>
-        <div class="ticker-item odd"><span class="ticker-dot"></span>ITA Group</div>
-        <div class="ticker-item"><span class="ticker-dot"></span>BI Worldwide</div>
-        <div class="ticker-item odd"><span class="ticker-dot"></span>Army &amp; Air Force Exchange (AAFES)</div>
-        <div class="ticker-item"><span class="ticker-dot"></span>Navy Exchange (NEX)</div>
-        <div class="ticker-item odd"><span class="ticker-dot"></span>Fastenal</div>
-        <div class="ticker-item"><span class="ticker-dot"></span>Bison Office</div>
-        <div class="ticker-item odd"><span class="ticker-dot"></span>Farmer's Furniture</div>
-        <div class="ticker-item"><span class="ticker-dot"></span>City Mill</div>
-        <div class="ticker-item odd"><span class="ticker-dot"></span>Posturite (UK)</div>
-        <div class="ticker-item"><span class="ticker-dot"></span>S.P. Richards</div>
+        <div class="ticker-item"><img class="ticker-logo" src="https://www.google.com/s2/favicons?domain=amazon.com&sz=32" onerror="this.style.display='none'">Amazon</div>
+        <div class="ticker-item odd"><img class="ticker-logo" src="https://www.google.com/s2/favicons?domain=walmart.com&sz=32" onerror="this.style.display='none'">Walmart</div>
+        <div class="ticker-item"><img class="ticker-logo" src="https://www.google.com/s2/favicons?domain=target.com&sz=32" onerror="this.style.display='none'">Target</div>
+        <div class="ticker-item odd"><img class="ticker-logo" src="https://www.google.com/s2/favicons?domain=homedepot.com&sz=32" onerror="this.style.display='none'">The Home Depot</div>
+        <div class="ticker-item"><img class="ticker-logo" src="https://www.google.com/s2/favicons?domain=lowes.com&sz=32" onerror="this.style.display='none'">Lowe's</div>
+        <div class="ticker-item odd"><img class="ticker-logo" src="https://www.google.com/s2/favicons?domain=bestbuy.com&sz=32" onerror="this.style.display='none'">Best Buy</div>
+        <div class="ticker-item"><img class="ticker-logo" src="https://www.google.com/s2/favicons?domain=wayfair.com&sz=32" onerror="this.style.display='none'">Wayfair</div>
+        <div class="ticker-item odd"><img class="ticker-logo" src="https://www.google.com/s2/favicons?domain=macys.com&sz=32" onerror="this.style.display='none'">Macy's</div>
+        <div class="ticker-item"><img class="ticker-logo" src="https://www.google.com/s2/favicons?domain=kohls.com&sz=32" onerror="this.style.display='none'">Kohl's</div>
+        <div class="ticker-item odd"><img class="ticker-logo" src="https://www.google.com/s2/favicons?domain=samsclub.com&sz=32" onerror="this.style.display='none'">Sam's Club</div>
+        <div class="ticker-item"><img class="ticker-logo" src="https://www.google.com/s2/favicons?domain=costco.com&sz=32" onerror="this.style.display='none'">Costco</div>
+        <div class="ticker-item odd"><img class="ticker-logo" src="https://www.google.com/s2/favicons?domain=costco.com&sz=32" onerror="this.style.display='none'">Costco Business Center</div>
+        <div class="ticker-item"><img class="ticker-logo" src="https://www.google.com/s2/favicons?domain=qvc.com&sz=32" onerror="this.style.display='none'">QVC</div>
+        <div class="ticker-item odd"><img class="ticker-logo" src="https://www.google.com/s2/favicons?domain=grainger.com&sz=32" onerror="this.style.display='none'">Grainger</div>
+        <div class="ticker-item"><img class="ticker-logo" src="https://www.google.com/s2/favicons?domain=zoro.com&sz=32" onerror="this.style.display='none'">Zoro</div>
+        <div class="ticker-item odd"><img class="ticker-logo" src="https://www.google.com/s2/favicons?domain=hdsupply.com&sz=32" onerror="this.style.display='none'">HD Supply</div>
+        <div class="ticker-item"><img class="ticker-logo" src="https://www.google.com/s2/favicons?domain=staples.com&sz=32" onerror="this.style.display='none'">Staples</div>
+        <div class="ticker-item odd"><img class="ticker-logo" src="https://www.google.com/s2/favicons?domain=houzz.com&sz=32" onerror="this.style.display='none'">Houzz</div>
+        <div class="ticker-item"><img class="ticker-logo" src="https://www.google.com/s2/favicons?domain=hayneedle.com&sz=32" onerror="this.style.display='none'">Hayneedle</div>
+        <div class="ticker-item odd"><img class="ticker-logo" src="https://www.google.com/s2/favicons?domain=zulily.com&sz=32" onerror="this.style.display='none'">Zulily</div>
+        <div class="ticker-item"><img class="ticker-logo" src="https://www.google.com/s2/favicons?domain=homegoods.com&sz=32" onerror="this.style.display='none'">HomeGoods</div>
+        <div class="ticker-item odd"><img class="ticker-logo" src="https://www.google.com/s2/favicons?domain=tjmaxx.com&sz=32" onerror="this.style.display='none'">TJ Maxx</div>
+        <div class="ticker-item"><img class="ticker-logo" src="https://www.google.com/s2/favicons?domain=marshalls.com&sz=32" onerror="this.style.display='none'">Marshalls</div>
+        <div class="ticker-item odd"><img class="ticker-logo" src="https://www.google.com/s2/favicons?domain=burlington.com&sz=32" onerror="this.style.display='none'">Burlington</div>
+        <div class="ticker-item"><img class="ticker-logo" src="https://www.google.com/s2/favicons?domain=nfm.com&sz=32" onerror="this.style.display='none'">Nebraska Furniture Mart</div>
+        <div class="ticker-item odd"><img class="ticker-logo" src="https://www.google.com/s2/favicons?domain=livingspaces.com&sz=32" onerror="this.style.display='none'">Living Spaces</div>
+        <div class="ticker-item"><img class="ticker-logo" src="https://www.google.com/s2/favicons?domain=afw.com&sz=32" onerror="this.style.display='none'">American Furniture Warehouse</div>
+        <div class="ticker-item odd"><img class="ticker-logo" src="https://www.google.com/s2/favicons?domain=rcwilley.com&sz=32" onerror="this.style.display='none'">RC Willey</div>
+        <div class="ticker-item"><img class="ticker-logo" src="https://www.google.com/s2/favicons?domain=homfurniture.com&sz=32" onerror="this.style.display='none'">HOM Furniture</div>
+        <div class="ticker-item odd"><img class="ticker-logo" src="https://www.google.com/s2/favicons?domain=roomstogo.com&sz=32" onerror="this.style.display='none'">Rooms To Go</div>
+        <div class="ticker-item"><img class="ticker-logo" src="https://www.google.com/s2/favicons?domain=steinhafels.com&sz=32" onerror="this.style.display='none'">Steinhafels</div>
+        <div class="ticker-item odd"><img class="ticker-logo" src="https://www.google.com/s2/favicons?domain=conns.com&sz=32" onerror="this.style.display='none'">Conn's HomePlus</div>
+        <div class="ticker-item"><img class="ticker-logo" src="https://www.google.com/s2/favicons?domain=lampsplus.com&sz=32" onerror="this.style.display='none'">Lamps Plus</div>
+        <div class="ticker-item odd"><img class="ticker-logo" src="https://www.google.com/s2/favicons?domain=oldtimepottery.com&sz=32" onerror="this.style.display='none'">Old Time Pottery</div>
+        <div class="ticker-item"><img class="ticker-logo" src="https://www.google.com/s2/favicons?domain=kirklands.com&sz=32" onerror="this.style.display='none'">Kirkland's</div>
+        <div class="ticker-item odd"><img class="ticker-logo" src="https://www.google.com/s2/favicons?domain=beyond.com&sz=32" onerror="this.style.display='none'">Bed Bath &amp; Beyond</div>
+        <div class="ticker-item"><img class="ticker-logo" src="https://www.google.com/s2/favicons?domain=nationalbusinessfurniture.com&sz=32" onerror="this.style.display='none'">National Business Furniture</div>
+        <div class="ticker-item odd"><img class="ticker-logo" src="https://www.google.com/s2/favicons?domain=worthingtondirect.com&sz=32" onerror="this.style.display='none'">Worthington Direct</div>
+        <div class="ticker-item"><img class="ticker-logo" src="https://www.google.com/s2/favicons?domain=cymax.com&sz=32" onerror="this.style.display='none'">Cymax</div>
+        <div class="ticker-item odd"><img class="ticker-logo" src="https://www.google.com/s2/favicons?domain=schooloutfitters.com&sz=32" onerror="this.style.display='none'">School Outfitters</div>
+        <div class="ticker-item"><img class="ticker-logo" src="https://www.google.com/s2/favicons?domain=directbuy.com&sz=32" onerror="this.style.display='none'">DirectBuy</div>
+        <div class="ticker-item odd"><img class="ticker-logo" src="https://www.google.com/s2/favicons?domain=worldmarket.com&sz=32" onerror="this.style.display='none'">Cost Plus World Market</div>
+        <div class="ticker-item"><img class="ticker-logo" src="https://www.google.com/s2/favicons?domain=pricesmart.com&sz=32" onerror="this.style.display='none'">PriceSmart</div>
+        <div class="ticker-item odd"><img class="ticker-logo" src="https://www.google.com/s2/favicons?domain=amazon.ca&sz=32" onerror="this.style.display='none'">Amazon Canada</div>
+        <div class="ticker-item"><img class="ticker-logo" src="https://www.google.com/s2/favicons?domain=sprichards.com&sz=32" onerror="this.style.display='none'">S.P. Richards</div>
+        <div class="ticker-item odd"><img class="ticker-logo" src="https://www.google.com/s2/favicons?domain=veyer.com&sz=32" onerror="this.style.display='none'">Veyer</div>
+        <div class="ticker-item"><img class="ticker-logo" src="https://www.google.com/s2/favicons?domain=bluestem.com&sz=32" onerror="this.style.display='none'">Bluestem Brands</div>
+        <div class="ticker-item odd"><img class="ticker-logo" src="https://www.google.com/s2/favicons?domain=itagroup.com&sz=32" onerror="this.style.display='none'">ITA Group</div>
+        <div class="ticker-item"><img class="ticker-logo" src="https://www.google.com/s2/favicons?domain=biworldwide.com&sz=32" onerror="this.style.display='none'">BI Worldwide</div>
+        <div class="ticker-item odd"><img class="ticker-logo" src="https://www.google.com/s2/favicons?domain=shopmyexchange.com&sz=32" onerror="this.style.display='none'">Army &amp; Air Force Exchange (AAFES)</div>
+        <div class="ticker-item"><img class="ticker-logo" src="https://www.google.com/s2/favicons?domain=mynavyexchange.com&sz=32" onerror="this.style.display='none'">Navy Exchange (NEX)</div>
+        <div class="ticker-item odd"><img class="ticker-logo" src="https://www.google.com/s2/favicons?domain=fastenal.com&sz=32" onerror="this.style.display='none'">Fastenal</div>
+        <div class="ticker-item"><img class="ticker-logo" src="https://www.google.com/s2/favicons?domain=bisonoffice.com&sz=32" onerror="this.style.display='none'">Bison Office</div>
+        <div class="ticker-item odd"><img class="ticker-logo" src="https://www.google.com/s2/favicons?domain=farmersfurniture.com&sz=32" onerror="this.style.display='none'">Farmer's Furniture</div>
+        <div class="ticker-item"><img class="ticker-logo" src="https://www.google.com/s2/favicons?domain=citymill.com&sz=32" onerror="this.style.display='none'">City Mill</div>
+        <div class="ticker-item odd"><img class="ticker-logo" src="https://www.google.com/s2/favicons?domain=posturite.co.uk&sz=32" onerror="this.style.display='none'">Posturite (UK)</div>
       </div>
     </div>
   </div>
