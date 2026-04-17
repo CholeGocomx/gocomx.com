@@ -145,21 +145,41 @@ nav {
 </div>
 
 <script>
-const CODE = 'GOCOMXCHLOE';
+const VALIDATE_URL = 'https://gocomx-api-f4c9eegcfsbxeban.westus2-01.azurewebsites.net/api/validateCode';
 
-function checkCode() {
+async function checkCode() {
   const input = document.getElementById('code-input');
-  const err = document.getElementById('error-msg');
-  const val = input.value.trim().toUpperCase();
-  if (val === CODE) {
-    document.getElementById('lock-screen').style.display = 'none';
-    const deck = document.getElementById('deck-screen');
-    deck.style.display = 'flex';
-    err.textContent = '';
-  } else {
-    input.classList.add('error');
-    err.textContent = 'Incorrect code. Please try again. · 访问码错误，请重试。';
-    setTimeout(() => input.classList.remove('error'), 1500);
+  const err   = document.getElementById('error-msg');
+  const btn   = document.querySelector('.lock-btn');
+  const val   = input.value.trim();
+
+  if (!val) return;
+
+  btn.disabled = true;
+  btn.textContent = 'Checking…';
+  err.textContent = '';
+
+  try {
+    const res  = await fetch(VALIDATE_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ code: val, page: 'investor' })
+    });
+    const data = await res.json();
+
+    if (data.valid) {
+      document.getElementById('lock-screen').style.display = 'none';
+      document.getElementById('deck-screen').style.display = 'flex';
+    } else {
+      input.classList.add('error');
+      err.textContent = 'Incorrect code. Please try again. · 访问码错误，请重试。';
+      setTimeout(() => input.classList.remove('error'), 1500);
+    }
+  } catch (e) {
+    err.textContent = 'Connection error. Please try again. · 连接失败，请重试。';
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Unlock →';
   }
 }
 
