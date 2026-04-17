@@ -74,24 +74,38 @@ nav {
 
 /* DOCUMENT VIEW */
 #doc-screen {
-  flex: 1; overflow: hidden; display: none; flex-direction: column;
+  flex: 1; display: none; flex-direction: column; align-items: center; justify-content: center;
+  background: var(--bg);
 }
-.deck-bar {
-  flex-shrink: 0;
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 10px 48px; background: #fff;
-  border-bottom: 1px solid var(--border);
+.doc-card {
+  background: var(--card); border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 52px 48px; width: 100%; max-width: 520px;
+  text-align: center;
 }
-.deck-title { font-size: var(--fs-md); font-weight: 600; color: var(--text); }
-.deck-sub { font-size: var(--fs-sm); color: #9ca3af; margin-top: 2px; }
-.deck-logout {
+.doc-icon { font-size: 56px; margin-bottom: 20px; }
+.doc-title { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 6px; }
+.doc-title span { color: var(--blue); }
+.doc-sub { font-size: var(--fs-sm); color: var(--muted); margin-bottom: 32px; line-height: 1.7; }
+.doc-open-btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 14px 32px; font-size: var(--fs-md); font-weight: 700;
+  background: var(--blue); color: #fff; border: none; border-radius: 8px;
+  cursor: pointer; font-family: inherit; text-decoration: none;
+  transition: background .15s; margin-bottom: 16px; width: 100%; justify-content: center;
+}
+.doc-open-btn:hover { background: var(--blue-dark); }
+.doc-lock-btn {
   font-size: var(--fs-sm); color: var(--muted); cursor: pointer;
-  padding: 6px 14px; border: 1px solid var(--border); border-radius: 6px;
-  background: #fff; font-family: inherit; transition: all .15s;
+  padding: 8px 20px; border: 1px solid var(--border); border-radius: 6px;
+  background: #fff; font-family: inherit; transition: all .15s; width: 100%;
 }
-.deck-logout:hover { color: var(--text); border-color: var(--muted); }
-.frame-wrap { flex: 1; overflow: hidden; }
-.frame-wrap iframe { width: 100%; height: 100%; border: none; display: block; }
+.doc-lock-btn:hover { color: var(--text); border-color: var(--muted); }
+.doc-notice {
+  margin-top: 24px; padding: 12px 16px;
+  background: var(--blue-light); border-radius: 8px;
+  font-size: var(--fs-sm); color: var(--blue); line-height: 1.6;
+}
 
 @media (max-width: 640px) {
   nav, .deck-bar { padding-left: 20px; padding-right: 20px; }
@@ -133,15 +147,21 @@ nav {
 
 <!-- DOCUMENT SCREEN -->
 <div id="doc-screen">
-  <div class="deck-bar">
-    <div>
-      <div class="deck-title">GoComX — Quote &amp; Fee Schedule · 报价与费用明细</div>
-      <div class="deck-sub">Confidential · For authorized recipients only · 保密文件，仅供授权人员查阅</div>
+  <div class="doc-card">
+    <div class="doc-icon">📄</div>
+    <div class="doc-title">Quote &amp; <span>Fee Schedule</span></div>
+    <p class="doc-sub">
+      Access granted. Your document is ready to view.<br>
+      <span style="font-family:'Noto Sans SC',sans-serif;">验证成功，您的文件已准备好查阅。</span>
+    </p>
+    <a class="doc-open-btn" href="https://gocomx.sharepoint.com/:b:/g/IQDZJs5_dfWFQqWndSphzHmWAU0AYZ_qOVGbiJ-ke1ir8v4" target="_blank" rel="noopener">
+      📂 Open Document · 打开文件
+    </a>
+    <button class="doc-lock-btn" onclick="lockOut()">🔒 Lock &amp; Exit</button>
+    <div class="doc-notice">
+      🔒 Confidential · For authorized recipients only<br>
+      <span style="font-family:'Noto Sans SC',sans-serif;">保密文件，仅供授权人员查阅，请勿转发。</span>
     </div>
-    <button class="deck-logout" onclick="lockOut()">🔒 Lock</button>
-  </div>
-  <div class="frame-wrap">
-    <iframe src="https://gocomx.sharepoint.com/:b:/g/IQDZJs5_dfWFQqWndSphzHmWAU0AYZ_qOVGbiJ-ke1ir8v4" frameborder="0" title="GoComX Quote & Fee Schedule" allowfullscreen></iframe>
   </div>
 </div>
 
