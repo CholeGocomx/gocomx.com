@@ -188,11 +188,12 @@ nav {
   display: inline-flex; align-items: center; gap: 7px;
   padding: 5px 12px; border-radius: 20px;
   font-size: 12px; font-weight: 600; white-space: nowrap;
-  border: 1px solid; transition: transform .15s;
+  border: 1px solid rgba(0,120,212,.25);
+  background: #eff6ff; color: #0078d4;
+  transition: transform .15s;
 }
 .ticker-item:hover { transform: translateX(3px); }
-.tc1,.tc2,.tc3,.tc4,.tc5,.tc6 { background:#eff6ff; color:#0078d4; border-color:rgba(0,120,212,.25); }
-.tc2,.tc4,.tc6 { background:#0078d4; color:#ffffff; border-color:#005a9e; }
+.ticker-item.odd { background:#0078d4; color:#ffffff; border-color:#005a9e; }
 .ticker-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; background: currentColor; opacity: .7; }
 @keyframes tickerUp {
   0%   { transform: translateY(0); }
@@ -263,63 +264,63 @@ footer {
     </div>
     <div class="ticker-wrap">
       <div class="ticker-list" id="ticker-list">
-        <div class="ticker-item tc1"><span class="ticker-dot"></span>Amazon</div>
-        <div class="ticker-item tc2"><span class="ticker-dot"></span>Walmart</div>
-        <div class="ticker-item tc3"><span class="ticker-dot"></span>Target</div>
-        <div class="ticker-item tc4"><span class="ticker-dot"></span>The Home Depot</div>
-        <div class="ticker-item tc5"><span class="ticker-dot"></span>Lowe's</div>
-        <div class="ticker-item tc6"><span class="ticker-dot"></span>Best Buy</div>
-        <div class="ticker-item tc1"><span class="ticker-dot"></span>Wayfair</div>
-        <div class="ticker-item tc2"><span class="ticker-dot"></span>Macy's</div>
-        <div class="ticker-item tc3"><span class="ticker-dot"></span>Kohl's</div>
-        <div class="ticker-item tc4"><span class="ticker-dot"></span>Sam's Club</div>
-        <div class="ticker-item tc5"><span class="ticker-dot"></span>Costco</div>
-        <div class="ticker-item tc6"><span class="ticker-dot"></span>Costco Business Center</div>
-        <div class="ticker-item tc1"><span class="ticker-dot"></span>QVC</div>
-        <div class="ticker-item tc2"><span class="ticker-dot"></span>Grainger</div>
-        <div class="ticker-item tc3"><span class="ticker-dot"></span>Zoro</div>
-        <div class="ticker-item tc4"><span class="ticker-dot"></span>HD Supply</div>
-        <div class="ticker-item tc5"><span class="ticker-dot"></span>Staples</div>
-        <div class="ticker-item tc6"><span class="ticker-dot"></span>Houzz</div>
-        <div class="ticker-item tc1"><span class="ticker-dot"></span>Hayneedle</div>
-        <div class="ticker-item tc2"><span class="ticker-dot"></span>Zulily</div>
-        <div class="ticker-item tc3"><span class="ticker-dot"></span>HomeGoods</div>
-        <div class="ticker-item tc4"><span class="ticker-dot"></span>TJ Maxx</div>
-        <div class="ticker-item tc5"><span class="ticker-dot"></span>Marshalls</div>
-        <div class="ticker-item tc6"><span class="ticker-dot"></span>Burlington</div>
-        <div class="ticker-item tc1"><span class="ticker-dot"></span>Nebraska Furniture Mart</div>
-        <div class="ticker-item tc2"><span class="ticker-dot"></span>Living Spaces</div>
-        <div class="ticker-item tc3"><span class="ticker-dot"></span>American Furniture Warehouse</div>
-        <div class="ticker-item tc4"><span class="ticker-dot"></span>RC Willey</div>
-        <div class="ticker-item tc5"><span class="ticker-dot"></span>HOM Furniture</div>
-        <div class="ticker-item tc6"><span class="ticker-dot"></span>Rooms To Go</div>
-        <div class="ticker-item tc1"><span class="ticker-dot"></span>Steinhafels</div>
-        <div class="ticker-item tc2"><span class="ticker-dot"></span>Conn's HomePlus</div>
-        <div class="ticker-item tc3"><span class="ticker-dot"></span>Lamps Plus</div>
-        <div class="ticker-item tc4"><span class="ticker-dot"></span>Old Time Pottery</div>
-        <div class="ticker-item tc5"><span class="ticker-dot"></span>Kirkland's</div>
-        <div class="ticker-item tc6"><span class="ticker-dot"></span>Bed Bath &amp; Beyond</div>
-        <div class="ticker-item tc1"><span class="ticker-dot"></span>National Business Furniture</div>
-        <div class="ticker-item tc2"><span class="ticker-dot"></span>Worthington Direct</div>
-        <div class="ticker-item tc3"><span class="ticker-dot"></span>Cymax</div>
-        <div class="ticker-item tc4"><span class="ticker-dot"></span>School Outfitters</div>
-        <div class="ticker-item tc5"><span class="ticker-dot"></span>DirectBuy</div>
-        <div class="ticker-item tc6"><span class="ticker-dot"></span>Cost Plus World Market</div>
-        <div class="ticker-item tc1"><span class="ticker-dot"></span>PriceSmart</div>
-        <div class="ticker-item tc2"><span class="ticker-dot"></span>Amazon Canada</div>
-        <div class="ticker-item tc3"><span class="ticker-dot"></span>S.P. Richards</div>
-        <div class="ticker-item tc4"><span class="ticker-dot"></span>Veyer</div>
-        <div class="ticker-item tc5"><span class="ticker-dot"></span>Bluestem Brands</div>
-        <div class="ticker-item tc6"><span class="ticker-dot"></span>ITA Group</div>
-        <div class="ticker-item tc1"><span class="ticker-dot"></span>BI Worldwide</div>
-        <div class="ticker-item tc2"><span class="ticker-dot"></span>Army &amp; Air Force Exchange (AAFES)</div>
-        <div class="ticker-item tc3"><span class="ticker-dot"></span>Navy Exchange (NEX)</div>
-        <div class="ticker-item tc4"><span class="ticker-dot"></span>Fastenal</div>
-        <div class="ticker-item tc5"><span class="ticker-dot"></span>Bison Office</div>
-        <div class="ticker-item tc6"><span class="ticker-dot"></span>Farmer's Furniture</div>
-        <div class="ticker-item tc1"><span class="ticker-dot"></span>City Mill</div>
-        <div class="ticker-item tc2"><span class="ticker-dot"></span>Posturite (UK)</div>
-        <div class="ticker-item tc3"><span class="ticker-dot"></span>S.P. Richards</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>Amazon</div>
+        <div class="ticker-item odd"><span class="ticker-dot"></span>Walmart</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>Target</div>
+        <div class="ticker-item odd"><span class="ticker-dot"></span>The Home Depot</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>Lowe's</div>
+        <div class="ticker-item odd"><span class="ticker-dot"></span>Best Buy</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>Wayfair</div>
+        <div class="ticker-item odd"><span class="ticker-dot"></span>Macy's</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>Kohl's</div>
+        <div class="ticker-item odd"><span class="ticker-dot"></span>Sam's Club</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>Costco</div>
+        <div class="ticker-item odd"><span class="ticker-dot"></span>Costco Business Center</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>QVC</div>
+        <div class="ticker-item odd"><span class="ticker-dot"></span>Grainger</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>Zoro</div>
+        <div class="ticker-item odd"><span class="ticker-dot"></span>HD Supply</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>Staples</div>
+        <div class="ticker-item odd"><span class="ticker-dot"></span>Houzz</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>Hayneedle</div>
+        <div class="ticker-item odd"><span class="ticker-dot"></span>Zulily</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>HomeGoods</div>
+        <div class="ticker-item odd"><span class="ticker-dot"></span>TJ Maxx</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>Marshalls</div>
+        <div class="ticker-item odd"><span class="ticker-dot"></span>Burlington</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>Nebraska Furniture Mart</div>
+        <div class="ticker-item odd"><span class="ticker-dot"></span>Living Spaces</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>American Furniture Warehouse</div>
+        <div class="ticker-item odd"><span class="ticker-dot"></span>RC Willey</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>HOM Furniture</div>
+        <div class="ticker-item odd"><span class="ticker-dot"></span>Rooms To Go</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>Steinhafels</div>
+        <div class="ticker-item odd"><span class="ticker-dot"></span>Conn's HomePlus</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>Lamps Plus</div>
+        <div class="ticker-item odd"><span class="ticker-dot"></span>Old Time Pottery</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>Kirkland's</div>
+        <div class="ticker-item odd"><span class="ticker-dot"></span>Bed Bath &amp; Beyond</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>National Business Furniture</div>
+        <div class="ticker-item odd"><span class="ticker-dot"></span>Worthington Direct</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>Cymax</div>
+        <div class="ticker-item odd"><span class="ticker-dot"></span>School Outfitters</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>DirectBuy</div>
+        <div class="ticker-item odd"><span class="ticker-dot"></span>Cost Plus World Market</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>PriceSmart</div>
+        <div class="ticker-item odd"><span class="ticker-dot"></span>Amazon Canada</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>S.P. Richards</div>
+        <div class="ticker-item odd"><span class="ticker-dot"></span>Veyer</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>Bluestem Brands</div>
+        <div class="ticker-item odd"><span class="ticker-dot"></span>ITA Group</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>BI Worldwide</div>
+        <div class="ticker-item odd"><span class="ticker-dot"></span>Army &amp; Air Force Exchange (AAFES)</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>Navy Exchange (NEX)</div>
+        <div class="ticker-item odd"><span class="ticker-dot"></span>Fastenal</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>Bison Office</div>
+        <div class="ticker-item odd"><span class="ticker-dot"></span>Farmer's Furniture</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>City Mill</div>
+        <div class="ticker-item odd"><span class="ticker-dot"></span>Posturite (UK)</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>S.P. Richards</div>
       </div>
     </div>
   </div>
