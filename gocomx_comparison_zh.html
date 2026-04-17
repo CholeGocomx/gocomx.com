@@ -3425,7 +3425,7 @@ function drawSloopFlows(){
 
 
   // 2. EDI → FO: create SO (right col → left col, through center gap)
-  pathFlow([[D.l,D.t+D.h*0.2],[gapMid+offset*0,D.t+D.h*0.2],[gapMid+offset*0,F.t+F.h*0.15],[F.r,F.t+F.h*0.15]], '#e07070','→ SO',0.2,1.6);
+  pathFlow([[D.l,D.t+D.h*0.2],[gapMid+offset*0,D.t+D.h*0.2],[gapMid+offset*0,F.t+F.h*0.15],[F.r,F.t+F.h*0.15]], '#e07070','新建SO',0.2,1.6);
 
   // 3. Portal → FO: API direct
   pathFlow([[P.mx,P.b],[P.mx,F.t],[F.l+F.w*0.15,F.t]], '#38bdf8','API直连',0.1,2.2);
@@ -3503,7 +3503,7 @@ function drawSloopFlows(){
 
     // — label (centered in the gap, on the line) —
     var my = (yT+yB)/2;
-    var tw = lbl.length*7+12;
+    var tw = lbl.length*8+16;
     var bg=document.createElementNS(NS,'rect');
     bg.setAttribute('x', x-tw/2); bg.setAttribute('y', my-6);
     bg.setAttribute('width', tw); bg.setAttribute('height', 12);
@@ -3535,13 +3535,13 @@ function drawSloopFlows(){
     svg.appendChild(g);
   }
 
-  // 850 PO  — inbound ↓  (e-com portal sends purchase order DOWN to EDI)
-  gapLine(0.15, '#e07070','850↓', 0,   1.5, true);
-  // Outbound ↑  (EDI sends responses back UP to e-com portal)
-  gapLine(0.35, '#e8a020','855↑', 0.5, 2.0, false);
-  gapLine(0.52, '#4ade80','856↑', 0.4, 1.9, false);
-  gapLine(0.70, '#38bdf8','846↑', 0.9, 2.3, false);
-  gapLine(0.88, '#fb923c','810↑', 0.7, 2.1, false);
+  // 850 PO  — inbound (e-com portal sends purchase order DOWN to EDI)
+  gapLine(0.15, '#e07070','850 PO', 0,   1.5, true);
+  // Outbound (EDI sends responses back UP to e-com portal)
+  gapLine(0.35, '#e8a020','855',    0.5, 2.0, false);
+  gapLine(0.52, '#4ade80','856',    0.4, 1.9, false);
+  gapLine(0.70, '#38bdf8','846',    0.9, 2.3, false);
+  gapLine(0.88, '#fb923c','810',    0.7, 2.1, false);
 
   // rAF: animate dots (only cy changes — x is fixed per line)
   if(window._gapRaf) cancelAnimationFrame(window._gapRaf);
