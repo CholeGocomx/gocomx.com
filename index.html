@@ -168,33 +168,32 @@ nav {
   border-radius: 10px; padding: 2px 9px;
 }
 .ticker-wrap {
-  height: 260px; overflow: hidden; position: relative;
-  border-radius: 10px; border: 1px solid #e2e8f0;
-  background: #f8faff;
+  height: 320px; overflow: hidden; position: relative;
+  background: transparent;
   margin-bottom: 14px;
 }
 .ticker-wrap::before, .ticker-wrap::after {
-  content: ''; position: absolute; left: 0; right: 0; height: 36px; z-index: 2; pointer-events: none;
+  content: ''; position: absolute; left: 0; right: 0; height: 40px; z-index: 2; pointer-events: none;
 }
-.ticker-wrap::before { top: 0; background: linear-gradient(to bottom, #f0f7ff, transparent); }
-.ticker-wrap::after  { bottom: 0; background: linear-gradient(to top, #e8f0fe, transparent); }
+.ticker-wrap::before { top: 0; background: linear-gradient(to bottom, #ffffff, transparent); }
+.ticker-wrap::after  { bottom: 0; background: linear-gradient(to top, #ffffff, transparent); }
 .ticker-list {
-  display: flex; flex-direction: column; gap: 5px;
-  padding: 10px 10px;
+  display: flex; flex-direction: column; gap: 2px;
+  padding: 8px 0;
   animation: tickerUp 55s linear infinite;
 }
 .ticker-list:hover { animation-play-state: paused; }
 .ticker-item {
-  display: inline-flex; align-items: center; gap: 8px;
-  padding: 4px 12px;
+  display: inline-flex; align-items: center; gap: 9px;
+  padding: 4px 8px;
   font-size: 13px; font-weight: 600; white-space: nowrap;
-  color: #1e40af; background: none; border: none;
-  transition: transform .15s;
+  color: #374151; background: none; border: none;
+  transition: transform .15s, color .15s;
 }
-.ticker-item:hover { transform: translateX(4px); }
+.ticker-item:hover { transform: translateX(4px); color: #0078d4; }
 .ticker-item.odd { color: #0078d4; }
 .ticker-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; background: currentColor; opacity: .7; }
-.ticker-logo { width: 16px; height: 16px; border-radius: 3px; object-fit: contain; flex-shrink: 0; background: #fff; }
+.ticker-logo { width: 16px; height: 16px; border-radius: 3px; object-fit: contain; flex-shrink: 0; }
 @keyframes tickerUp {
   0%   { transform: translateY(0); }
   100% { transform: translateY(-50%); }
