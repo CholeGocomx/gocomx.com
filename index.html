@@ -109,6 +109,53 @@ nav {
   white-space: nowrap;
 }
 
+/* Microsoft ISV Award Card */
+.msft-award {
+  margin-top: 16px;
+  border-radius: 12px; overflow: hidden;
+  box-shadow: 0 6px 24px rgba(0,0,0,.10), 0 1px 4px rgba(0,0,0,.06);
+  transition: transform .2s, box-shadow .2s;
+  cursor: default;
+}
+.msft-award:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 36px rgba(0,0,0,.14), 0 2px 8px rgba(0,0,0,.08);
+}
+.msft-award-top {
+  background: #f9fafb; border-bottom: 1px solid #e8eaea;
+  padding: 11px 16px; display: flex; align-items: center; gap: 10px;
+}
+.msft-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 2.5px;
+  width: 18px; height: 18px; flex-shrink: 0;
+}
+.msft-grid span { border-radius: 1px; display: block; width: 100%; height: 100%; }
+.msft-grid .sq1 { background: #f25022; }
+.msft-grid .sq2 { background: #7fba00; }
+.msft-grid .sq3 { background: #00a4ef; }
+.msft-grid .sq4 { background: #ffb900; }
+.msft-brand { font-size: 13px; font-weight: 600; color: #333; letter-spacing: -.2px; }
+.msft-award-banner {
+  background: linear-gradient(120deg, #107c10 0%, #1a9a1a 100%);
+  padding: 13px 16px;
+}
+.msft-banner-title {
+  font-size: 15px; font-weight: 800; color: #fff;
+  letter-spacing: .01em; margin-bottom: 2px;
+}
+.msft-banner-sub { font-size: 11px; color: rgba(255,255,255,.80); }
+.msft-award-bottom {
+  background: #fff; padding: 10px 16px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.msft-bottom-label { font-size: 11px; color: var(--muted); }
+.msft-bottom-chips { display: flex; gap: 6px; }
+.msft-chip {
+  font-size: 10px; font-weight: 700; color: #0078d4;
+  background: #eff6ff; border: 1px solid rgba(0,120,212,.2);
+  border-radius: 4px; padding: 2px 7px;
+}
+
 /* FOOTER */
 footer {
   flex-shrink: 0;
@@ -249,9 +296,26 @@ footer {
         <div class="stat-zh zh">EDI 映射规则</div>
       </div>
     </div>
-    <div class="badge-row">
-      <span class="badge-pill">✓ Microsoft ISV Certified</span>
-      <span class="badge-pill">⚙ D365 F&amp;O / SCM</span>
+    <div class="msft-award">
+      <div class="msft-award-top">
+        <div class="msft-grid">
+          <span class="sq1"></span><span class="sq2"></span>
+          <span class="sq3"></span><span class="sq4"></span>
+        </div>
+        <span class="msft-brand">Microsoft</span>
+      </div>
+      <div class="msft-award-banner">
+        <div class="msft-banner-title">ISV Success Partner</div>
+        <div class="msft-banner-sub">GoComX · Certified Independent Software Vendor</div>
+      </div>
+      <div class="msft-award-bottom">
+        <span class="msft-bottom-label">✓ Verified Certification</span>
+        <div class="msft-bottom-chips">
+          <span class="msft-chip">D365 F&amp;O</span>
+          <span class="msft-chip">SCM</span>
+          <span class="msft-chip">ERP</span>
+        </div>
+      </div>
     </div>
   </div>
 
