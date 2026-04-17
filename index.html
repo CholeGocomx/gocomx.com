@@ -156,6 +156,42 @@ nav {
   border-radius: 4px; padding: 2px 7px;
 }
 
+/* Platform Ticker */
+.ticker-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin: 14px 0 6px;
+}
+.ticker-label { font-size: var(--fs-sm); font-weight: 700; color: var(--text2); }
+.ticker-count {
+  font-size: 11px; font-weight: 700; color: var(--blue);
+  background: var(--blue-light); border: 1px solid rgba(0,120,212,.2);
+  border-radius: 10px; padding: 2px 9px;
+}
+.ticker-wrap {
+  height: 128px; overflow: hidden; position: relative;
+  border-radius: 8px; border: 1px solid #eaeaea; background: #f8f9fb;
+  margin-bottom: 14px;
+}
+.ticker-wrap::before, .ticker-wrap::after {
+  content: ''; position: absolute; left: 0; right: 0; height: 26px; z-index: 2; pointer-events: none;
+}
+.ticker-wrap::before { top: 0; background: linear-gradient(to bottom, #f8f9fb, transparent); }
+.ticker-wrap::after  { bottom: 0; background: linear-gradient(to top,   #f8f9fb, transparent); }
+.ticker-list {
+  display: flex; flex-direction: column;
+  animation: tickerUp 50s linear infinite;
+}
+.ticker-list:hover { animation-play-state: paused; }
+.ticker-item {
+  display: flex; align-items: center; gap: 8px;
+  padding: 5px 14px; font-size: var(--fs-sm); color: #374151; white-space: nowrap;
+}
+.ticker-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--blue); flex-shrink: 0; }
+@keyframes tickerUp {
+  0%   { transform: translateY(0); }
+  100% { transform: translateY(-50%); }
+}
+
 /* FOOTER */
 footer {
   flex-shrink: 0;
@@ -214,6 +250,71 @@ footer {
     <p class="brand-desc-zh zh">
       GoComX 帮助中国制造商通过一次接入，打通北美80个以上零售渠道。自动化EDI对接、微软D365 ERP系统、AI智能分销，一站式解决方案。
     </p>
+    <div class="ticker-header">
+      <span class="ticker-label">🔗 Active Channels · 已接入渠道</span>
+      <span class="ticker-count">80+</span>
+    </div>
+    <div class="ticker-wrap">
+      <div class="ticker-list" id="ticker-list">
+        <div class="ticker-item"><span class="ticker-dot"></span>Amazon</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>Walmart</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>Target</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>The Home Depot</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>Lowe's</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>Best Buy</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>Wayfair</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>Macy's</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>Kohl's</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>Sam's Club</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>Costco</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>Costco Business Center</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>QVC</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>Grainger</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>Zoro</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>HD Supply</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>Staples</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>Houzz</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>Hayneedle</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>Zulily</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>HomeGoods</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>TJ Maxx</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>Marshalls</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>Burlington</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>Nebraska Furniture Mart</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>Living Spaces</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>American Furniture Warehouse</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>RC Willey</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>HOM Furniture</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>Rooms To Go</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>Steinhafels</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>Conn's HomePlus</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>Lamps Plus</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>Old Time Pottery</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>Kirkland's</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>Bed Bath &amp; Beyond</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>National Business Furniture</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>Worthington Direct</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>Cymax</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>School Outfitters</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>DirectBuy</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>Cost Plus World Market</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>PriceSmart</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>Amazon Canada</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>S.P. Richards</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>Veyer</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>Bluestem Brands</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>ITA Group</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>BI Worldwide</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>Army &amp; Air Force Exchange (AAFES)</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>Navy Exchange (NEX)</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>Fastenal</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>Bison Office</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>Farmer's Furniture</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>City Mill</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>Posturite (UK)</div>
+        <div class="ticker-item"><span class="ticker-dot"></span>Houzz</div>
+      </div>
+    </div>
     <div class="cta-group">
       <a href="contact.html" class="btn btn-primary">Contact Us →</a>
       <a href="deck.html" class="btn btn-outline">How It Works</a>
@@ -331,5 +432,14 @@ footer {
   <div></div>
 </footer>
 
+<script>
+// Duplicate ticker items for seamless infinite loop
+(function(){
+  var list = document.getElementById('ticker-list');
+  if(!list) return;
+  var clone = list.innerHTML;
+  list.innerHTML += clone;
+})();
+</script>
 </body>
 </html>
