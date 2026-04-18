@@ -189,12 +189,12 @@ nav {
 .ticker-item {
   display: inline-flex; align-items: center; gap: 9px;
   padding: 4px 8px;
-  font-size: 13px; font-weight: 600; white-space: nowrap;
+  font-size: var(--fs-md); font-weight: 500; white-space: nowrap;
   color: #374151; background: none; border: none;
   transition: transform .15s, color .15s;
 }
 .ticker-item:hover { transform: translateX(4px); color: #0078d4; }
-.ticker-item.odd { color: #0078d4; }
+.ticker-item.odd { color: #374151; }
 .ticker-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; background: currentColor; opacity: .7; }
 .ticker-logo { width: 16px; height: 16px; border-radius: 3px; object-fit: contain; flex-shrink: 0; }
 @keyframes tickerUp {
