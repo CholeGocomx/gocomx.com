@@ -2636,26 +2636,25 @@ function drawArchLines(){
   pc.innerHTML = '';
 
   const wrap = document.getElementById('arch-wrap');
-  const W = wrap.offsetWidth  || 1200;
-  const H = wrap.offsetHeight || 710;
+
+  // Use getBoundingClientRect for the viewBox so SVG coords always match
+  // visual pixel measurements — works correctly regardless of CSS zoom.
+  const ob = wrap.getBoundingClientRect();
+  const W = ob.width  || 1200;
+  const H = ob.height || 710;
 
   svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
 
-  // CSS zoom causes getBoundingClientRect to return scaled values —
-  // divide by zoom so coordinates match the unscaled SVG viewBox
-  const zoomVal = parseFloat(getComputedStyle(wrap).zoom) || 1;
-
-  // ── Live DOM measurements — always correct regardless of CSS layout ──
-  const ob = wrap.getBoundingClientRect();
+  // ── Live DOM measurements in visual CSS pixels (consistent with viewBox) ──
   function B(sel){
     const el = wrap.querySelector(sel);
     if(!el) return null;
     const r = el.getBoundingClientRect();
-    return { l: (r.left-ob.left)/zoomVal, r: (r.right-ob.left)/zoomVal,
-             t: (r.top-ob.top)/zoomVal,   b: (r.bottom-ob.top)/zoomVal,
-             mx: ((r.left+r.right)/2 - ob.left)/zoomVal,
-             my: ((r.top+r.bottom)/2 - ob.top)/zoomVal,
-             w: r.width/zoomVal, h: r.height/zoomVal };
+    return { l: r.left-ob.left, r: r.right-ob.left,
+             t: r.top-ob.top,   b: r.bottom-ob.top,
+             mx: (r.left+r.right)/2 - ob.left,
+             my: (r.top+r.bottom)/2 - ob.top,
+             w: r.width, h: r.height };
   }
   const MFR  = B('.arch-mfr-col');
   const PIM  = B('.arch-pim');
@@ -2724,11 +2723,11 @@ function drawArchLines(){
   const mfrEls = wrap.querySelectorAll('.arch-mfr');
   const mfrYs = Array.from(mfrEls).map(el=>{
     const r = el.getBoundingClientRect();
-    return ((r.top + r.bottom)/2 - ob.top) / zoomVal;
+    return (r.top + r.bottom)/2 - ob.top;
   });
   const pimEl = wrap.querySelector('.arch-pim');
   const pimRect = pimEl ? pimEl.getBoundingClientRect() : null;
-  const pimCY = pimRect ? ((pimRect.top + pimRect.bottom)/2 - ob.top) / zoomVal : pH(240);
+  const pimCY = pimRect ? (pimRect.top + pimRect.bottom)/2 - ob.top : pH(240);
 
   /* ─────────────────────────────────────────
      A. Manufacturers → PIM  (red)
