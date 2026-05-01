@@ -39,35 +39,36 @@ nav {
 .nav-links a:hover { color: var(--text); background: #e8eaed; }
 .nav-links a.active { color: var(--blue); font-weight: 600; }
 
-/* LOCK SCREEN — two-column layout */
+/* LOCK SCREEN */
 #lock-screen {
-  flex: 1; display: flex; align-items: stretch; overflow: hidden;
+  flex: 1; overflow-y: auto; background: var(--bg);
+  display: flex; flex-direction: column; align-items: center;
+  padding: 40px 40px 56px;
 }
-.lock-left {
-  flex: 1; min-width: 0; overflow-y: auto;
-  padding: 40px 40px 56px; background: var(--bg);
+.icp-outer { width: 100%; max-width: 1100px; }
+/* Top row: heading left + compact lock card right */
+.icp-top-row {
+  display: flex; align-items: flex-start; gap: 24px; margin-bottom: 28px;
 }
-.lock-left-head {
-  margin-bottom: 24px; padding-bottom: 18px;
-  border-bottom: 1px solid var(--border);
+.icp-top-head { flex: 1; padding-top: 4px; }
+.icp-top-head-title { font-size: 20px; font-weight: 800; color: var(--text); }
+.icp-top-head-sub {
+  font-size: var(--fs-sm); color: var(--muted); margin-top: 5px;
+  line-height: 1.65; font-family: 'Noto Sans SC','Inter',sans-serif;
 }
-.lock-left-title { font-size: 20px; font-weight: 800; color: var(--text); }
-.lock-left-sub {
-  font-size: var(--fs-sm); color: var(--muted);
-  margin-top: 5px; line-height: 1.65; max-width: 700px;
-  font-family: 'Noto Sans SC','Inter',sans-serif;
+/* Compact lock card */
+.lock-compact {
+  width: 300px; flex-shrink: 0; background: var(--card);
+  border-radius: var(--radius); box-shadow: var(--shadow);
+  padding: 22px 22px; text-align: center;
 }
-.lock-right {
-  width: 400px; flex-shrink: 0; overflow-y: auto;
-  display: flex; align-items: center; justify-content: center;
-  padding: 40px 28px;
-  background: linear-gradient(rgba(255,248,235,0.90),rgba(255,248,235,0.90)), url('fly-bag.jpg') center/cover no-repeat;
-  border-left: 1px solid rgba(0,0,0,0.08);
-}
+.lock-compact-title { font-size: 16px; font-weight: 800; color: var(--text); margin-bottom: 5px; }
+.lock-compact-title span { color: var(--blue); }
+.lock-compact-sub { font-size: var(--fs-sm); color: var(--muted); margin-bottom: 16px; line-height: 1.55; font-family: 'Noto Sans SC','Inter',sans-serif; }
 @media (max-width: 860px) {
-  #lock-screen { flex-direction: column-reverse; }
-  .lock-right { width: 100%; border-left: none; border-bottom: 1px solid var(--border); padding: 32px 20px; }
-  .lock-left { padding: 24px 20px 40px; }
+  #lock-screen { padding: 24px 20px 40px; }
+  .icp-top-row { flex-direction: column; }
+  .lock-compact { width: 100%; }
 }
 .lock-card {
   background: var(--card); border-radius: var(--radius);
@@ -107,76 +108,36 @@ nav {
 
 /* ── ICP SECTION ── */
 .icp-section { width: 100%; max-width: 940px; }
-.icp-header { text-align: center; margin-bottom: 22px; }
+.icp-header { margin-bottom: 22px; }
 .icp-header-title { font-size: 19px; font-weight: 800; color: var(--text); }
-.icp-header-sub { font-size: var(--fs-sm); color: var(--muted); margin-top: 5px; }
-.icp-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
+.icp-header-sub { font-size: var(--fs-sm); color: var(--muted); margin-top: 5px; line-height: 1.6; font-family: 'Noto Sans SC','Inter',sans-serif; }
+.icp-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+
+/* Card shell — uniform blue top border */
 .icp-card {
   background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow);
-  padding: 22px 18px; display: flex; flex-direction: column; gap: 13px;
-  border-top: 3px solid transparent;
+  padding: 20px 18px; display: flex; flex-direction: column;
+  border-top: 3px solid var(--blue);
 }
-.icp-1 { border-top-color: var(--blue); }
-.icp-2 { border-top-color: #7c3aed; }
-.icp-3 { border-top-color: #059669; }
-.icp-card-head { display: flex; align-items: flex-start; gap: 10px; }
+/* Card header */
+.icp-card-head { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 16px; }
 .icp-badge {
-  width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
+  width: 26px; height: 26px; border-radius: 50%; flex-shrink: 0;
   display: flex; align-items: center; justify-content: center;
-  font-size: 13px; font-weight: 800; color: #fff;
+  font-size: 12px; font-weight: 800; color: #fff; background: var(--blue);
 }
-.icp-badge-1 { background: var(--blue); }
-.icp-badge-2 { background: #7c3aed; }
-.icp-badge-3 { background: #059669; }
-.icp-card-title {
-  font-size: 15px; font-weight: 800; color: var(--text); line-height: 1.3;
-  font-family: 'Noto Sans SC','Inter',sans-serif;
-}
-.icp-pill {
-  display: inline-block; font-size: 10px; font-weight: 700;
-  border-radius: 4px; padding: 2px 7px; margin-top: 4px;
-}
-.icp-pill-blue  { color: var(--blue); background: var(--blue-light); }
-.icp-pill-purple{ color: #7c3aed; background: #f5f3ff; }
-.icp-pill-green { color: #059669; background: #ecfdf5; }
-.icp-block { display: flex; flex-direction: column; gap: 5px; }
-.icp-lbl {
-  font-size: 10px; font-weight: 700; letter-spacing: .07em;
-  text-transform: uppercase; margin-bottom: 2px; color: var(--muted);
-}
-.icp-lbl-red { color: #dc2626; }
-.icp-lbl-green { color: #059669; }
-.icp-row {
-  font-size: var(--fs-sm); line-height: 1.6; display: flex;
-  align-items: flex-start; gap: 6px;
-  font-family: 'Noto Sans SC','Inter',sans-serif; color: var(--text);
-}
-.icp-row::before { flex-shrink: 0; font-weight: 900; }
-.icp-feat::before { content: '·'; color: var(--blue); }
-.icp-2 .icp-feat::before { color: #7c3aed; }
-.icp-3 .icp-feat::before { color: #059669; }
-.icp-pain { color: #dc2626; }
-.icp-pain::before { content: '!'; }
-.icp-value { color: #059669; font-weight: 600; }
-.icp-value::before { content: '→'; color: #059669; }
-.icp-pain-box {
-  background: #fff5f5; border-radius: 8px; padding: 10px 12px;
-  border-left: 3px solid #fca5a5;
-}
-.icp-tags { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 2px; }
-.icp-ind-tag {
-  font-size: 11px; color: var(--muted); background: var(--bg);
-  border: 1px solid var(--border); border-radius: 4px; padding: 2px 8px;
-}
-.icp-cta-bar {
-  margin-top: auto; padding: 10px 14px; border-radius: 0 7px 7px 0;
-  border-left: 4px solid; display: flex; align-items: flex-start; gap: 8px;
-  font-size: var(--fs-sm); font-weight: 700; line-height: 1.55;
-  font-family: 'Noto Sans SC','Inter',sans-serif;
-}
-.icp-cta-blue   { border-color: var(--blue);  background: var(--blue-light); color: #1d4ed8; }
-.icp-cta-purple { border-color: #7c3aed; background: #f5f3ff;    color: #5b21b6; }
-.icp-cta-green  { border-color: #059669; background: #ecfdf5;    color: #065f46; }
+.icp-card-title { font-size: 15px; font-weight: 800; color: var(--text); line-height: 1.3; font-family: 'Noto Sans SC','Inter',sans-serif; }
+.icp-card-title span { display: block; font-size: 12px; font-weight: 500; color: var(--muted); margin-top: 2px; }
+.icp-pill { display: inline-block; font-size: 10px; font-weight: 700; border-radius: 4px; padding: 2px 7px; margin-top: 5px; color: var(--blue); background: var(--blue-light); }
+
+/* Three sections */
+.icp-s { display: flex; flex-direction: column; gap: 5px; padding: 14px 0; border-top: 1px solid var(--border); }
+.icp-s:first-of-type { border-top: none; padding-top: 0; }
+.icp-sh { font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--blue); margin-bottom: 5px; }
+.icp-r { font-size: var(--fs-sm); color: var(--text); line-height: 1.65; display: flex; align-items: flex-start; gap: 7px; font-family: 'Noto Sans SC','Inter',sans-serif; }
+.icp-r::before { content: '·'; color: var(--blue); font-weight: 900; flex-shrink: 0; margin-top: 1px; }
+.icp-tags { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 3px; }
+.icp-ind-tag { font-size: 11px; color: var(--muted); background: var(--bg); border: 1px solid var(--border); border-radius: 4px; padding: 2px 8px; }
 @media (max-width: 800px) { .icp-grid { grid-template-columns: 1fr; } }
 .doc-card {
   background: var(--card); border-radius: var(--radius);
@@ -235,114 +196,110 @@ nav {
 
 <!-- LOCK SCREEN -->
 <div id="lock-screen">
+ <div class="icp-outer">
 
-  <!-- LEFT: public content -->
-  <div class="lock-left">
-    <div class="lock-left-head">
-      <div class="lock-left-title">Who We Serve · 目标客户画像</div>
-      <div class="lock-left-sub">GoComX serves three core segments of Chinese manufacturers and distributors seeking compliant access to the U.S. retail supply chain · 服务三大核心客群，助力中国制造商合规进入美国零售供应链</div>
+  <!-- TOP ROW: heading + compact lock card -->
+  <div class="icp-top-row">
+    <div class="icp-top-head">
+      <div class="icp-top-head-title">Who We Serve · 目标客户画像</div>
+      <div class="icp-top-head-sub">GoComX serves three core segments of Chinese manufacturers and distributors seeking compliant access to the U.S. retail supply chain · 服务三大核心客群，助力中国制造商合规进入美国零售供应链</div>
     </div>
-
-    <div class="icp-grid">
-
-      <!-- 1 -->
-      <div class="icp-card icp-1">
-        <div class="icp-card-head">
-          <div class="icp-badge icp-badge-1">1</div>
-          <div>
-            <div class="icp-card-title">Emerging Brand Manufacturers<br><span style="font-weight:500;font-size:13px;color:var(--muted);">准品牌型工厂</span></div>
-            <span class="icp-pill icp-pill-blue">Primary Segment · 最核心客群</span>
-          </div>
-        </div>
-        <div class="icp-block">
-          <div class="icp-lbl">Customer Profile · 客户画像</div>
-          <div class="icp-row icp-feat">Established sales on Amazon and Walmart Marketplace with proven market traction · 已在主流电商平台建立销售基础</div>
-          <div class="icp-row icp-feat">Pursuing expansion into major brick-and-mortar retail (Home Depot, Lowe's) · 积极拓展线下大型零售渠道</div>
-          <div class="icp-row icp-feat">Possess structured SKU portfolios, UPC/barcode compliance, and retail-ready packaging · 具备完整 SKU 体系与合规包装能力</div>
-        </div>
-        <div class="icp-block">
-          <div class="icp-lbl">Representative Sectors · 典型行业</div>
-          <div class="icp-tags">
-            <span class="icp-ind-tag">⚡ Power Tools &amp; Hand Tools</span>
-            <span class="icp-ind-tag">💡 Lighting &amp; Plumbing</span>
-            <span class="icp-ind-tag">🏠 Small Appliances · 小家电</span>
-            <span class="icp-ind-tag">🌿 Outdoor &amp; Garden (BBQ)</span>
-          </div>
-        </div>
-        <div class="icp-block icp-pain-box">
-          <div class="icp-lbl icp-lbl-red">Key Challenges · 核心挑战</div>
-          <div class="icp-row icp-pain">Approved by major retailers, yet unable to complete EDI onboarding independently · 已获零售商认可，但受阻于 EDI 接入流程</div>
-          <div class="icp-row icp-pain">Limited expertise in EDI transaction sets (850 PO, 856 ASN), label compliance, and routing requirements · 缺乏 EDI 报文、标签及路由合规能力</div>
-        </div>
-        <div class="icp-cta-bar icp-cta-blue">GoComX removes the final barrier between manufacturer and retail shelf — this segment demonstrates the highest willingness to pay. · 此类客户付费意愿最强，GoComX 直接打通进入零售货架的最后一公里。</div>
-      </div>
-
-      <!-- 2 -->
-      <div class="icp-card icp-2">
-        <div class="icp-card-head">
-          <div class="icp-badge icp-badge-2">2</div>
-          <div>
-            <div class="icp-card-title">ODM / OEM Manufacturers<br><span style="font-weight:500;font-size:13px;color:var(--muted);">ODM / OEM 工厂</span></div>
-            <span class="icp-pill icp-pill-purple">High-Value Latent Segment · 隐形大客户</span>
-          </div>
-        </div>
-        <div class="icp-block">
-          <div class="icp-lbl">Customer Profile · 客户画像</div>
-          <div class="icp-row icp-feat">Existing contract manufacturers supplying major U.S. consumer brands · 现为美国知名品牌提供 OEM / ODM 代工服务</div>
-          <div class="icp-row icp-feat">Seeking to launch proprietary brands through DTC or B2B retail channels · 计划自主建立品牌，拓展 DTC 或 B2B 零售渠道</div>
-          <div class="icp-row icp-feat">Strong production capacity and competitive cost structure, but no established retail distribution · 具备强大产能与成本优势，尚未建立独立销售渠道</div>
-        </div>
-        <div class="icp-block icp-pain-box">
-          <div class="icp-lbl icp-lbl-red">Key Challenges · 核心挑战</div>
-          <div class="icp-row icp-pain">Unfamiliar with U.S. retail compliance standards and buyer requirements · 对美国零售合规体系及采购商要求缺乏系统了解</div>
-          <div class="icp-row icp-pain">No EDI infrastructure — unable to connect directly with retail buyers without intermediary brand owners · 缺乏 EDI 能力，无法绕开中间品牌商直接对接零售渠道</div>
-        </div>
-        <div class="icp-cta-bar icp-cta-purple">GoComX provides a direct path to U.S. retail, enabling manufacturers to establish independent brand presence without relying on intermediary distributors. · GoComX 构建直连零售的通道，助力工厂实现独立品牌出海。</div>
-      </div>
-
-      <!-- 3 -->
-      <div class="icp-card icp-3">
-        <div class="icp-card-head">
-          <div class="icp-badge icp-badge-3">3</div>
-          <div>
-            <div class="icp-card-title">Cross-Border B2B Distributors<br><span style="font-weight:500;font-size:13px;color:var(--muted);">跨境 B2B 贸易商</span></div>
-            <span class="icp-pill icp-pill-green">Wholesale-Focused · 非铺货型</span>
-          </div>
-        </div>
-        <div class="icp-block">
-          <div class="icp-lbl">Customer Profile · 客户画像</div>
-          <div class="icp-row icp-feat">Engaged in B2B wholesale distribution, not direct-to-consumer retail · 专注于 B2B 批发业务，非零售铺货模式</div>
-          <div class="icp-row icp-feat">Operate overseas fulfillment centers with stable, recurring SKU portfolios · 拥有海外仓储体系，SKU 结构稳定</div>
-        </div>
-        <div class="icp-block icp-pain-box">
-          <div class="icp-lbl icp-lbl-red">Key Challenges · 核心挑战</div>
-          <div class="icp-row icp-pain">Retail and wholesale buyers mandate EDI compliance as a prerequisite for order placement · 采购方强制要求 EDI 合规，否则拒绝下单</div>
-          <div class="icp-row icp-pain">Manual order processing creates significant operational overhead and scalability constraints · 人工处理订单导致运营成本高，严重制约业务规模扩张</div>
-        </div>
-        <div class="icp-block">
-          <div class="icp-lbl icp-lbl-green">Value Delivered by GoComX · 平台核心价值</div>
-          <div class="icp-row icp-value">Substantial cost reduction through end-to-end order processing automation · 全流程自动化，大幅降低运营成本</div>
-          <div class="icp-row icp-value">Expanded order intake capacity, enabling distributors to pursue larger buyer relationships · 提升接单能力，助力拓展更大规模的采购合作</div>
-        </div>
-        <div class="icp-cta-bar icp-cta-green">EDI compliance is the entry requirement for institutional retail. GoComX makes it accessible, affordable, and fast to deploy. · EDI 合规是进入规模化零售采购的门槛，GoComX 让这一能力触手可及。</div>
-      </div>
-
-    </div><!-- /icp-grid -->
-  </div><!-- /lock-left -->
-
-  <!-- RIGHT: lock card -->
-  <div class="lock-right">
-    <div class="lock-card">
-      <div class="lock-icon">🔒</div>
-      <div class="lock-title">Investor <span>Deck</span></div>
-      <p class="lock-sub">This presentation is restricted.<br>Please enter your access code to continue.<br><span style="font-family:'Noto Sans SC',sans-serif;">此文件受限，请输入访问码以继续。</span></p>
+    <div class="lock-compact">
+      <div class="lock-compact-title">Investor <span>Deck</span></div>
+      <p class="lock-compact-sub">This document is restricted. Enter your access code to continue.<br>此文件受限，请输入访问码以继续。</p>
       <input type="password" class="lock-input" id="code-input" placeholder="ENTER ACCESS CODE" maxlength="30"
         onkeydown="if(event.key==='Enter') checkCode()">
       <button class="lock-btn" onclick="checkCode()">Unlock →</button>
       <div class="lock-error" id="error-msg"></div>
       <p class="lock-hint">Don't have a code? <a href="contact.html">Contact us →</a></p>
     </div>
-  </div><!-- /lock-right -->
+  </div>
+
+  <!-- 3 CARDS -->
+  <div class="icp-grid">
+    <div class="icp-card">
+      <div class="icp-card-head">
+        <div class="icp-badge">1</div>
+        <div>
+          <div class="icp-card-title">Emerging Brand Manufacturers<span>准品牌型工厂</span></div>
+          <span class="icp-pill">Primary Segment · 最核心客群</span>
+        </div>
+      </div>
+      <div class="icp-s">
+        <div class="icp-sh">Customer Profile · 客户画像</div>
+        <div class="icp-r">Proven online sales presence on Amazon and Walmart Marketplace · 已在主流电商平台建立销售基础</div>
+        <div class="icp-r">Targeting major brick-and-mortar retail expansion (Home Depot, Lowe's) · 寻求进入 Home Depot、Lowe's 等线下零售渠道</div>
+        <div class="icp-r">Structured SKU portfolios with UPC compliance and retail-ready packaging · 具备完整 SKU 体系与零售合规包装能力</div>
+        <div class="icp-tags">
+          <span class="icp-ind-tag">⚡ Power Tools</span>
+          <span class="icp-ind-tag">💡 Lighting &amp; Plumbing</span>
+          <span class="icp-ind-tag">🏠 Small Appliances</span>
+          <span class="icp-ind-tag">🌿 Outdoor &amp; Garden</span>
+        </div>
+      </div>
+      <div class="icp-s">
+        <div class="icp-sh">Key Challenges · 核心挑战</div>
+        <div class="icp-r">Approved by major retailers but unable to complete EDI onboarding independently · 已获零售商认可，但受阻于 EDI 系统接入</div>
+        <div class="icp-r">No expertise in EDI transaction sets (850 PO, 856 ASN), routing labels, or compliance standards · 缺乏 EDI 报文处理、路由标签与合规能力</div>
+      </div>
+      <div class="icp-s">
+        <div class="icp-sh">GoComX Value · 核心价值</div>
+        <div class="icp-r">Full EDI onboarding and ongoing compliance management — highest willingness-to-pay segment · 提供完整 EDI 接入与合规管理，此类客户付费意愿最强</div>
+      </div>
+    </div>
+
+    <div class="icp-card">
+      <div class="icp-card-head">
+        <div class="icp-badge">2</div>
+        <div>
+          <div class="icp-card-title">ODM / OEM Manufacturers<span>ODM / OEM 工厂</span></div>
+          <span class="icp-pill">High-Value Latent Segment · 隐形大客户</span>
+        </div>
+      </div>
+      <div class="icp-s">
+        <div class="icp-sh">Customer Profile · 客户画像</div>
+        <div class="icp-r">Currently supplying major U.S. consumer brands as contract manufacturers · 现为美国品牌提供 OEM / ODM 代工服务</div>
+        <div class="icp-r">Seeking to launch proprietary brands through DTC or B2B retail channels · 计划自主建立品牌，拓展 DTC 或 B2B 零售渠道</div>
+        <div class="icp-r">Strong production capacity with no established direct retail distribution channel · 产能与成本优势突出，尚未建立独立零售渠道</div>
+      </div>
+      <div class="icp-s">
+        <div class="icp-sh">Key Challenges · 核心挑战</div>
+        <div class="icp-r">Unfamiliar with U.S. retail compliance standards and institutional buyer requirements · 对美国零售合规体系与采购商要求缺乏系统了解</div>
+        <div class="icp-r">No EDI infrastructure — unable to reach retail buyers without relying on brand intermediaries · 缺乏 EDI 能力，无法绕开中间品牌商直接对接零售渠道</div>
+      </div>
+      <div class="icp-s">
+        <div class="icp-sh">GoComX Value · 核心价值</div>
+        <div class="icp-r">Provides a direct retail channel, eliminating dependence on intermediary brand owners and unlocking independent market access · 构建直连零售通道，助力工厂摆脱中间商依赖，实现独立品牌出海</div>
+      </div>
+    </div>
+
+    <div class="icp-card">
+      <div class="icp-card-head">
+        <div class="icp-badge">3</div>
+        <div>
+          <div class="icp-card-title">Cross-Border B2B Distributors<span>跨境 B2B 贸易商</span></div>
+          <span class="icp-pill">Wholesale-Focused · 非铺货型</span>
+        </div>
+      </div>
+      <div class="icp-s">
+        <div class="icp-sh">Customer Profile · 客户画像</div>
+        <div class="icp-r">Wholesale-focused B2B distributors operating overseas fulfillment centers · 专注 B2B 批发业务，拥有海外仓储体系</div>
+        <div class="icp-r">Stable, recurring SKU portfolios serving institutional buyers · SKU 结构稳定，服务机构类采购商</div>
+      </div>
+      <div class="icp-s">
+        <div class="icp-sh">Key Challenges · 核心挑战</div>
+        <div class="icp-r">Buyers mandate EDI compliance as a non-negotiable requirement for order placement · 采购方强制要求 EDI 合规，否则拒绝下单</div>
+        <div class="icp-r">Manual order processing creates high operational costs and limits scalability · 人工处理订单成本高，严重制约业务规模扩张</div>
+      </div>
+      <div class="icp-s">
+        <div class="icp-sh">GoComX Value · 核心价值</div>
+        <div class="icp-r">End-to-end automation reduces per-order operating costs significantly · 全流程自动化，大幅降低每笔订单运营成本</div>
+        <div class="icp-r">Expanded intake capacity supports larger institutional buyer relationships · 系统化接单能力助力拓展更大规模采购商合作</div>
+      </div>
+    </div>
+  </div><!-- /icp-grid -->
+
+ </div><!-- /icp-outer -->
 
 </div>
 
@@ -351,120 +308,104 @@ nav {
   <div class="doc-card">
     <div class="doc-icon">📊</div>
     <div class="doc-title">Investor <span>Deck</span></div>
-    <p class="doc-sub">
-      Access granted. Your document is ready to view.<br>
+    <p class="doc-sub">Access granted. Your document is ready to view.<br>
       <span style="font-family:'Noto Sans SC',sans-serif;">验证成功，您的文件已准备好查阅。</span>
     </p>
     <a class="doc-open-btn" href="https://gocomx.sharepoint.com/:b:/g/IQB3I010EEQwRK5cULBmGWZqAePKTAajeMpT_HgdqWcyvTg?e=8f9FiN" target="_blank" rel="noopener">
       📂 Open Document · 打开文件
     </a>
     <button class="doc-lock-btn" onclick="lockOut()">🔒 Lock &amp; Exit</button>
-    <div class="doc-notice">
-      🔒 Confidential · For authorized recipients only<br>
+    <div class="doc-notice">🔒 Confidential · For authorized recipients only<br>
       <span style="font-family:'Noto Sans SC',sans-serif;">保密文件，仅供授权人员查阅，请勿转发。</span>
     </div>
   </div>
 
-  <!-- ── TARGET CUSTOMER PROFILES ── -->
   <div class="icp-section">
     <div class="icp-header">
       <div class="icp-header-title">Target Customer Profiles · 目标客户画像</div>
-      <div class="icp-header-sub">GoComX serves three distinct manufacturer and distributor segments seeking to access the U.S. retail supply chain · 三大核心客户群体</div>
+      <div class="icp-header-sub">GoComX serves three core manufacturer and distributor segments seeking compliant access to the U.S. retail supply chain · 三大核心客户群体</div>
     </div>
-
     <div class="icp-grid">
 
-      <!-- 1. Emerging Brand Manufacturers -->
-      <div class="icp-card icp-1">
+      <div class="icp-card">
         <div class="icp-card-head">
-          <div class="icp-badge icp-badge-1">1</div>
+          <div class="icp-badge">1</div>
           <div>
-            <div class="icp-card-title">Emerging Brand Manufacturers<br><span style="font-weight:500;font-size:13px;color:var(--muted);">准品牌型工厂</span></div>
-            <span class="icp-pill icp-pill-blue">Primary Segment · 最核心客群</span>
+            <div class="icp-card-title">Emerging Brand Manufacturers<span>准品牌型工厂</span></div>
+            <span class="icp-pill">Primary Segment · 最核心客群</span>
           </div>
         </div>
-
-        <div class="icp-block">
-          <div class="icp-lbl">Customer Profile · 客户画像</div>
-          <div class="icp-row icp-feat">Established sales on Amazon and Walmart Marketplace with proven market traction · 已在主流电商平台建立销售基础</div>
-          <div class="icp-row icp-feat">Pursuing expansion into major brick-and-mortar retail (Home Depot, Lowe's) · 积极拓展线下大型零售渠道</div>
-          <div class="icp-row icp-feat">Possess structured SKU portfolios, UPC/barcode compliance, and retail-ready packaging · 具备完整 SKU 体系与合规包装能力</div>
-        </div>
-
-        <div class="icp-block">
-          <div class="icp-lbl">Representative Sectors · 典型行业</div>
+        <div class="icp-s">
+          <div class="icp-sh">Customer Profile · 客户画像</div>
+          <div class="icp-r">Proven online sales presence on Amazon and Walmart Marketplace · 已在主流电商平台建立销售基础</div>
+          <div class="icp-r">Targeting major brick-and-mortar retail expansion (Home Depot, Lowe's) · 寻求进入 Home Depot、Lowe's 等线下零售渠道</div>
+          <div class="icp-r">Structured SKU portfolios with UPC compliance and retail-ready packaging · 具备完整 SKU 体系与零售合规包装能力</div>
           <div class="icp-tags">
-            <span class="icp-ind-tag">⚡ Power Tools &amp; Hand Tools</span>
+            <span class="icp-ind-tag">⚡ Power Tools</span>
             <span class="icp-ind-tag">💡 Lighting &amp; Plumbing</span>
-            <span class="icp-ind-tag">🏠 Small Appliances · 小家电</span>
-            <span class="icp-ind-tag">🌿 Outdoor &amp; Garden (BBQ)</span>
+            <span class="icp-ind-tag">🏠 Small Appliances</span>
+            <span class="icp-ind-tag">🌿 Outdoor &amp; Garden</span>
           </div>
         </div>
-
-        <div class="icp-block icp-pain-box">
-          <div class="icp-lbl icp-lbl-red">Key Challenges · 核心挑战</div>
-          <div class="icp-row icp-pain">Approved by major retailers, yet unable to complete EDI onboarding independently · 已获零售商认可，但受阻于 EDI 接入流程</div>
-          <div class="icp-row icp-pain">Limited expertise in EDI transaction sets (850 PO, 856 ASN), label compliance, and routing requirements · 缺乏 EDI 报文、标签及路由合规能力</div>
+        <div class="icp-s">
+          <div class="icp-sh">Key Challenges · 核心挑战</div>
+          <div class="icp-r">Approved by major retailers but unable to complete EDI onboarding independently · 已获零售商认可，但受阻于 EDI 系统接入</div>
+          <div class="icp-r">No expertise in EDI transaction sets (850 PO, 856 ASN), routing labels, or compliance standards · 缺乏 EDI 报文处理、路由标签与合规能力</div>
         </div>
-
-        <div class="icp-cta-bar icp-cta-blue">GoComX removes the final barrier between manufacturer and retail shelf — this segment demonstrates the highest willingness to pay. · 此类客户付费意愿最强，GoComX 直接打通其进入零售货架的最后一公里。</div>
+        <div class="icp-s">
+          <div class="icp-sh">GoComX Value · 核心价值</div>
+          <div class="icp-r">Full EDI onboarding and ongoing compliance management — highest willingness-to-pay segment · 提供完整 EDI 接入与合规管理，此类客户付费意愿最强</div>
+        </div>
       </div>
 
-      <!-- 2. ODM / OEM Manufacturers -->
-      <div class="icp-card icp-2">
+      <div class="icp-card">
         <div class="icp-card-head">
-          <div class="icp-badge icp-badge-2">2</div>
+          <div class="icp-badge">2</div>
           <div>
-            <div class="icp-card-title">ODM / OEM Manufacturers<br><span style="font-weight:500;font-size:13px;color:var(--muted);">ODM / OEM 工厂</span></div>
-            <span class="icp-pill icp-pill-purple">High-Value Latent Segment · 隐形大客户</span>
+            <div class="icp-card-title">ODM / OEM Manufacturers<span>ODM / OEM 工厂</span></div>
+            <span class="icp-pill">High-Value Latent Segment · 隐形大客户</span>
           </div>
         </div>
-
-        <div class="icp-block">
-          <div class="icp-lbl">Customer Profile · 客户画像</div>
-          <div class="icp-row icp-feat">Existing contract manufacturers supplying major U.S. consumer brands · 现为美国知名品牌提供 OEM / ODM 代工服务</div>
-          <div class="icp-row icp-feat">Seeking to launch proprietary brands through DTC or B2B retail channels · 计划自主建立品牌，拓展 DTC 或 B2B 零售渠道</div>
-          <div class="icp-row icp-feat">Strong production capacity and competitive cost structure, but no established retail distribution · 具备强大产能与成本优势，尚未建立独立销售渠道</div>
+        <div class="icp-s">
+          <div class="icp-sh">Customer Profile · 客户画像</div>
+          <div class="icp-r">Currently supplying major U.S. consumer brands as contract manufacturers · 现为美国品牌提供 OEM / ODM 代工服务</div>
+          <div class="icp-r">Seeking to launch proprietary brands through DTC or B2B retail channels · 计划自主建立品牌，拓展 DTC 或 B2B 零售渠道</div>
+          <div class="icp-r">Strong production capacity with no established direct retail distribution channel · 产能与成本优势突出，尚未建立独立零售渠道</div>
         </div>
-
-        <div class="icp-block icp-pain-box">
-          <div class="icp-lbl icp-lbl-red">Key Challenges · 核心挑战</div>
-          <div class="icp-row icp-pain">Unfamiliar with U.S. retail compliance standards and buyer requirements · 对美国零售合规体系及采购商要求缺乏系统了解</div>
-          <div class="icp-row icp-pain">No EDI infrastructure — unable to connect directly with retail buyers without intermediary brand owners · 缺乏 EDI 能力，无法绕开中间品牌商直接对接零售渠道</div>
+        <div class="icp-s">
+          <div class="icp-sh">Key Challenges · 核心挑战</div>
+          <div class="icp-r">Unfamiliar with U.S. retail compliance standards and institutional buyer requirements · 对美国零售合规体系与采购商要求缺乏系统了解</div>
+          <div class="icp-r">No EDI infrastructure — unable to reach retail buyers without relying on brand intermediaries · 缺乏 EDI 能力，无法绕开中间品牌商直接对接零售渠道</div>
         </div>
-
-        <div class="icp-cta-bar icp-cta-purple">GoComX provides a direct path to U.S. retail, enabling manufacturers to establish independent brand presence without relying on intermediary distributors. · GoComX 为工厂构建直连零售的通道，助力其摆脱对中间品牌商的依赖，实现独立品牌出海。</div>
+        <div class="icp-s">
+          <div class="icp-sh">GoComX Value · 核心价值</div>
+          <div class="icp-r">Provides a direct retail channel, eliminating dependence on intermediary brand owners and unlocking independent market access · 构建直连零售通道，助力工厂摆脱中间商依赖，实现独立品牌出海</div>
+        </div>
       </div>
 
-      <!-- 3. Cross-Border B2B Distributors -->
-      <div class="icp-card icp-3">
+      <div class="icp-card">
         <div class="icp-card-head">
-          <div class="icp-badge icp-badge-3">3</div>
+          <div class="icp-badge">3</div>
           <div>
-            <div class="icp-card-title">Cross-Border B2B Distributors<br><span style="font-weight:500;font-size:13px;color:var(--muted);">跨境 B2B 贸易商</span></div>
-            <span class="icp-pill icp-pill-green">Wholesale-Focused · 非铺货型</span>
+            <div class="icp-card-title">Cross-Border B2B Distributors<span>跨境 B2B 贸易商</span></div>
+            <span class="icp-pill">Wholesale-Focused · 非铺货型</span>
           </div>
         </div>
-
-        <div class="icp-block">
-          <div class="icp-lbl">Customer Profile · 客户画像</div>
-          <div class="icp-row icp-feat">Engaged in B2B wholesale distribution, not direct-to-consumer retail · 专注于 B2B 批发业务，非零售铺货模式</div>
-          <div class="icp-row icp-feat">Operate overseas fulfillment centers with stable, recurring SKU portfolios · 拥有海外仓储体系，SKU 结构稳定</div>
+        <div class="icp-s">
+          <div class="icp-sh">Customer Profile · 客户画像</div>
+          <div class="icp-r">Wholesale-focused B2B distributors operating overseas fulfillment centers · 专注 B2B 批发业务，拥有海外仓储体系</div>
+          <div class="icp-r">Stable, recurring SKU portfolios serving institutional buyers · SKU 结构稳定，服务机构类采购商</div>
         </div>
-
-        <div class="icp-block icp-pain-box">
-          <div class="icp-lbl icp-lbl-red">Key Challenges · 核心挑战</div>
-          <div class="icp-row icp-pain">Retail and wholesale buyers mandate EDI compliance as a prerequisite for order placement · 采购方强制要求 EDI 合规，否则拒绝下单</div>
-          <div class="icp-row icp-pain">Manual order processing creates significant operational overhead, error risk, and scalability constraints · 人工处理订单导致运营成本高、错误率高，严重制约业务规模扩张</div>
+        <div class="icp-s">
+          <div class="icp-sh">Key Challenges · 核心挑战</div>
+          <div class="icp-r">Buyers mandate EDI compliance as a non-negotiable requirement for order placement · 采购方强制要求 EDI 合规，否则拒绝下单</div>
+          <div class="icp-r">Manual order processing creates high operational costs and limits scalability · 人工处理订单成本高，严重制约业务规模扩张</div>
         </div>
-
-        <div class="icp-block">
-          <div class="icp-lbl icp-lbl-green">Value Delivered by GoComX · 平台核心价值</div>
-          <div class="icp-row icp-value">Substantial cost reduction through end-to-end order processing automation · 全流程自动化，大幅降低运营成本</div>
-          <div class="icp-row icp-value">Expanded order intake capacity, enabling distributors to pursue larger and more diverse buyer relationships · 提升接单能力，助力拓展更大规模的采购合作</div>
+        <div class="icp-s">
+          <div class="icp-sh">GoComX Value · 核心价值</div>
+          <div class="icp-r">End-to-end automation reduces per-order operating costs significantly · 全流程自动化，大幅降低每笔订单运营成本</div>
+          <div class="icp-r">Expanded intake capacity supports larger institutional buyer relationships · 系统化接单能力助力拓展更大规模采购商合作</div>
         </div>
-
-        <div class="icp-cta-bar icp-cta-green">EDI compliance is the entry requirement for institutional retail. GoComX makes it accessible, affordable, and fast to deploy. · EDI 合规是进入规模化零售采购的门槛，GoComX 让这一能力触手可及。</div>
       </div>
 
     </div><!-- /icp-grid -->
