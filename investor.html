@@ -42,15 +42,15 @@ nav {
 /* LOCK SCREEN */
 #lock-screen {
   flex: 1; overflow-y: auto; background: var(--bg);
-  display: flex; flex-direction: column; align-items: center;
-  padding: 40px 40px 56px;
+  display: flex; flex-direction: column; align-items: stretch;
+  padding: 32px 48px 56px;
 }
-.icp-outer { width: 100%; max-width: 1100px; }
+.icp-outer { width: 100%; }
 /* Top row: heading left + compact lock card right */
 .icp-top-row {
-  display: flex; align-items: flex-start; gap: 24px; margin-bottom: 28px;
+  display: flex; align-items: flex-start; gap: 24px; margin-bottom: 24px;
 }
-.icp-top-head { flex: 1; padding-top: 4px; }
+.icp-top-head { flex: 1; padding-top: 6px; }
 .icp-top-head-title { font-size: 20px; font-weight: 800; color: var(--text); }
 .icp-top-head-sub {
   font-size: var(--fs-sm); color: var(--muted); margin-top: 5px;
@@ -58,17 +58,23 @@ nav {
 }
 /* Compact lock card */
 .lock-compact {
-  width: 300px; flex-shrink: 0; background: var(--card);
+  width: 480px; flex-shrink: 0; background: var(--card);
   border-radius: var(--radius); box-shadow: var(--shadow);
-  padding: 22px 22px; text-align: center;
+  padding: 18px 20px;
 }
-.lock-compact-title { font-size: 16px; font-weight: 800; color: var(--text); margin-bottom: 5px; }
+.lock-compact-title { font-size: 15px; font-weight: 800; color: var(--text); margin-bottom: 3px; }
 .lock-compact-title span { color: var(--blue); }
-.lock-compact-sub { font-size: var(--fs-sm); color: var(--muted); margin-bottom: 16px; line-height: 1.55; font-family: 'Noto Sans SC','Inter',sans-serif; }
-@media (max-width: 860px) {
+.lock-compact-sub { font-size: var(--fs-sm); color: var(--muted); margin-bottom: 12px; line-height: 1.5; font-family: 'Noto Sans SC','Inter',sans-serif; }
+/* Horizontal input + button row */
+.lock-row { display: flex; gap: 8px; align-items: center; }
+.lock-row .lock-input { flex: 1; margin-bottom: 0; }
+.lock-row .lock-btn { width: auto; flex-shrink: 0; padding: 12px 22px; white-space: nowrap; }
+@media (max-width: 900px) {
   #lock-screen { padding: 24px 20px 40px; }
   .icp-top-row { flex-direction: column; }
   .lock-compact { width: 100%; }
+  .lock-row { flex-direction: column; }
+  .lock-row .lock-btn { width: 100%; }
 }
 .lock-card {
   background: var(--card); border-radius: var(--radius);
@@ -103,11 +109,11 @@ nav {
 /* DECK VIEW */
 #deck-screen {
   flex: 1; display: none; flex-direction: column; align-items: center; justify-content: flex-start;
-  background: var(--bg); overflow-y: auto; padding: 36px 20px 56px; gap: 28px;
+  background: var(--bg); overflow-y: auto; padding: 36px 48px 56px; gap: 28px;
 }
 
 /* ── ICP SECTION ── */
-.icp-section { width: 100%; max-width: 940px; }
+.icp-section { width: 100%; }
 .icp-header { margin-bottom: 22px; }
 .icp-header-title { font-size: 19px; font-weight: 800; color: var(--text); }
 .icp-header-sub { font-size: var(--fs-sm); color: var(--muted); margin-top: 5px; line-height: 1.6; font-family: 'Noto Sans SC','Inter',sans-serif; }
@@ -207,9 +213,11 @@ nav {
     <div class="lock-compact">
       <div class="lock-compact-title">Investor <span>Deck</span></div>
       <p class="lock-compact-sub">This document is restricted. Enter your access code to continue.<br>此文件受限，请输入访问码以继续。</p>
-      <input type="password" class="lock-input" id="code-input" placeholder="ENTER ACCESS CODE" maxlength="30"
-        onkeydown="if(event.key==='Enter') checkCode()">
-      <button class="lock-btn" onclick="checkCode()">Unlock →</button>
+      <div class="lock-row">
+        <input type="password" class="lock-input" id="code-input" placeholder="ENTER ACCESS CODE" maxlength="30"
+          onkeydown="if(event.key==='Enter') checkCode()">
+        <button class="lock-btn" id="unlock-btn" onclick="checkCode()">Unlock →</button>
+      </div>
       <div class="lock-error" id="error-msg"></div>
       <p class="lock-hint">Don't have a code? <a href="contact.html">Contact us →</a></p>
     </div>
@@ -419,7 +427,7 @@ const VALIDATE_URL = 'https://gocomx-api-f4c9eegcfsbxeban.westus2-01.azurewebsit
 async function checkCode() {
   const input = document.getElementById('code-input');
   const err   = document.getElementById('error-msg');
-  const btn   = document.querySelector('.lock-btn');
+  const btn   = document.getElementById('unlock-btn');
   const val   = input.value.trim();
 
   if (!val) return;
