@@ -102,15 +102,17 @@ nav {
 }
 .page-bar-exit-btn:hover { color: var(--text); border-color: var(--muted); }
 
-/* LOCK / DECK SCREENS — just the card grid */
+/* LOCK / DECK SCREENS — flex column so grid can fill full height */
 #lock-screen {
   flex: 1; overflow-y: auto; background: var(--bg);
-  padding: 28px 48px 56px;
+  display: flex; flex-direction: column;
+  padding: 24px 48px 32px;
 }
 /* DECK VIEW */
 #deck-screen {
   flex: 1; display: none; overflow-y: auto; background: var(--bg);
-  padding: 28px 48px 56px;
+  flex-direction: column;
+  padding: 24px 48px 32px;
 }
 
 /* ── ICP SECTION ── */
@@ -124,7 +126,7 @@ nav {
   .page-bar-lock, .page-bar-unlocked { width: 100%; flex-wrap: wrap; }
   #lock-screen, #deck-screen { padding: 20px 20px 40px; }
 }
-.icp-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+.icp-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; flex: 1; align-items: stretch; min-height: 0; }
 
 /* Card shell — uniform blue top border */
 .icp-card {
