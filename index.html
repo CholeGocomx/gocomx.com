@@ -164,7 +164,13 @@ nav {
   display: flex; align-items: center; justify-content: space-between;
   margin: 14px 0 18px;
 }
-.ticker-label { font-size: var(--fs-sm); font-weight: 700; color: var(--text2); }
+.ticker-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: var(--fs-sm); color: var(--blue);
+  letter-spacing: .08em; text-transform: uppercase;
+  display: flex; align-items: center; gap: 8px; font-weight: 700;
+}
+.ticker-label::before { content: ''; width: 20px; height: 2px; background: var(--blue); border-radius: 2px; }
 .ticker-count {
   font-size: 11px; font-weight: 700; color: var(--blue);
   background: var(--blue-light); border: 1px solid rgba(0,120,212,.2);
@@ -262,7 +268,7 @@ footer {
       GoComX 帮助中国制造商通过一次接入，打通北美80个以上零售渠道。自动化EDI对接、微软D365 ERP系统、AI智能分销，一站式解决方案。
     </p>
     <div class="ticker-header">
-      <span class="ticker-label">🔗 Active Channels · 已接入渠道</span>
+      <span class="ticker-label">Active Channels · 已接入渠道</span>
       <span class="ticker-count">80+</span>
     </div>
     <div class="ticker-wrap">
