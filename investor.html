@@ -39,77 +39,74 @@ nav {
 .nav-links a:hover { color: var(--text); background: #e8eaed; }
 .nav-links a.active { color: var(--blue); font-weight: 600; }
 
-/* LOCK SCREEN */
+/* PAGE BAR — sits below nav, title left + lock form right */
+.page-bar {
+  flex-shrink: 0;
+  display: flex; align-items: center;
+  padding: 0 48px; height: 56px;
+  background: var(--card); border-bottom: 1px solid var(--border);
+  box-shadow: 0 1px 4px rgba(0,0,0,.06);
+}
+.page-bar-info { flex: 1; min-width: 0; overflow: hidden; }
+.page-bar-title {
+  font-size: 16px; font-weight: 800; color: var(--text);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  font-family: 'Noto Sans SC','Inter',sans-serif;
+}
+.page-bar-sub {
+  font-size: 11.5px; color: var(--muted); margin-top: 1px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  font-family: 'Noto Sans SC','Inter',sans-serif;
+}
+.page-bar-divider { width: 1px; height: 28px; background: var(--border); margin: 0 20px; flex-shrink: 0; }
+/* Lock form (visible when locked) */
+.page-bar-lock { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.page-bar-lock-label { font-size: 13px; font-weight: 700; color: var(--text); white-space: nowrap; margin-right: 4px; }
+.page-bar-lock-label span { color: var(--blue); }
+.page-bar-input {
+  width: 210px; padding: 7px 12px; font-size: 12px;
+  border: 1.5px solid #d0d0d0; border-radius: 7px;
+  font-family: 'JetBrains Mono', monospace; letter-spacing: .06em;
+  outline: none; transition: border-color .15s; text-transform: uppercase;
+}
+.page-bar-input:focus { border-color: var(--blue); }
+.page-bar-input.error { border-color: #ef4444; background: #fff5f5; }
+.page-bar-unlock-btn {
+  padding: 7px 16px; font-size: 13px; font-weight: 700;
+  background: var(--blue); color: #fff; border: none; border-radius: 7px;
+  cursor: pointer; font-family: inherit; transition: background .15s; white-space: nowrap;
+}
+.page-bar-unlock-btn:hover { background: var(--blue-dark); }
+.page-bar-hint { font-size: 12px; color: var(--muted); white-space: nowrap; }
+.page-bar-hint a { color: var(--blue); text-decoration: none; font-weight: 600; }
+.page-bar-hint a:hover { text-decoration: underline; }
+.page-bar-error { font-size: 11px; color: #ef4444; white-space: nowrap; }
+/* Unlocked actions */
+.page-bar-unlocked { display: none; align-items: center; gap: 8px; flex-shrink: 0; }
+.page-bar-open-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 7px 16px; font-size: 13px; font-weight: 700;
+  background: var(--blue); color: #fff; border: none; border-radius: 7px;
+  cursor: pointer; font-family: inherit; text-decoration: none;
+  transition: background .15s; white-space: nowrap;
+}
+.page-bar-open-btn:hover { background: var(--blue-dark); }
+.page-bar-exit-btn {
+  padding: 7px 14px; font-size: 12px; font-weight: 600; color: var(--muted);
+  border: 1px solid var(--border); border-radius: 7px; background: #fff;
+  cursor: pointer; font-family: inherit; white-space: nowrap; transition: all .15s;
+}
+.page-bar-exit-btn:hover { color: var(--text); border-color: var(--muted); }
+
+/* LOCK / DECK SCREENS — just the card grid */
 #lock-screen {
   flex: 1; overflow-y: auto; background: var(--bg);
-  display: flex; flex-direction: column; align-items: stretch;
-  padding: 32px 48px 56px;
+  padding: 28px 48px 56px;
 }
-.icp-outer { width: 100%; }
-/* Top row: heading left + compact lock card right */
-.icp-top-row {
-  display: flex; align-items: flex-start; gap: 24px; margin-bottom: 24px;
-}
-.icp-top-head { flex: 1; padding-top: 6px; }
-.icp-top-head-title { font-size: 20px; font-weight: 800; color: var(--text); }
-.icp-top-head-sub {
-  font-size: var(--fs-sm); color: var(--muted); margin-top: 5px;
-  line-height: 1.65; font-family: 'Noto Sans SC','Inter',sans-serif;
-}
-/* Compact lock card */
-.lock-compact {
-  width: 480px; flex-shrink: 0; background: var(--card);
-  border-radius: var(--radius); box-shadow: var(--shadow);
-  padding: 18px 20px;
-}
-.lock-compact-title { font-size: 15px; font-weight: 800; color: var(--text); margin-bottom: 3px; }
-.lock-compact-title span { color: var(--blue); }
-.lock-compact-sub { font-size: var(--fs-sm); color: var(--muted); margin-bottom: 12px; line-height: 1.5; font-family: 'Noto Sans SC','Inter',sans-serif; }
-/* Horizontal input + button row */
-.lock-row { display: flex; gap: 8px; align-items: stretch; }
-.lock-row .lock-input { flex: 1; margin-bottom: 0; padding: 8px 12px; font-size: var(--fs-sm); }
-.lock-row .lock-btn { width: auto; flex-shrink: 0; padding: 0 18px; font-size: var(--fs-sm); white-space: nowrap; }
-@media (max-width: 900px) {
-  #lock-screen { padding: 24px 20px 40px; }
-  .icp-top-row { flex-direction: column; }
-  .lock-compact { width: 100%; }
-  .lock-row { flex-direction: column; }
-  .lock-row .lock-btn { width: 100%; }
-}
-.lock-card {
-  background: var(--card); border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  padding: 48px 44px; width: 100%; max-width: 420px;
-  text-align: center;
-}
-.lock-icon { font-size: 48px; margin-bottom: 16px; }
-.lock-title { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 6px; }
-.lock-title span { color: var(--blue); }
-.lock-sub { font-size: var(--fs-sm); color: var(--muted); margin-bottom: 28px; line-height: 1.6; }
-.lock-input {
-  width: 100%; padding: 12px 16px; font-size: var(--fs-md);
-  border: 1.5px solid #d0d0d0; border-radius: 8px;
-  font-family: 'JetBrains Mono', monospace; letter-spacing: .08em;
-  outline: none; transition: border-color .15s; text-transform: uppercase;
-  margin-bottom: 12px;
-}
-.lock-input:focus { border-color: var(--blue); }
-.lock-input.error { border-color: #ef4444; background: #fff5f5; }
-.lock-btn {
-  width: 100%; padding: 12px; font-size: var(--fs-md); font-weight: 700;
-  background: var(--blue); color: #fff; border: none; border-radius: 8px;
-  cursor: pointer; font-family: inherit; transition: background .15s;
-}
-.lock-btn:hover { background: var(--blue-dark); }
-.lock-error { font-size: var(--fs-sm); color: #ef4444; margin-top: 10px; min-height: 20px; }
-.lock-hint { font-size: var(--fs-sm); color: var(--muted); margin-top: 20px; }
-.lock-hint a { color: var(--blue); text-decoration: none; font-weight: 600; }
-.lock-hint a:hover { text-decoration: underline; }
-
 /* DECK VIEW */
 #deck-screen {
-  flex: 1; display: none; flex-direction: column; align-items: center; justify-content: flex-start;
-  background: var(--bg); overflow-y: auto; padding: 36px 48px 56px; gap: 28px;
+  flex: 1; display: none; overflow-y: auto; background: var(--bg);
+  padding: 28px 48px 56px;
 }
 
 /* ── ICP SECTION ── */
@@ -117,6 +114,12 @@ nav {
 .icp-header { margin-bottom: 22px; }
 .icp-header-title { font-size: 19px; font-weight: 800; color: var(--text); }
 .icp-header-sub { font-size: var(--fs-sm); color: var(--muted); margin-top: 5px; line-height: 1.6; font-family: 'Noto Sans SC','Inter',sans-serif; }
+@media (max-width: 900px) {
+  .page-bar { padding: 10px 20px; height: auto; flex-wrap: wrap; gap: 8px; }
+  .page-bar-divider { display: none; }
+  .page-bar-lock, .page-bar-unlocked { width: 100%; flex-wrap: wrap; }
+  #lock-screen, #deck-screen { padding: 20px 20px 40px; }
+}
 .icp-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
 
 /* Card shell — uniform blue top border */
@@ -200,29 +203,31 @@ nav {
   </ul>
 </nav>
 
+<!-- PAGE BAR -->
+<div class="page-bar">
+  <div class="page-bar-info">
+    <div class="page-bar-title">Who We Serve · 目标客户画像</div>
+    <div class="page-bar-sub">GoComX serves three core segments of Chinese manufacturers and distributors seeking compliant access to the U.S. retail supply chain · 服务三大核心客群</div>
+  </div>
+  <div class="page-bar-divider"></div>
+  <!-- Locked state -->
+  <div class="page-bar-lock" id="bar-lock">
+    <span class="page-bar-lock-label">Investor <span>Deck</span> ·</span>
+    <input type="password" class="page-bar-input" id="code-input" placeholder="ACCESS CODE" maxlength="30"
+      onkeydown="if(event.key==='Enter') checkCode()">
+    <button class="page-bar-unlock-btn" id="unlock-btn" onclick="checkCode()">Unlock →</button>
+    <span class="page-bar-error" id="error-msg"></span>
+    <span class="page-bar-hint">No code? <a href="contact.html">Contact us</a></span>
+  </div>
+  <!-- Unlocked state -->
+  <div class="page-bar-unlocked" id="bar-unlocked">
+    <a class="page-bar-open-btn" href="https://gocomx.sharepoint.com/:b:/g/IQB3I010EEQwRK5cULBmGWZqAePKTAajeMpT_HgdqWcyvTg?e=8f9FiN" target="_blank" rel="noopener">📂 Open Deck · 打开文件</a>
+    <button class="page-bar-exit-btn" onclick="lockOut()">🔒 Lock &amp; Exit</button>
+  </div>
+</div>
+
 <!-- LOCK SCREEN -->
 <div id="lock-screen">
- <div class="icp-outer">
-
-  <!-- TOP ROW: heading + compact lock card -->
-  <div class="icp-top-row">
-    <div class="icp-top-head">
-      <div class="icp-top-head-title">Who We Serve · 目标客户画像</div>
-      <div class="icp-top-head-sub">GoComX serves three core segments of Chinese manufacturers and distributors seeking compliant access to the U.S. retail supply chain · 服务三大核心客群，助力中国制造商合规进入美国零售供应链</div>
-    </div>
-    <div class="lock-compact">
-      <div class="lock-compact-title">Investor <span>Deck</span></div>
-      <p class="lock-compact-sub">This document is restricted. Enter your access code to continue.<br>此文件受限，请输入访问码以继续。</p>
-      <div class="lock-row">
-        <input type="password" class="lock-input" id="code-input" placeholder="ENTER ACCESS CODE" maxlength="30"
-          onkeydown="if(event.key==='Enter') checkCode()">
-        <button class="lock-btn" id="unlock-btn" onclick="checkCode()">Unlock →</button>
-      </div>
-      <div class="lock-error" id="error-msg"></div>
-      <p class="lock-hint">Don't have a code? <a href="contact.html">Contact us →</a></p>
-    </div>
-  </div>
-
   <!-- 3 CARDS -->
   <div class="icp-grid">
     <div class="icp-card">
@@ -305,35 +310,13 @@ nav {
         <div class="icp-r">Expanded intake capacity supports larger institutional buyer relationships · 系统化接单能力助力拓展更大规模采购商合作</div>
       </div>
     </div>
-  </div><!-- /icp-grid -->
+  </div><!-- /icp-grid (lock-screen) -->
 
- </div><!-- /icp-outer -->
+</div><!-- /lock-screen -->
 
-</div>
-
-<!-- DECK SCREEN -->
+<!-- DECK SCREEN — same 3 cards, shown after unlock -->
 <div id="deck-screen">
-  <div class="doc-card">
-    <div class="doc-icon">📊</div>
-    <div class="doc-title">Investor <span>Deck</span></div>
-    <p class="doc-sub">Access granted. Your document is ready to view.<br>
-      <span style="font-family:'Noto Sans SC',sans-serif;">验证成功，您的文件已准备好查阅。</span>
-    </p>
-    <a class="doc-open-btn" href="https://gocomx.sharepoint.com/:b:/g/IQB3I010EEQwRK5cULBmGWZqAePKTAajeMpT_HgdqWcyvTg?e=8f9FiN" target="_blank" rel="noopener">
-      📂 Open Document · 打开文件
-    </a>
-    <button class="doc-lock-btn" onclick="lockOut()">🔒 Lock &amp; Exit</button>
-    <div class="doc-notice">🔒 Confidential · For authorized recipients only<br>
-      <span style="font-family:'Noto Sans SC',sans-serif;">保密文件，仅供授权人员查阅，请勿转发。</span>
-    </div>
-  </div>
-
-  <div class="icp-section">
-    <div class="icp-header">
-      <div class="icp-header-title">Target Customer Profiles · 目标客户画像</div>
-      <div class="icp-header-sub">GoComX serves three core manufacturer and distributor segments seeking compliant access to the U.S. retail supply chain · 三大核心客户群体</div>
-    </div>
-    <div class="icp-grid">
+  <div class="icp-grid">
 
       <div class="icp-card">
         <div class="icp-card-head">
@@ -416,10 +399,9 @@ nav {
         </div>
       </div>
 
-    </div><!-- /icp-grid -->
-  </div><!-- /icp-section -->
+  </div><!-- /icp-grid (deck-screen) -->
 
-</div>
+</div><!-- /deck-screen -->
 
 <script>
 const VALIDATE_URL = 'https://gocomx-api-f4c9eegcfsbxeban.westus2-01.azurewebsites.net/api/validateCode';
@@ -446,7 +428,9 @@ async function checkCode() {
 
     if (data.valid) {
       document.getElementById('lock-screen').style.display = 'none';
-      document.getElementById('deck-screen').style.display = 'flex';
+      document.getElementById('deck-screen').style.display = 'block';
+      document.getElementById('bar-lock').style.display = 'none';
+      document.getElementById('bar-unlocked').style.display = 'flex';
     } else {
       input.classList.add('error');
       err.textContent = 'Incorrect code. Please try again. · 访问码错误，请重试。';
@@ -462,7 +446,9 @@ async function checkCode() {
 
 function lockOut() {
   document.getElementById('deck-screen').style.display = 'none';
-  document.getElementById('lock-screen').style.display = 'flex';
+  document.getElementById('lock-screen').style.display = 'block';
+  document.getElementById('bar-unlocked').style.display = 'none';
+  document.getElementById('bar-lock').style.display = 'flex';
   document.getElementById('code-input').value = '';
   document.getElementById('error-msg').textContent = '';
 }
