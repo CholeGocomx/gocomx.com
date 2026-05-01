@@ -139,23 +139,21 @@ nav {
 .icp-badge {
   width: 30px; height: 30px; border-radius: 50%; flex-shrink: 0;
   display: flex; align-items: center; justify-content: center;
-  font-size: 14px; font-weight: 800; color: var(--blue); background: #fff;
+  font-size: 14px; font-weight: 400; color: var(--blue); background: #fff;
   border: 2px solid var(--blue);
 }
-/* CLEAR TYPE HIERARCHY — title always bigger than content beneath it */
-/* Level 1 — Card title: 17px bold */
-.icp-card-title { font-size: 17px; font-weight: 800; color: var(--text); line-height: 1.3; font-family: 'Noto Sans SC','Inter',sans-serif; }
-.icp-card-title span { display: block; font-size: 13px; font-weight: 500; color: var(--text); margin-top: 3px; }
-.icp-pill { display: inline-block; font-size: 12px; font-weight: 600; border-radius: 4px; padding: 3px 9px; margin-top: 6px; color: var(--blue); background: var(--blue-light); }
+/* Card title — 2 lines: English · Chinese on line 1, pill on line 2 */
+.icp-card-title { font-size: 16px; font-weight: 400; color: var(--text); line-height: 1.4; font-family: 'Noto Sans SC','Inter',sans-serif; }
+.icp-card-title span { display: inline; font-size: 16px; font-weight: 400; color: var(--text); }
+.icp-card-title span::before { content: ' · '; color: var(--muted); }
+.icp-pill { display: block; font-size: 13px; font-weight: 400; border-radius: 4px; padding: 3px 0; margin-top: 4px; color: var(--blue); background: none; }
 
-/* Three sections — flex to fill full card height */
+/* Three sections — flex to fill full card height, all regular weight */
 .icp-s { display: flex; flex-direction: column; gap: 8px; padding: 16px 0; border-top: 1px solid var(--border); flex: 1; }
 .icp-s:first-of-type { border-top: none; padding-top: 0; }
-/* Level 2 — Section title: 15px bold — MUST be larger than body text below */
-.icp-sh { font-size: 15px; font-weight: 700; color: var(--blue); margin-bottom: 6px; letter-spacing: 0; text-transform: none; font-family: 'Noto Sans SC','Inter',sans-serif; }
-/* Level 3 — Body content: 13px regular */
-.icp-r { font-size: 13px; color: var(--text); line-height: 1.7; display: flex; align-items: flex-start; gap: 8px; font-family: 'Noto Sans SC','Inter',sans-serif; }
-.icp-r::before { content: '·'; color: var(--blue); font-weight: 900; flex-shrink: 0; margin-top: 2px; }
+.icp-sh { font-size: 15px; font-weight: 400; color: var(--blue); margin-bottom: 4px; font-family: 'Noto Sans SC','Inter',sans-serif; }
+.icp-r { font-size: 13px; font-weight: 400; color: var(--text); line-height: 1.7; display: flex; align-items: flex-start; gap: 8px; font-family: 'Noto Sans SC','Inter',sans-serif; }
+.icp-r::before { content: '·'; color: var(--blue); font-weight: 400; flex-shrink: 0; margin-top: 2px; }
 .icp-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 4px; }
 .icp-ind-tag { font-size: 12px; color: var(--blue); background: var(--blue-light); border: 1px solid rgba(0,120,212,.18); border-radius: 4px; padding: 3px 10px; font-weight: 600; }
 @media (max-width: 800px) { .icp-grid { grid-template-columns: 1fr; } }
@@ -247,7 +245,7 @@ nav {
         </div>
       </div>
       <div class="icp-s">
-        <div class="icp-sh">Customer Profile · 客户画像</div>
+
         <div class="icp-r">Proven online sales presence on Amazon and Walmart Marketplace · 已在主流电商平台建立销售基础</div>
         <div class="icp-r">Targeting major brick-and-mortar retail expansion (Home Depot, Lowe's) · 寻求进入 Home Depot、Lowe's 等线下零售渠道</div>
         <div class="icp-r">Structured SKU portfolios with UPC compliance and retail-ready packaging · 具备完整 SKU 体系与零售合规包装能力</div>
@@ -280,7 +278,7 @@ nav {
         </div>
       </div>
       <div class="icp-s">
-        <div class="icp-sh">Customer Profile · 客户画像</div>
+
         <div class="icp-r">Currently supplying major U.S. consumer brands as contract manufacturers · 现为美国品牌提供 OEM / ODM 代工服务</div>
         <div class="icp-r">Seeking to launch proprietary brands through DTC or B2B retail channels · 计划自主建立品牌，拓展 DTC 或 B2B 零售渠道</div>
         <div class="icp-r">Strong production capacity with no established direct retail distribution channel · 产能与成本优势突出，尚未建立独立零售渠道</div>
@@ -307,7 +305,7 @@ nav {
         </div>
       </div>
       <div class="icp-s">
-        <div class="icp-sh">Customer Profile · 客户画像</div>
+
         <div class="icp-r">Wholesale-focused B2B distributors operating overseas fulfillment centers · 专注 B2B 批发业务，拥有海外仓储体系</div>
         <div class="icp-r">Stable, recurring SKU portfolios serving institutional buyers · SKU 结构稳定，服务机构类采购商</div>
       </div>
@@ -340,7 +338,7 @@ nav {
           </div>
         </div>
         <div class="icp-s">
-          <div class="icp-sh">Customer Profile · 客户画像</div>
+  
           <div class="icp-r">Proven online sales presence on Amazon and Walmart Marketplace · 已在主流电商平台建立销售基础</div>
           <div class="icp-r">Targeting major brick-and-mortar retail expansion (Home Depot, Lowe's) · 寻求进入 Home Depot、Lowe's 等线下零售渠道</div>
           <div class="icp-r">Structured SKU portfolios with UPC compliance and retail-ready packaging · 具备完整 SKU 体系与零售合规包装能力</div>
@@ -371,7 +369,7 @@ nav {
           </div>
         </div>
         <div class="icp-s">
-          <div class="icp-sh">Customer Profile · 客户画像</div>
+  
           <div class="icp-r">Currently supplying major U.S. consumer brands as contract manufacturers · 现为美国品牌提供 OEM / ODM 代工服务</div>
           <div class="icp-r">Seeking to launch proprietary brands through DTC or B2B retail channels · 计划自主建立品牌，拓展 DTC 或 B2B 零售渠道</div>
           <div class="icp-r">Strong production capacity with no established direct retail distribution channel · 产能与成本优势突出，尚未建立独立零售渠道</div>
@@ -396,7 +394,7 @@ nav {
           </div>
         </div>
         <div class="icp-s">
-          <div class="icp-sh">Customer Profile · 客户画像</div>
+  
           <div class="icp-r">Wholesale-focused B2B distributors operating overseas fulfillment centers · 专注 B2B 批发业务，拥有海外仓储体系</div>
           <div class="icp-r">Stable, recurring SKU portfolios serving institutional buyers · SKU 结构稳定，服务机构类采购商</div>
         </div>
