@@ -93,8 +93,10 @@ nav {
   border-radius: 4px; padding: 3px 10px; margin-bottom: 12px;
   align-self: flex-start;
 }
-.member-name { font-size: var(--fs-lg); font-weight: 400; margin-bottom: 4px; color: var(--blue); }
-.member-title { font-size: var(--fs-sm); color: var(--muted); line-height: 1.5; margin-bottom: 3px; }
+.member-name { display: inline; font-size: var(--fs-sm); font-weight: 400; color: var(--blue); }
+.member-name::after { content: ' · '; color: #aaa; }
+.member-title { display: inline; font-size: var(--fs-sm); color: var(--text); line-height: 1.5; }
+.member-name-line { margin-bottom: 3px; }
 .member-title-zh { font-size: var(--fs-sm); color: #374151; margin-bottom: 16px; }
 .member-divider { border: none; border-top: 1px solid #f0f0f0; margin-bottom: 14px; }
 .member-bio { font-size: var(--fs-sm); color: var(--text2); line-height: 1.7; flex: 1; }
@@ -164,8 +166,7 @@ footer {
 
       <div class="member-card">
         <div class="member-role">Interim CEO &amp; CTO</div>
-        <div class="member-name">Chloe Zeng</div>
-        <div class="member-title">Principal Solution Architect · Microsoft D365 &amp; EDI</div>
+        <div class="member-name-line"><span class="member-name">Chloe Zeng</span><span class="member-title">Principal Solution Architect · Microsoft D365 &amp; EDI</span></div>
         <div class="member-title-zh zh">临时首席执行官 · 首席技术官 · 零售 B2B 集成专家</div>
         <hr class="member-divider">
         <p class="member-bio">Microsoft D365 F&amp;O/SCM ERP systems architect and technical founder of GoComX. Built the entire integration infrastructure connecting Chinese manufacturers to 80+ North American retail channels.<br><br><span class="zh" style="color:var(--muted);">微软ERP系统架构师，GoComX技术创始人，构建了连接中国制造商与北美80个以上零售渠道的完整集成基础设施。</span></p>
@@ -182,8 +183,7 @@ footer {
 
       <div class="member-card">
         <div class="member-role">COO</div>
-        <div class="member-name">Tian Tang</div>
-        <div class="member-title">Chief Operating Officer</div>
+        <div class="member-name-line"><span class="member-name">Tian Tang</span><span class="member-title">Chief Operating Officer</span></div>
         <div class="member-title-zh zh">首席运营官</div>
         <hr class="member-divider">
         <p class="member-bio">Chief Operating Officer overseeing GoComX's day-to-day operations, order management, and customer success. Drives operational excellence supporting rapid channel expansion across North American markets.<br><br><span class="zh" style="color:var(--muted);">负责GoComX日常运营、订单管理与客户服务，推动北美市场渠道快速扩张的运营卓越。</span></p>
@@ -198,8 +198,7 @@ footer {
 
       <div class="member-card">
         <div class="member-role">E-Commerce</div>
-        <div class="member-name">Somesh Gyan</div>
-        <div class="member-title">Senior E-Commerce &amp; Platform Operations Executive</div>
+        <div class="member-name-line"><span class="member-name">Somesh Gyan</span><span class="member-title">Senior E-Commerce &amp; Platform Operations Executive</span></div>
         <div class="member-title-zh zh">资深电商与平台运营高管</div>
         <hr class="member-divider">
         <p class="member-bio">15+ years leading omnichannel e-commerce growth across global platforms. Driven $100M+ annual revenue in the home &amp; lifestyle category with deep P&amp;L ownership and marketplace expertise.<br><br><span class="zh" style="color:var(--muted);">拥有15年以上全渠道电商经验，在家居生活领域推动年收入超1亿美元。</span></p>
@@ -215,8 +214,7 @@ footer {
 
       <div class="member-card">
         <div class="member-role">Secretary</div>
-        <div class="member-name">Andrew Ngo</div>
-        <div class="member-title">Corporate Secretary</div>
+        <div class="member-name-line"><span class="member-name">Andrew Ngo</span><span class="member-title">Corporate Secretary</span></div>
         <div class="member-title-zh zh">公司秘书</div>
         <hr class="member-divider">
         <p class="member-bio">Responsible for corporate governance and administrative operations at GoComX — ensuring compliance, record-keeping, and organizational integrity as the company grows.<br><br><span class="zh" style="color:var(--muted);">负责公司治理与行政运营，确保合规性与组织完整性。</span></p>
