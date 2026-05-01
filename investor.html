@@ -33,10 +33,13 @@ nav {
 .nav-logo-text { font-size: 18px; font-weight: 800; color: var(--text); letter-spacing: -.3px; }
 .nav-logo-text span { color: var(--blue); }
 .nav-logo-img { height: 44px; width: auto; display: block; }
-.nav-tagline { font-size: 13px; color: #404040; border-left: 1px solid #e0e0e0; padding-left: 16px; font-weight: 400; letter-spacing: 0; }
+.nav-tagline { font-size: 13px; border-left: 1px solid #e0e0e0; padding-left: 16px; font-weight: 400; letter-spacing: 0; }
+.nt-en { color: var(--blue); }
+.nt-zh { color: var(--text); font-family: 'Noto Sans SC','Inter',sans-serif; }
+.nt-sep { color: #bbb; }
 /* Page-specific tagline override (investor.html only) */
 .nav-page-tag { display: flex; align-items: center; }
-.nav-page-tag-main { font-size: 13px; font-weight: 400; color: #404040; letter-spacing: 0; font-family: 'Noto Sans SC','Inter',sans-serif; }
+.nav-page-tag-main { font-size: 13px; font-weight: 400; letter-spacing: 0; }
 .nav-links { display: flex; gap: 2px; list-style: none; align-items: center; }
 .nav-links a { font-size: var(--fs-md); font-weight: 500; color: var(--muted); text-decoration: none; padding: 7px 14px; border-radius: 6px; transition: all .15s; }
 .nav-links a:hover { color: var(--text); background: #e8eaed; }
@@ -200,7 +203,7 @@ nav {
   <a class="nav-brand" href="index.html">
     <span class="nav-logo-text">Go<span>Com</span>X</span>
     <span class="nav-tagline nav-page-tag">
-      <span class="nav-page-tag-main">Who We Serve · 目标客户画像</span>
+      <span class="nav-page-tag-main"><span class="nt-en">Who We Serve</span><span class="nt-sep"> · </span><span class="nt-zh">目标客户画像</span></span>
     </span>
   </a>
   <ul class="nav-links">
