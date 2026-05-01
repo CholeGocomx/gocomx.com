@@ -144,13 +144,14 @@ nav {
   border: 1px solid var(--border); border-radius: 4px; padding: 2px 8px;
 }
 .icp-cta-bar {
-  margin-top: auto; padding: 9px 12px; border-radius: 7px;
-  font-size: var(--fs-sm); font-weight: 700; line-height: 1.5;
+  margin-top: auto; padding: 10px 14px; border-radius: 0 7px 7px 0;
+  border-left: 4px solid; display: flex; align-items: flex-start; gap: 8px;
+  font-size: var(--fs-sm); font-weight: 700; line-height: 1.55;
   font-family: 'Noto Sans SC','Inter',sans-serif;
 }
-.icp-cta-blue   { background: var(--blue-light); color: var(--blue); }
-.icp-cta-purple { background: #f5f3ff; color: #7c3aed; }
-.icp-cta-green  { background: #ecfdf5; color: #059669; }
+.icp-cta-blue   { border-color: var(--blue);  background: var(--blue-light); color: #1d4ed8; }
+.icp-cta-purple { border-color: #7c3aed; background: #f5f3ff;    color: #5b21b6; }
+.icp-cta-green  { border-color: #059669; background: #ecfdf5;    color: #065f46; }
 @media (max-width: 800px) { .icp-grid { grid-template-columns: 1fr; } }
 .doc-card {
   background: var(--card); border-radius: var(--radius);
@@ -308,7 +309,7 @@ nav {
           <div class="icp-row icp-pain">没有 EDI 能力 → 无法直接对接</div>
         </div>
 
-        <div class="icp-cta-bar icp-cta-purple">🔗 EDI 平台 = "帮他绕过中间品牌商"</div>
+        <div class="icp-cta-bar icp-cta-purple">🔗 EDI 平台 = 绕过中间品牌商的通道</div>
       </div>
 
       <!-- 3. 跨境B2B贸易商 -->
