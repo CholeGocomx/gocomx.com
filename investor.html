@@ -76,9 +76,82 @@ nav {
 
 /* DECK VIEW */
 #deck-screen {
-  flex: 1; display: none; flex-direction: column; align-items: center; justify-content: center;
-  background: var(--bg);
+  flex: 1; display: none; flex-direction: column; align-items: center; justify-content: flex-start;
+  background: var(--bg); overflow-y: auto; padding: 36px 20px 56px; gap: 28px;
 }
+
+/* ── ICP SECTION ── */
+.icp-section { width: 100%; max-width: 940px; }
+.icp-header { text-align: center; margin-bottom: 22px; }
+.icp-header-title { font-size: 19px; font-weight: 800; color: var(--text); }
+.icp-header-sub { font-size: var(--fs-sm); color: var(--muted); margin-top: 5px; }
+.icp-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
+.icp-card {
+  background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow);
+  padding: 22px 18px; display: flex; flex-direction: column; gap: 13px;
+  border-top: 3px solid transparent;
+}
+.icp-1 { border-top-color: var(--blue); }
+.icp-2 { border-top-color: #7c3aed; }
+.icp-3 { border-top-color: #059669; }
+.icp-card-head { display: flex; align-items: flex-start; gap: 10px; }
+.icp-badge {
+  width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 800; color: #fff;
+}
+.icp-badge-1 { background: var(--blue); }
+.icp-badge-2 { background: #7c3aed; }
+.icp-badge-3 { background: #059669; }
+.icp-card-title {
+  font-size: 15px; font-weight: 800; color: var(--text); line-height: 1.3;
+  font-family: 'Noto Sans SC','Inter',sans-serif;
+}
+.icp-pill {
+  display: inline-block; font-size: 10px; font-weight: 700;
+  border-radius: 4px; padding: 2px 7px; margin-top: 4px;
+}
+.icp-pill-blue  { color: var(--blue); background: var(--blue-light); }
+.icp-pill-purple{ color: #7c3aed; background: #f5f3ff; }
+.icp-pill-green { color: #059669; background: #ecfdf5; }
+.icp-block { display: flex; flex-direction: column; gap: 5px; }
+.icp-lbl {
+  font-size: 10px; font-weight: 700; letter-spacing: .07em;
+  text-transform: uppercase; margin-bottom: 2px; color: var(--muted);
+}
+.icp-lbl-red { color: #dc2626; }
+.icp-lbl-green { color: #059669; }
+.icp-row {
+  font-size: var(--fs-sm); line-height: 1.6; display: flex;
+  align-items: flex-start; gap: 6px;
+  font-family: 'Noto Sans SC','Inter',sans-serif; color: var(--text);
+}
+.icp-row::before { flex-shrink: 0; font-weight: 900; }
+.icp-feat::before { content: '·'; color: var(--blue); }
+.icp-2 .icp-feat::before { color: #7c3aed; }
+.icp-3 .icp-feat::before { color: #059669; }
+.icp-pain { color: #dc2626; }
+.icp-pain::before { content: '!'; }
+.icp-value { color: #059669; font-weight: 600; }
+.icp-value::before { content: '→'; color: #059669; }
+.icp-pain-box {
+  background: #fff5f5; border-radius: 8px; padding: 10px 12px;
+  border-left: 3px solid #fca5a5;
+}
+.icp-tags { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 2px; }
+.icp-ind-tag {
+  font-size: 11px; color: var(--muted); background: var(--bg);
+  border: 1px solid var(--border); border-radius: 4px; padding: 2px 8px;
+}
+.icp-cta-bar {
+  margin-top: auto; padding: 9px 12px; border-radius: 7px;
+  font-size: var(--fs-sm); font-weight: 700; line-height: 1.5;
+  font-family: 'Noto Sans SC','Inter',sans-serif;
+}
+.icp-cta-blue   { background: var(--blue-light); color: var(--blue); }
+.icp-cta-purple { background: #f5f3ff; color: #7c3aed; }
+.icp-cta-green  { background: #ecfdf5; color: #059669; }
+@media (max-width: 800px) { .icp-grid { grid-template-columns: 1fr; } }
 .doc-card {
   background: var(--card); border-radius: var(--radius);
   box-shadow: var(--shadow);
@@ -166,6 +239,112 @@ nav {
       <span style="font-family:'Noto Sans SC',sans-serif;">保密文件，仅供授权人员查阅，请勿转发。</span>
     </div>
   </div>
+
+  <!-- ── TARGET CUSTOMER PROFILES ── -->
+  <div class="icp-section">
+    <div class="icp-header">
+      <div class="icp-header-title">目标客户画像 · Target Customer Profiles</div>
+      <div class="icp-header-sub">GoComX 核心三类目标客户 · Three Core ICP Segments</div>
+    </div>
+
+    <div class="icp-grid">
+
+      <!-- 1. 准品牌型工厂 -->
+      <div class="icp-card icp-1">
+        <div class="icp-card-head">
+          <div class="icp-badge icp-badge-1">1</div>
+          <div>
+            <div class="icp-card-title">准品牌型工厂</div>
+            <span class="icp-pill icp-pill-blue">⭐ 最核心人群</span>
+          </div>
+        </div>
+
+        <div class="icp-block">
+          <div class="icp-lbl">特征</div>
+          <div class="icp-row icp-feat">已在 Amazon / Walmart Marketplace 有销量</div>
+          <div class="icp-row icp-feat">想进入线下零售（Home Depot / Lowe's）</div>
+          <div class="icp-row icp-feat">有 SKU 体系 + 条码 + 包装能力</div>
+        </div>
+
+        <div class="icp-block">
+          <div class="icp-lbl">典型行业</div>
+          <div class="icp-tags">
+            <span class="icp-ind-tag">⚡ 电动工具 / Hand Tools</span>
+            <span class="icp-ind-tag">💡 Lighting / Plumbing</span>
+            <span class="icp-ind-tag">🏠 小家电</span>
+            <span class="icp-ind-tag">🌿 BBQ / Garden</span>
+          </div>
+        </div>
+
+        <div class="icp-block icp-pain-box">
+          <div class="icp-lbl icp-lbl-red">痛点</div>
+          <div class="icp-row icp-pain">被大零售选中，但卡在 EDI onboarding</div>
+          <div class="icp-row icp-pain">不懂 850 / 856 / label / routing</div>
+        </div>
+
+        <div class="icp-cta-bar icp-cta-blue">💰 这类客户最愿意付钱</div>
+      </div>
+
+      <!-- 2. ODM / OEM 工厂 -->
+      <div class="icp-card icp-2">
+        <div class="icp-card-head">
+          <div class="icp-badge icp-badge-2">2</div>
+          <div>
+            <div class="icp-card-title">ODM / OEM 工厂</div>
+            <span class="icp-pill icp-pill-purple">隐形大客户</span>
+          </div>
+        </div>
+
+        <div class="icp-block">
+          <div class="icp-lbl">特征</div>
+          <div class="icp-row icp-feat">本来就在给美国品牌供货</div>
+          <div class="icp-row icp-feat">想自己做品牌（DTC 或 B2B）</div>
+          <div class="icp-row icp-feat">有产能但没渠道</div>
+        </div>
+
+        <div class="icp-block icp-pain-box">
+          <div class="icp-lbl icp-lbl-red">痛点</div>
+          <div class="icp-row icp-pain">不懂美国零售规则</div>
+          <div class="icp-row icp-pain">没有 EDI 能力 → 无法直接对接</div>
+        </div>
+
+        <div class="icp-cta-bar icp-cta-purple">🔗 EDI 平台 = "帮他绕过中间品牌商"</div>
+      </div>
+
+      <!-- 3. 跨境B2B贸易商 -->
+      <div class="icp-card icp-3">
+        <div class="icp-card-head">
+          <div class="icp-badge icp-badge-3">3</div>
+          <div>
+            <div class="icp-card-title">跨境 B2B 贸易商</div>
+            <span class="icp-pill icp-pill-green">非铺货型</span>
+          </div>
+        </div>
+
+        <div class="icp-block">
+          <div class="icp-lbl">特征</div>
+          <div class="icp-row icp-feat">已经在做批发（不是 ToC）</div>
+          <div class="icp-row icp-feat">有海外仓，SKU 较稳定</div>
+        </div>
+
+        <div class="icp-block icp-pain-box">
+          <div class="icp-lbl icp-lbl-red">痛点</div>
+          <div class="icp-row icp-pain">客户要求 EDI（否则不给单）</div>
+          <div class="icp-row icp-pain">人工处理订单成本极高</div>
+        </div>
+
+        <div class="icp-block">
+          <div class="icp-lbl icp-lbl-green">EDI 直接带来</div>
+          <div class="icp-row icp-value">降本（自动化）</div>
+          <div class="icp-row icp-value">提升接单能力</div>
+        </div>
+
+        <div class="icp-cta-bar icp-cta-green">📦 EDI = 接单门票，不做就丢单</div>
+      </div>
+
+    </div><!-- /icp-grid -->
+  </div><!-- /icp-section -->
+
 </div>
 
 <script>
