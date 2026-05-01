@@ -34,6 +34,10 @@ nav {
 .nav-logo-text span { color: var(--blue); }
 .nav-logo-img { height: 44px; width: auto; display: block; }
 .nav-tagline { font-size: 18px; color: #404040; border-left: 1px solid #e0e0e0; padding-left: 16px; font-weight: 800; letter-spacing: -.3px; }
+/* Page-specific tagline override (investor.html only) */
+.nav-page-tag { display: flex; flex-direction: column; gap: 1px; justify-content: center; }
+.nav-page-tag-main { font-size: 15px; font-weight: 800; color: var(--text); line-height: 1.25; letter-spacing: -.2px; font-family: 'Noto Sans SC','Inter',sans-serif; }
+.nav-page-tag-sub { font-size: 11px; font-weight: 400; color: var(--muted); letter-spacing: 0; line-height: 1.25; font-family: 'Noto Sans SC','Inter',sans-serif; }
 .nav-links { display: flex; gap: 2px; list-style: none; align-items: center; }
 .nav-links a { font-size: var(--fs-md); font-weight: 500; color: var(--muted); text-decoration: none; padding: 7px 14px; border-radius: 6px; transition: all .15s; }
 .nav-links a:hover { color: var(--text); background: #e8eaed; }
@@ -190,7 +194,10 @@ nav {
 <nav>
   <a class="nav-brand" href="index.html">
     <span class="nav-logo-text">Go<span>Com</span>X</span>
-    <span class="nav-tagline">Cross-Border Distribution OS · 跨境智能分销信息技术服务和商业战略咨询 · Microsoft ISV Certified</span>
+    <span class="nav-tagline nav-page-tag">
+      <span class="nav-page-tag-main">Who We Serve · 目标客户画像</span>
+      <span class="nav-page-tag-sub">GoComX serves three core segments of Chinese manufacturers and distributors seeking compliant access to the U.S. retail supply chain · 服务三大核心客群</span>
+    </span>
   </a>
   <ul class="nav-links">
     <li><a href="index.html">Home</a></li>
@@ -203,13 +210,8 @@ nav {
   </ul>
 </nav>
 
-<!-- PAGE BAR -->
-<div class="page-bar">
-  <div class="page-bar-info">
-    <div class="page-bar-title">Who We Serve · 目标客户画像</div>
-    <div class="page-bar-sub">GoComX serves three core segments of Chinese manufacturers and distributors seeking compliant access to the U.S. retail supply chain · 服务三大核心客群</div>
-  </div>
-  <div class="page-bar-divider"></div>
+<!-- PAGE BAR — lock form only (title is in nav tagline) -->
+<div class="page-bar" style="justify-content:flex-end;">
   <!-- Locked state -->
   <div class="page-bar-lock" id="bar-lock">
     <span class="page-bar-lock-label">Investor <span>Deck</span> ·</span>
