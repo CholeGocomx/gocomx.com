@@ -132,6 +132,10 @@ nav {
   text-decoration: none; transition: all .15s; cursor: pointer;
 }
 .book-banner:hover { background: #dbeeff; border-color: var(--blue); box-shadow: 0 2px 12px rgba(0,120,212,.12); }
+.book-banner.zoom { background: #f5f0ff; border-color: rgba(100,60,200,.2); }
+.book-banner.zoom:hover { background: #ede5ff; border-color: #7c4dff; box-shadow: 0 2px 12px rgba(100,60,200,.12); }
+.book-banner.zoom .book-title { color: #5b21b6; }
+.book-banner.zoom .book-arrow { color: #5b21b6; }
 .book-banner-left { display: flex; align-items: center; gap: 14px; }
 .book-icon { font-size: 28px; flex-shrink: 0; }
 .book-title { font-size: var(--fs-md); font-weight: 700; color: var(--blue); margin-bottom: 2px; }
@@ -328,6 +332,23 @@ footer {
         <div>
           <div class="book-title">Book a Meeting · 预约会议</div>
           <div class="book-sub">Schedule a call directly on our Microsoft Bookings calendar · 直接预约视频会议，选择您方便的时间</div>
+        </div>
+      </div>
+      <div class="book-arrow">→</div>
+    </a>
+
+    <!-- Zoom Meeting -->
+    <a href="https://scheduler.zoom.us/chloe-zeng-uiubyx/30-mins-with-gocomx" target="_blank" class="book-banner zoom" style="margin-bottom:6px;">
+      <div class="book-banner-left">
+        <div class="book-icon">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none">
+            <rect x="1" y="5" width="15" height="14" rx="2.5" fill="#5b21b6"/>
+            <path d="M16 9.5l6-4v13l-6-4V9.5z" fill="#7c4dff"/>
+          </svg>
+        </div>
+        <div>
+          <div class="book-title">Join via Zoom · Zoom视频会议</div>
+          <div class="book-sub">Prefer Zoom? Book a 30-min meeting directly · 偏好Zoom？直接预约30分钟视频会议</div>
         </div>
       </div>
       <div class="book-arrow">→</div>
