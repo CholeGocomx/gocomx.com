@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -6,8 +6,6 @@
 <title>Contact — GoComX</title>
 <link rel="icon" type="image/png" sizes="32x32" href="logo.png">
 <link rel="apple-touch-icon" sizes="180x180" href="logo.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root {
   --blue: #0078d4; --blue-dark: #005a9e; --blue-light: #eff6ff;
@@ -21,7 +19,7 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body {
   background: var(--bg); color: var(--text);
-  font-family: 'Inter', sans-serif; font-size: var(--fs-md); line-height: 1.6;
+  font-family: 'Segoe UI',system-ui,sans-serif; font-size: var(--fs-md); line-height: 1.6;
   height: 100vh; display: flex; flex-direction: column; overflow: hidden;
 }
 
@@ -38,7 +36,7 @@ nav {
 .nav-logo-img { height: 44px; width: auto; display: block; }
 .nav-tagline { font-size: 13px; border-left: 1px solid #e0e0e0; padding-left: 16px; font-weight: 400; letter-spacing: 0; }
 .nt-en { color: var(--blue); }
-.nt-zh { color: var(--text); font-family: 'Noto Sans SC','Inter',sans-serif; }
+.nt-zh { color: var(--text); font-family: 'Noto Sans SC','Segoe UI',system-ui,sans-serif; }
 .nt-sep { color: #bbb; }
 .nav-links { display: flex; gap: 2px; list-style: none; align-items: center; }
 .nav-links a { font-size: var(--fs-md); font-weight: 500; color: var(--muted); text-decoration: none; padding: 7px 14px; border-radius: 6px; transition: all .15s; }
@@ -159,7 +157,7 @@ nav {
 .form-input, .form-textarea {
   width: 100%; padding: 9px 13px;
   border: 1.5px solid #e0e0e0; border-radius: 8px;
-  font-size: var(--fs-sm); font-family: 'Inter', sans-serif;
+  font-size: var(--fs-sm); font-family: 'Segoe UI',system-ui,sans-serif;
   color: var(--text); background: #fff;
   outline: none; transition: border-color .15s;
 }
@@ -168,7 +166,7 @@ nav {
 .form-submit {
   width: 100%; padding: 11px; font-size: var(--fs-md); font-weight: 700;
   background: var(--blue); color: #fff; border: none; border-radius: 8px;
-  cursor: pointer; font-family: 'Inter', sans-serif; transition: background .15s; margin-top: 2px;
+  cursor: pointer; font-family: 'Segoe UI',system-ui,sans-serif; transition: background .15s; margin-top: 2px;
 }
 .form-submit:hover { background: var(--blue-dark); }
 .form-submit:disabled { background: #93afc8; cursor: not-allowed; }
@@ -393,3 +391,5 @@ document.getElementById('contact-form').addEventListener('submit', async functio
 </script>
 </body>
 </html>
+
+
