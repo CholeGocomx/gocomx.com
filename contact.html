@@ -70,12 +70,12 @@ nav {
   display: flex; align-items: center; gap: 8px;
 }
 .page-label::before { content: ''; width: 20px; height: 2px; background: var(--blue); border-radius: 2px; }
-.page-title { font-size: var(--fs-lg); font-weight: 800; letter-spacing: -.02em; margin-bottom: 4px; }
+.page-title { font-size: var(--fs-lg); font-weight: 600; color: var(--blue); font-family: 'Segoe UI',system-ui,sans-serif; letter-spacing: -.01em; margin-bottom: 4px; }
 .page-title span { color: var(--blue); }
 .page-sub { font-size: var(--fs-md); color: var(--text2); margin-bottom: 4px; }
 .page-sub-zh { font-size: var(--fs-sm); color: var(--muted); margin-bottom: 20px; }
 
-.panel-heading { font-size: var(--fs-lg); font-weight: 800; color: var(--text); margin-bottom: 4px; }
+.panel-heading { font-size: var(--fs-lg); font-weight: 600; color: var(--blue); font-family: 'Segoe UI',system-ui,sans-serif; margin-bottom: 4px; }
 .panel-heading-zh { font-size: var(--fs-sm); color: var(--muted); margin-bottom: 16px; }
 .offer-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
 .offer-list li {
@@ -89,9 +89,9 @@ nav {
 .offer-zh { font-size: var(--fs-sm); color: var(--muted); margin-top: 3px; }
 
 /* Right panel (connect) keeps same style */
-.form-title { font-size: var(--fs-lg); font-weight: 800; color: var(--text); margin-bottom: 4px; }
+.form-title { font-size: var(--fs-lg); font-weight: 600; color: var(--blue); font-family: 'Segoe UI',system-ui,sans-serif; margin-bottom: 4px; }
 .form-title-zh { font-size: var(--fs-sm); color: var(--muted); margin-bottom: 20px; }
-.form-title { font-size: var(--fs-lg); font-weight: 800; color: var(--text); margin-bottom: 4px; }
+.form-title { font-size: var(--fs-lg); font-weight: 600; color: var(--blue); font-family: 'Segoe UI',system-ui,sans-serif; margin-bottom: 4px; }
 .form-title-zh { font-size: var(--fs-sm); color: var(--muted); margin-bottom: 24px; }
 /* Email option card */
 .contact-option {
@@ -104,7 +104,7 @@ nav {
 .contact-option.copied { background: #f0fdf4; border-color: #22c55e; }
 .contact-option-left { display: flex; align-items: center; gap: 14px; }
 .contact-icon { font-size: 26px; flex-shrink: 0; }
-.contact-option-title { font-size: var(--fs-md); font-weight: 700; color: var(--text); margin-bottom: 2px; }
+.contact-option-title { font-size: var(--fs-md); font-weight: 600; color: var(--blue); font-family: 'Segoe UI',system-ui,sans-serif; margin-bottom: 2px; }
 .contact-option-sub { font-size: var(--fs-sm); color: #404040; line-height: 1.4; }
 #copy-indicator {
   font-size: var(--fs-sm); font-weight: 700;
@@ -393,6 +393,7 @@ document.getElementById('contact-form').addEventListener('submit', async functio
 </script>
 </body>
 </html>
+
 
 
 
