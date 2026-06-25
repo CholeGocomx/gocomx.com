@@ -51,15 +51,16 @@ footer { flex-shrink:0; background:linear-gradient(105deg,var(--blue),var(--blue
 
 /* PAGE LAYOUT */
 .page-layout {
-  display: grid; grid-template-columns: 300px 1fr;
-  gap: 20px; padding: 20px 48px; align-items: start;
+  display: flex; flex-direction: column;
+  gap: 20px; padding: 20px 48px;
 }
 
-/* LEFT PANEL */
+/* INTRO STRIP */
 .page-left {
   background: var(--card); border-radius: var(--radius);
   box-shadow: var(--shadow);
-  padding: 36px 28px;
+  padding: 20px 28px;
+  display: flex; align-items: center; gap: 32px;
 }
 .page-label {
   font-family:var(--font);
@@ -74,11 +75,13 @@ footer { flex-shrink:0; background:linear-gradient(105deg,var(--blue),var(--blue
 .page-desc-zh { font-size: var(--fs-sm); color: var(--muted); line-height: 1.65; }
 
 /* RIGHT — team cards */
-.page-right { overflow-y: auto; }
+.page-right { }
 .team-grid {
   display: grid; grid-template-columns: 1fr 1fr;
-  gap: 16px; flex: 1; min-height: 0;
+  gap: 16px;
 }
+.page-desc { font-size: var(--fs-md); color: var(--text2); line-height: 1.7; flex: 1; }
+.page-desc-zh { font-size: var(--fs-sm); color: var(--muted); line-height: 1.65; flex: 1; }
 
 /* Microsoft-style member card */
 .member-card {
@@ -136,12 +139,10 @@ footer { flex-shrink:0; background:linear-gradient(105deg,var(--blue),var(--blue
 <div style="background:linear-gradient(105deg,#0078d4,#005a9e);padding:18px 48px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0"><div><h1 style="font-size:1.3rem;font-weight:600;color:#fff;font-family:var(--font);letter-spacing:-0.02em">Our Team · 团队介绍</h1><p style="font-size:0.82rem;color:rgba(255,255,255,0.78);margin-top:4px">Vendor Onboarding Specialists</p></div></div>
 <div class="page-layout">
 
-  <!-- LEFT: Intro panel -->
+  <!-- INTRO STRIP -->
   <div class="page-left">
-
-    <div class="page-title">Why <span>Trust Us</span></div>
-    <p class="page-desc">The right team is the most important proof. Each member answers one question: why are we the right people to solve this?</p>
-    <p class="page-desc-zh zh">正确的团队是最重要的信任证明。每位成员回答一个问题：为什么我们是解决这个问题的正确人选？</p>
+    <div class="page-title" style="white-space:nowrap;margin-bottom:0;padding-right:32px;border-right:2px solid var(--border);">Why <span>Trust Us</span></div>
+    <p class="page-desc"><span class="bio-en">The right team is the most important proof. Each member answers one question: why are we the right people to solve this?</span><span class="bio-zh">正确的团队是最重要的信任证明。每位成员回答一个问题：为什么我们是解决这个问题的正确人选？</span></p>
   </div>
 
   <!-- RIGHT: Team cards -->

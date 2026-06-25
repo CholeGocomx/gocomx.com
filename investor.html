@@ -150,16 +150,19 @@ footer { flex-shrink:0; background:linear-gradient(105deg,var(--blue),var(--blue
   font-size: 14px; font-weight: 400; color: var(--blue); background: #fff;
   border: 2px solid var(--blue);
 }
-/* Card title — 2 lines: English · Chinese on line 1, pill on line 2 */
+/* Card title */
 .icp-card-title { font-size: var(--fs-md); font-weight: 600; color: var(--blue); line-height: 1.4; font-family:var(--font); }
-.icp-card-title span { display: inline; font-size: var(--fs-xs); font-weight: 400; color: var(--muted); }
-.icp-card-title span::before { content: ' · '; color: var(--muted); }
+.icp-card-title .bio-en { font-size: var(--fs-md); font-weight: 600; color: var(--blue); font-family:var(--font); }
+.icp-card-title .bio-zh { display:none; font-size: var(--fs-md) !important; font-weight: 600; color: var(--blue); font-family:var(--font-zh) !important; }
+body.zh-mode .icp-card-title .bio-en { display:none !important; }
+body.zh-mode .icp-card-title .bio-zh { display:inline !important; font-size:var(--fs-md) !important; color:var(--blue) !important; }
 .icp-pill { display: block; font-size: var(--fs-xs); font-weight: 400; border-radius: 4px; padding: 3px 0; margin-top: 4px; color: var(--blue); background: none; }
 
 /* Three sections — flex to fill full card height, all regular weight */
 .icp-s { display: flex; flex-direction: column; gap: 8px; padding: 16px 0; border-top: 1px solid var(--border); flex: 1; }
 .icp-s:first-of-type { border-top: none; padding-top: 0; }
 .icp-sh { font-size: var(--fs-md); font-weight: 600; color: var(--blue); margin-bottom: 4px; font-family:var(--font); }
+.icp-sh .bio-zh { font-size: var(--fs-md) !important; font-family:var(--font-zh) !important; }
 .icp-r { font-size: var(--fs-xs); font-weight: 400; color: var(--text); line-height: 1.7; display: flex; align-items: flex-start; gap: 8px; font-family:var(--font-zh); }
 .icp-r::before { content: '·'; color: var(--blue); font-weight: 400; flex-shrink: 0; margin-top: 2px; }
 .icp-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 4px; }
@@ -261,7 +264,7 @@ footer { flex-shrink:0; background:linear-gradient(105deg,var(--blue),var(--blue
       <div class="icp-card-head">
         <div class="icp-badge">1</div>
         <div>
-          <div class="icp-card-title">Retailer Relationships<span>零售商关系</span></div>
+          <div class="icp-card-title"><span class="bio-en">Retailer Relationships</span><span class="bio-zh">零售商关系</span></div>
           <span class="icp-pill">Hardest to Build · 最难建立</span>
         </div>
       </div>
@@ -287,7 +290,7 @@ footer { flex-shrink:0; background:linear-gradient(105deg,var(--blue),var(--blue
       <div class="icp-card-head">
         <div class="icp-badge">2</div>
         <div>
-          <div class="icp-card-title">Compliance Knowledge<span>合规经验壁垒</span></div>
+          <div class="icp-card-title"><span class="bio-en">Compliance Knowledge</span><span class="bio-zh">合规经验壁垒</span></div>
           <span class="icp-pill">Only Learned by Doing · 只能在实战中积累</span>
         </div>
       </div>
@@ -312,7 +315,7 @@ footer { flex-shrink:0; background:linear-gradient(105deg,var(--blue),var(--blue
       <div class="icp-card-head">
         <div class="icp-badge">3</div>
         <div>
-          <div class="icp-card-title">Cross-Border Bridge<span>跨境执行能力</span></div>
+          <div class="icp-card-title"><span class="bio-en">Cross-Border Bridge</span><span class="bio-zh">跨境执行能力</span></div>
           <span class="icp-pill">The Intersection No One Else Occupies · 无竞争者的市场交叉点</span>
         </div>
       </div>
@@ -346,7 +349,7 @@ footer { flex-shrink:0; background:linear-gradient(105deg,var(--blue),var(--blue
         <div class="icp-card-head">
           <div class="icp-badge">1</div>
           <div>
-            <div class="icp-card-title">Retailer Relationships<span>零售商关系</span></div>
+            <div class="icp-card-title"><span class="bio-en">Retailer Relationships</span><span class="bio-zh">零售商关系</span></div>
             <span class="icp-pill">Hardest to Build · 最难建立</span>
           </div>
         </div>
@@ -372,7 +375,7 @@ footer { flex-shrink:0; background:linear-gradient(105deg,var(--blue),var(--blue
         <div class="icp-card-head">
           <div class="icp-badge">2</div>
           <div>
-            <div class="icp-card-title">Compliance Knowledge<span>合规经验壁垒</span></div>
+            <div class="icp-card-title"><span class="bio-en">Compliance Knowledge</span><span class="bio-zh">合规经验壁垒</span></div>
             <span class="icp-pill">Only Learned by Doing · 只能在实战中积累</span>
           </div>
         </div>
@@ -397,7 +400,7 @@ footer { flex-shrink:0; background:linear-gradient(105deg,var(--blue),var(--blue
         <div class="icp-card-head">
           <div class="icp-badge">3</div>
           <div>
-            <div class="icp-card-title">Cross-Border Bridge<span>跨境执行能力</span></div>
+            <div class="icp-card-title"><span class="bio-en">Cross-Border Bridge</span><span class="bio-zh">跨境执行能力</span></div>
             <span class="icp-pill">The Intersection No One Else Occupies · 无竞争者的市场交叉点</span>
           </div>
         </div>
@@ -512,6 +515,7 @@ function setLang(lang) {
 </footer>
 </body>
 </html>
+
 
 
 
