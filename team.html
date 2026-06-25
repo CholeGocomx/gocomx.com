@@ -30,7 +30,7 @@ nav { flex-shrink:0; display:flex; align-items:center; justify-content:space-bet
 .nt-zh { color:var(--muted); font-size:11px; font-family:var(--font-zh); }
 .nt-sep { color:#bbb; font-size:var(--fs-xs); }
 .nav-links { display:flex; gap:2px; list-style:none; align-items:center; flex-shrink:0; }
-.nav-links a { font-size:0.92rem; color:var(--muted2); text-decoration:none; padding:0 14px; height:52px; display:inline-flex; align-items:center; border-bottom:2px solid transparent; transition:color .15s,border-color .15s; font-weight:600; white-space:nowrap; }
+.nav-links a { font-size:0.92rem; font-family:var(--font); color:var(--muted2); text-decoration:none; padding:0 14px; height:52px; display:inline-flex; align-items:center; border-bottom:2px solid transparent; transition:color .15s,border-color .15s; font-weight:600; white-space:nowrap; }
 .nav-links a:hover { color:var(--blue); border-bottom-color:var(--blue); }
 .nav-links a.active { color:var(--blue); font-weight:600; border-bottom-color:var(--blue); }
 .lang-btn { padding:3px 0; width:46px; text-align:center; font-size:var(--fs-xs); font-weight:600; border:1.5px solid var(--blue); border-radius:4px; background:#fff; color:var(--blue); cursor:pointer; transition:background .15s,color .15s; }
@@ -39,6 +39,7 @@ nav { flex-shrink:0; display:flex; align-items:center; justify-content:space-bet
 .bio-zh { display:none; font-family:var(--font-zh) !important; font-size:0.88em; }
 body.zh-mode .bio-en { display:none !important; }
 body.zh-mode .bio-zh { display:inline !important; }
+body.zh-mode p.bio-zh { display:block !important; }
 body.zh-mode .member-title.bio-zh { display:block !important; }
 body.zh-mode .member-bio .bio-zh { display:inline !important; }
 .zh { font-family:var(--font-zh); font-size:0.88em; font-weight:400; }
@@ -52,17 +53,18 @@ footer { flex-shrink:0; background:linear-gradient(105deg,var(--blue),var(--blue
 /* PAGE LAYOUT */
 .page-layout {
   flex: 1;
-  display: grid; grid-template-columns: 280px 1fr;
+  display: flex; flex-direction: row; align-items: flex-start;
   gap: 20px; padding: 20px 48px;
 }
 
 /* LEFT PANEL */
 .page-left {
+  width: 260px; flex-shrink: 0;
   background: var(--card); border-radius: var(--radius);
   box-shadow: var(--shadow);
-  padding: 32px 28px;
-  align-self: start;
+  padding: 28px 24px;
 }
+.page-right { flex: 1; }
 .page-label {
   font-family:var(--font);
   font-size: var(--fs-sm); color: var(--blue);
@@ -74,9 +76,11 @@ footer { flex-shrink:0; background:linear-gradient(105deg,var(--blue),var(--blue
 .page-title span { color: var(--blue); }
 .page-desc { font-size: var(--fs-md); color: var(--text2); line-height: 1.7; margin-bottom: 8px; }
 .page-desc-zh { font-size: var(--fs-sm); color: var(--muted); line-height: 1.65; }
+.trust-list { list-style: none; margin-top: 16px; display: flex; flex-direction: column; gap: 8px; }
+.trust-list li { font-size: var(--fs-xs); font-family: var(--font); color: var(--blue); font-weight: 600; padding-left: 12px; position: relative; }
+.trust-list li::before { content: '·'; position: absolute; left: 0; color: var(--muted); font-weight: 400; }
 
 /* RIGHT — team cards */
-.page-right { }
 .team-grid {
   display: grid; grid-template-columns: 1fr 1fr;
   gap: 20px;
@@ -106,7 +110,8 @@ footer { flex-shrink:0; background:linear-gradient(105deg,var(--blue),var(--blue
 
 @media (max-width: 960px) {
   body { overflow: auto; height: auto; }
-  .page-layout { grid-template-columns: 1fr; overflow: visible; padding: 16px 20px; }
+  .page-layout { flex-direction: column; padding: 16px 20px; }
+  .page-left { width: 100%; }
   .team-grid { grid-template-columns: 1fr; height: auto; }
   nav { padding: 0 20px; }
   .nav-tagline { display: none; }
@@ -136,14 +141,21 @@ footer { flex-shrink:0; background:linear-gradient(105deg,var(--blue),var(--blue
   </div>
 </nav>
 
-<div style="background:linear-gradient(105deg,#0078d4,#005a9e);padding:18px 48px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0"><div><h1 style="font-size:1.3rem;font-weight:600;color:#fff;font-family:var(--font);letter-spacing:-0.02em">Our Team · 团队介绍</h1><p style="font-size:0.82rem;color:rgba(255,255,255,0.78);margin-top:4px">Vendor Onboarding Specialists</p></div></div>
+<div style="background:linear-gradient(105deg,#0078d4,#005a9e);padding:14px 48px;display:flex;align-items:center;flex-shrink:0"><h1 style="font-size:var(--fs-md);font-weight:400;color:#fff;font-family:var(--font);">Our Team · 团队介绍</h1></div>
 <div class="page-layout">
 
   <!-- LEFT: Intro panel -->
   <div class="page-left">
-    <div class="page-title">Why <span>Trust Us</span></div>
-    <p class="page-desc"><span class="bio-en">The right team is the most important proof. Each member answers one question: why are we the right people to solve this?</span></p>
-    <p class="page-desc-zh zh">正确的团队是最重要的信任证明。每位成员回答一个问题：为什么我们是解决这个问题的正确人选？</p>
+    <div class="page-title">Why Trust Us</div>
+    <p class="page-desc bio-en">The right team is the most important proof. Each member answers one question: why are we the right people to solve this?</p>
+    <p class="page-desc bio-zh" style="font-family:var(--font-zh);">正确的团队是最重要的信任证明。每位成员回答一个问题：为什么我们是解决这个问题的正确人选？</p>
+    <ul class="trust-list">
+      <li><span class="bio-en">Commercial Governance</span><span class="bio-zh">商业治理</span></li>
+      <li><span class="bio-en">Exclusive Representation</span><span class="bio-zh">独家代理</span></li>
+      <li><span class="bio-en">Channel Development</span><span class="bio-zh">渠道开发</span></li>
+      <li><span class="bio-en">Supplier Trust</span><span class="bio-zh">供应商信任</span></li>
+      <li><span class="bio-en">North American Market Access</span><span class="bio-zh">北美市场准入</span></li>
+    </ul>
   </div>
 
   <!-- RIGHT: Team cards -->
