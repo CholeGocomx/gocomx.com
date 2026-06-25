@@ -19,7 +19,7 @@
   --font-zh:'Noto Sans SC','Segoe UI',system-ui,sans-serif;
 }
 *,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
-body { background:var(--bg); color:var(--text); font-family:var(--font); font-size:var(--fs-md); line-height:1.6; min-height:100vh; display:flex; flex-direction:column; }
+body { background:var(--bg); color:var(--text); font-family:var(--font); font-size:var(--fs-md); line-height:1.6; min-height:100vh; display:flex; flex-direction:column; overflow-x:hidden; }
 nav { flex-shrink:0; display:flex; align-items:center; justify-content:space-between; padding:0 48px; height:52px; background:var(--bg); box-shadow:0 1px 4px rgba(0,0,0,.08); z-index:100; }
 .nav-brand { display:flex; align-items:center; gap:16px; text-decoration:none; }
 .nav-logo-text { font-size:17px; font-weight:700; color:var(--text); }
@@ -51,16 +51,17 @@ footer { flex-shrink:0; background:linear-gradient(105deg,var(--blue),var(--blue
 
 /* PAGE LAYOUT */
 .page-layout {
-  display: flex; flex-direction: column;
+  flex: 1;
+  display: grid; grid-template-columns: 280px 1fr;
   gap: 20px; padding: 20px 48px;
 }
 
-/* INTRO STRIP */
+/* LEFT PANEL */
 .page-left {
   background: var(--card); border-radius: var(--radius);
   box-shadow: var(--shadow);
-  padding: 20px 28px;
-  display: flex; align-items: center; gap: 32px;
+  padding: 32px 28px;
+  align-self: start;
 }
 .page-label {
   font-family:var(--font);
@@ -78,30 +79,29 @@ footer { flex-shrink:0; background:linear-gradient(105deg,var(--blue),var(--blue
 .page-right { }
 .team-grid {
   display: grid; grid-template-columns: 1fr 1fr;
-  gap: 16px;
+  gap: 20px;
 }
-.page-desc { font-size: var(--fs-md); color: var(--text2); line-height: 1.7; flex: 1; }
-.page-desc-zh { font-size: var(--fs-sm); color: var(--muted); line-height: 1.65; flex: 1; }
+.page-desc { font-size: var(--fs-md); color: var(--text2); line-height: 1.7; margin-top: 12px; }
+.page-desc-zh { font-size: var(--fs-sm); color: var(--muted); line-height: 1.65; margin-top: 8px; }
 
 /* Microsoft-style member card */
 .member-card {
   background: var(--card); border-radius: var(--radius);
   box-shadow: var(--shadow);
-  padding: 24px 26px;
+  padding: 28px 28px;
   display: flex; flex-direction: column;
-  overflow: hidden;
   transition: box-shadow .2s;
 }
 .member-card:hover { box-shadow: var(--shadow-hover); }
 .member-role { display: none; }
-.member-name { display: block; font-size: 1rem; font-weight: 600; color: var(--blue); font-family:var(--font); margin-bottom: 2px; }
-.member-title { display: block; font-size: var(--fs-xs); color: var(--text); line-height: 1.4; font-family:var(--font); }
-.member-name-line { margin-bottom: 3px; }
-.member-title-zh { font-size: var(--fs-xs); color: var(--muted); margin-bottom: 8px; font-family:var(--font-zh); }
-.member-divider { border: none; border-top: 1px solid #f0f0f0; margin-bottom: 8px; }
-.member-bio { font-size: var(--fs-xs); color: var(--text2); line-height: 1.6; flex: 1; overflow: hidden; font-family:var(--font); }
-.member-tags { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 4px; }
-.tag { font-size: var(--fs-xs); padding: 2px 8px; background: #f2f4f7; border-radius: 4px; color: var(--muted); font-family:var(--font); }
+.member-name { display: block; font-size: var(--fs-md); font-weight: 600; color: var(--blue); font-family:var(--font); margin-bottom: 4px; }
+.member-title { display: block; font-size: var(--fs-xs); color: var(--text); line-height: 1.5; font-family:var(--font); }
+.member-name-line { margin-bottom: 6px; }
+.member-title-zh { font-size: var(--fs-xs); color: var(--muted); margin-bottom: 12px; font-family:var(--font-zh); }
+.member-divider { border: none; border-top: 1px solid #f0f0f0; margin: 12px 0; }
+.member-bio { font-size: var(--fs-xs); color: var(--text2); line-height: 1.7; flex: 1; font-family:var(--font); }
+.member-tags { margin-top: 16px; display: flex; flex-wrap: wrap; gap: 6px; }
+.tag { font-size: var(--fs-xs); padding: 3px 10px; background: #f2f4f7; border-radius: 4px; color: var(--muted); font-family:var(--font); }
 
 
 @media (max-width: 960px) {
@@ -139,10 +139,11 @@ footer { flex-shrink:0; background:linear-gradient(105deg,var(--blue),var(--blue
 <div style="background:linear-gradient(105deg,#0078d4,#005a9e);padding:18px 48px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0"><div><h1 style="font-size:1.3rem;font-weight:600;color:#fff;font-family:var(--font);letter-spacing:-0.02em">Our Team · 团队介绍</h1><p style="font-size:0.82rem;color:rgba(255,255,255,0.78);margin-top:4px">Vendor Onboarding Specialists</p></div></div>
 <div class="page-layout">
 
-  <!-- INTRO STRIP -->
+  <!-- LEFT: Intro panel -->
   <div class="page-left">
-    <div class="page-title" style="white-space:nowrap;margin-bottom:0;padding-right:32px;border-right:2px solid var(--border);">Why <span>Trust Us</span></div>
-    <p class="page-desc"><span class="bio-en">The right team is the most important proof. Each member answers one question: why are we the right people to solve this?</span><span class="bio-zh">正确的团队是最重要的信任证明。每位成员回答一个问题：为什么我们是解决这个问题的正确人选？</span></p>
+    <div class="page-title">Why <span>Trust Us</span></div>
+    <p class="page-desc"><span class="bio-en">The right team is the most important proof. Each member answers one question: why are we the right people to solve this?</span></p>
+    <p class="page-desc-zh zh">正确的团队是最重要的信任证明。每位成员回答一个问题：为什么我们是解决这个问题的正确人选？</p>
   </div>
 
   <!-- RIGHT: Team cards -->
