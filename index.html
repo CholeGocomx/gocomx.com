@@ -91,7 +91,7 @@ nav {
 .step-heading { font-size: var(--fs-md); font-weight: 600; color: var(--blue); font-family: 'Segoe UI',system-ui,sans-serif; margin-bottom: 2px; }
 .step-heading-zh { font-size: var(--fs-sm); color: var(--muted); margin-bottom: 6px; }
 .step-text { font-size: var(--fs-sm); color: var(--text2); line-height: 1.65; }
-.step-text .zh { display: block; color: var(--muted); margin-top: 4px; }
+.step-text .zh { color: var(--muted); margin-top: 4px; }
 
 /* PANEL 3 — Stats */
 .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
@@ -211,6 +211,20 @@ nav {
   100% { transform: translateY(-50%); }
 }
 
+/* LANG TOGGLE */
+.lang-bar { display:flex; justify-content:flex-end; padding:5px 48px 0; flex-shrink:0; gap:4px; }
+.lang-btn { padding:3px 12px; font-size:0.82rem; font-weight:600; font-family:'Segoe UI',system-ui,sans-serif; border:1.5px solid var(--blue); border-radius:4px; background:#fff; color:var(--blue); cursor:pointer; transition:all .15s; }
+.lang-btn.active { background:var(--blue); color:#fff; }
+.lang-btn:hover:not(.active) { background:var(--blue-light); }
+/* Default EN: hide zh elements */
+.zh { display: none; }
+/* ZH mode */
+body.zh-mode .zh { display: block; }
+body.zh-mode .brand-desc { display: none; }
+body.zh-mode .step-heading { display: none; }
+body.zh-mode .stat-label { display: none; }
+body.zh-mode .bio-en { display: none !important; }
+
 /* FOOTER */
 footer { flex-shrink:0; background:linear-gradient(105deg,#0078d4,#005a9e); padding:14px 48px; display:flex; align-items:center; justify-content:center; gap:24px; flex-wrap:wrap; }
 .footer-copy { font-size: 0.88rem; color: #fff; font-weight: 400; font-family: 'Segoe UI',system-ui,sans-serif; }
@@ -252,6 +266,10 @@ footer { flex-shrink:0; background:linear-gradient(105deg,#0078d4,#005a9e); padd
 </nav>
 
 <div style="background:linear-gradient(105deg,#0078d4,#005a9e);padding:18px 48px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0"><div><h1 style="font-size:1.3rem;font-weight:600;color:#fff;font-family:'Segoe UI',system-ui,sans-serif;letter-spacing:-0.02em">Cross-Border Distribution OS</h1><p style="font-size:0.82rem;color:rgba(255,255,255,0.78);margin-top:4px">China Manufacturing SaaS + North American Retail Infrastructure</p></div></div>
+<div class="lang-bar">
+  <button onclick="setLang('en')" id="btn-en" class="lang-btn active">EN</button>
+  <button onclick="setLang('zh')" id="btn-zh" class="lang-btn">中文</button>
+</div>
 <div class="main-grid">
 
   <!-- Panel 1: Brand / Intro -->
@@ -436,6 +454,32 @@ footer { flex-shrink:0; background:linear-gradient(105deg,#0078d4,#005a9e); padd
   var clone = list.innerHTML;
   list.innerHTML += clone;
 })();
+
+// Lang toggle
+function splitBilingual(el) {
+  var text = el.textContent.trim();
+  var idx = text.indexOf(' · ');
+  if (idx === -1 || !/[一-鿿]/.test(text.slice(idx+3))) return;
+  el.innerHTML = '<span class="bio-en">' + text.slice(0,idx) + '</span><span class="zh">' + text.slice(idx+3) + '</span>';
+}
+document.querySelectorAll('.col-label, .ticker-label').forEach(splitBilingual);
+document.querySelectorAll('.step-text').forEach(function(el) {
+  var zhSpan = el.querySelector('.zh');
+  if (!zhSpan) return;
+  var enParts = [];
+  el.childNodes.forEach(function(node) {
+    if (node === zhSpan) return;
+    enParts.push(node.nodeType === 3 ? node.textContent : node.outerHTML);
+  });
+  el.innerHTML = '<span class="bio-en">' + enParts.join('').trim() + '</span>' + zhSpan.outerHTML;
+});
+
+function setLang(lang) {
+  var isZh = lang === 'zh';
+  document.body.classList.toggle('zh-mode', isZh);
+  document.getElementById('btn-en').classList.toggle('active', !isZh);
+  document.getElementById('btn-zh').classList.toggle('active', isZh);
+}
 </script>
 </body>
 </html>

@@ -86,7 +86,7 @@ nav {
 .page-bar-hint { font-size: 12px; color: var(--muted); white-space: nowrap; }
 .page-bar-hint a { color: var(--blue); text-decoration: none; font-weight: 600; }
 .page-bar-hint a:hover { text-decoration: underline; }
-.page-bar-error { font-size: 11px; color: #ef4444; white-space: nowrap; }
+.page-bar-error { font-size: 0.88rem; color: #fff; white-space: nowrap; font-weight: 500; }
 /* Unlocked actions */
 .page-bar-unlocked { display: none; align-items: center; gap: 8px; flex-shrink: 0; }
 .page-bar-open-btn {
@@ -195,6 +195,17 @@ nav {
   .nav-tagline { display: none; }
   .lock-card { padding: 32px 24px; margin: 0 16px; }
 }
+/* LANG TOGGLE */
+.lang-btn { padding:3px 12px; font-size:0.82rem; font-weight:600; font-family:'Segoe UI',system-ui,sans-serif; border:1.5px solid var(--blue); border-radius:4px; background:#fff; color:var(--blue); cursor:pointer; transition:all .15s; }
+.lang-btn.active { background:var(--blue); color:#fff; }
+.lang-btn:hover:not(.active) { background:var(--blue-light); }
+.bio-zh { display:none; }
+body.zh-mode .bio-en { display:none !important; }
+body.zh-mode .bio-zh { display:inline !important; }
+/* Remove auto separator from split title spans */
+.icp-card-title .bio-en::before,
+.icp-card-title .bio-zh::before { content:none; }
+
 footer { flex-shrink:0; background:linear-gradient(105deg,#0078d4,#005a9e); padding:14px 48px; display:flex; align-items:center; justify-content:center; gap:24px; flex-wrap:wrap; }
 .footer-copy { font-size: 0.88rem; color: #fff; font-weight: 400; font-family: 'Segoe UI',system-ui,sans-serif; }
 .footer-copy span { color: #fff; }
@@ -221,6 +232,10 @@ footer { flex-shrink:0; background:linear-gradient(105deg,#0078d4,#005a9e); padd
     <li><a href="investor.html" class="active">Investor Deck</a></li>
     <li><a href="quotefee.html">Quote</a></li>
   </ul>
+  <div style="display:flex;gap:4px;margin-left:12px">
+    <button onclick="setLang('en')" id="btn-en" class="lang-btn active">EN</button>
+    <button onclick="setLang('zh')" id="btn-zh" class="lang-btn">中文</button>
+  </div>
 </nav>
 
 <!-- LOCK SCREEN -->
@@ -237,7 +252,7 @@ footer { flex-shrink:0; background:linear-gradient(105deg,#0078d4,#005a9e); padd
       <input type="password" class="page-bar-input" id="code-input" placeholder="ACCESS CODE" maxlength="30"
         onkeydown="if(event.key==='Enter') checkCode()" style="background:#fff;border-color:#fff">
       <button class="page-bar-unlock-btn" id="unlock-btn" onclick="checkCode()" style="background:#fff;color:#0078d4;font-weight:700;border:none">Unlock →</button>
-      <span class="page-bar-error" id="error-msg" style="color:#fca5a5"></span>
+      <span class="page-bar-error" id="error-msg"></span>
       <span class="page-bar-hint" style="color:rgba(255,255,255,0.85);font-size:0.92rem">No code? <a href="contact.html" style="color:#fff;font-weight:600">Contact us</a></span>
     </div>
     <!-- Unlocked state -->
@@ -465,6 +480,34 @@ function lockOut() {
   document.getElementById('bar-lock').style.display = 'flex';
   document.getElementById('code-input').value = '';
   document.getElementById('error-msg').textContent = '';
+}
+</script>
+
+<script>
+(function() {
+  function splitBilingual(el) {
+    var text = el.textContent.trim();
+    var idx = text.indexOf(' · ');
+    if (idx === -1 || !/[一-鿿]/.test(text.slice(idx+3))) return;
+    el.innerHTML = '<span class="bio-en">' + text.slice(0,idx) + '</span><span class="bio-zh">' + text.slice(idx+3) + '</span>';
+  }
+  document.querySelectorAll('.icp-r, .icp-sh, .icp-pill').forEach(splitBilingual);
+  document.querySelectorAll('.icp-card-title').forEach(function(el) {
+    var zhSpan = el.querySelector('span');
+    if (!zhSpan) return;
+    var enText = el.firstChild.textContent.trim();
+    var zhText = zhSpan.textContent.trim();
+    el.innerHTML = '<span class="bio-en">' + enText + '</span><span class="bio-zh">' + zhText + '</span>';
+  });
+  // Banner title
+  document.querySelectorAll('[data-bilingual]').forEach(splitBilingual);
+})();
+
+function setLang(lang) {
+  var isZh = lang === 'zh';
+  document.body.classList.toggle('zh-mode', isZh);
+  document.getElementById('btn-en').classList.toggle('active', !isZh);
+  document.getElementById('btn-zh').classList.toggle('active', isZh);
 }
 </script>
 

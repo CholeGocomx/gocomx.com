@@ -76,27 +76,38 @@ nav {
 .page-right { overflow-y: auto; }
 .team-grid {
   display: grid; grid-template-columns: 1fr 1fr;
-  gap: 16px; height: 100%;
+  gap: 10px; flex: 1; min-height: 0;
 }
 
 /* Microsoft-style member card */
 .member-card {
   background: var(--card); border-radius: var(--radius);
   box-shadow: var(--shadow);
-  padding: 28px 24px;
+  padding: 14px 18px;
   display: flex; flex-direction: column;
+  overflow: hidden;
   transition: box-shadow .2s;
 }
 .member-card:hover { box-shadow: var(--shadow-hover); }
 .member-role { display: none; }
-.member-name { display: block; font-size: 1.05rem; font-weight: 600; color: var(--blue); font-family: 'Segoe UI',system-ui,sans-serif; margin-bottom: 2px; }
-.member-title { display: block; font-size: var(--fs-sm); color: var(--text); line-height: 1.5; font-family: 'Segoe UI',system-ui,sans-serif; }
-.member-name-line { margin-bottom: 4px; }
-.member-title-zh { font-size: var(--fs-sm); color: #374151; margin-bottom: 16px; font-family: 'Segoe UI',system-ui,sans-serif; }
-.member-divider { border: none; border-top: 1px solid #f0f0f0; margin-bottom: 14px; }
-.member-bio { font-size: var(--fs-sm); color: var(--text2); line-height: 1.7; flex: 1; font-family: 'Segoe UI',system-ui,sans-serif; }
-.member-tags { margin-top: 16px; display: flex; flex-wrap: wrap; gap: 6px; }
-.tag { font-size: var(--fs-sm); padding: 3px 10px; background: #f2f4f7; border-radius: 4px; color: var(--muted); font-family: 'Segoe UI',system-ui,sans-serif; }
+.member-name { display: block; font-size: 1rem; font-weight: 600; color: var(--blue); font-family: 'Segoe UI',system-ui,sans-serif; margin-bottom: 2px; }
+.member-title { display: block; font-size: 13px; color: var(--text); line-height: 1.4; font-family: 'Segoe UI',system-ui,sans-serif; }
+.member-name-line { margin-bottom: 3px; }
+.member-title-zh { font-size: 13px; color: #374151; margin-bottom: 8px; font-family: 'Segoe UI',system-ui,sans-serif; }
+.member-divider { border: none; border-top: 1px solid #f0f0f0; margin-bottom: 8px; }
+.member-bio { font-size: 13px; color: var(--text2); line-height: 1.6; flex: 1; overflow: hidden; font-family: 'Segoe UI',system-ui,sans-serif; }
+.member-tags { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 4px; }
+.tag { font-size: 12px; padding: 2px 8px; background: #f2f4f7; border-radius: 4px; color: var(--muted); font-family: 'Segoe UI',system-ui,sans-serif; }
+
+/* LANG TOGGLE */
+.lang-btn {
+  padding: 4px 14px; font-size: 0.82rem; font-weight: 600;
+  font-family: 'Segoe UI',system-ui,sans-serif;
+  border: 1.5px solid var(--blue); border-radius: 4px;
+  background: #fff; color: var(--blue); cursor: pointer; transition: all .15s;
+}
+.lang-btn.active { background: var(--blue); color: #fff; }
+.lang-btn:hover:not(.active) { background: var(--blue-light); }
 
 /* FOOTER */
 footer { flex-shrink:0; background:linear-gradient(105deg,#0078d4,#005a9e); padding:14px 48px; display:flex; align-items:center; justify-content:center; gap:24px; flex-wrap:wrap; }
@@ -152,74 +163,45 @@ footer { flex-shrink:0; background:linear-gradient(105deg,#0078d4,#005a9e); padd
 
   <!-- RIGHT: Team cards -->
   <div class="page-right">
+    <div style="display:flex;justify-content:flex-end;margin-bottom:10px;gap:4px">
+      <button onclick="setLang('en')" id="btn-en" class="lang-btn active">EN</button>
+      <button onclick="setLang('zh')" id="btn-zh" class="lang-btn">中文</button>
+    </div>
     <div class="team-grid">
 
       <div class="member-card">
-        <div class="member-role">CEO · CTO</div>
-        <div class="member-name-line"><span class="member-name">Chloe Zeng</span><span class="member-title">CEO · Enterprise Supply Chain &amp; Retail Compliance Leader · North American E-Commerce &amp; Market Entry Specialist</span></div>
-        <div class="member-title-zh zh">企业供应链与零售合规领导者 · 北美电商与市场准入专家</div>
+        <div class="member-name-line"><span class="member-name">Chloe Zeng</span><span class="member-title bio-en">CEO · Enterprise Supply Chain &amp; Retail Compliance Leader · North American E-Commerce &amp; Market Entry Specialist</span><span class="member-title bio-zh zh" style="display:none">CEO · 企业供应链与零售合规领导者 · 北美电商与市场准入专家</span></div>
         <hr class="member-divider">
-        <p class="member-bio">Led enterprise supply chain transformation for global manufacturers entering North American retail — cutting vendor onboarding from 18 months to under 60 days. Delivered multi-million dollar programs across 80+ major retailers with full ownership of retail compliance: routing guides, chargebacks, ASN, order response, and settlement workflows. Former CIO with a track record of building the end-to-end infrastructure that connects manufacturers to Walmart, Home Depot, Amazon, and 75+ institutional buyers at scale.<br><br><span class="zh" style="color:var(--muted);">主导全球制造商进入北美零售市场的供应链转型，将厂商入驻周期从18个月压缩至60天以内。在80余家主流零售商中交付数百万美元级项目，全面负责零售合规：路由指南、罚款消除、ASN、订单响应与结算流程。曾任大型企业首席信息官（CIO），构建连接制造商与沃尔玛、家得宝、亚马逊及75家以上机构买家的端到端基础设施。</span></p>
+        <p class="member-bio"><span class="bio-en">Led enterprise supply chain transformation for global manufacturers entering North American retail — cutting vendor onboarding from 18 months to under 60 days. Delivered multi-million dollar programs across 80+ major retailers with full ownership of retail compliance: routing guides, chargebacks, ASN, order response, and settlement workflows. Former CIO with a track record of building the end-to-end infrastructure that connects manufacturers to Walmart, Home Depot, Amazon, and 75+ institutional buyers at scale.</span><span class="bio-zh zh" style="display:none;color:var(--muted)">主导全球制造商进入北美零售市场的供应链转型，将厂商入驻周期从18个月压缩至60天以内。在80余家主流零售商中交付数百万美元级项目，全面负责零售合规：路由指南、罚款消除、ASN、订单响应与结算流程。曾任大型企业首席信息官（CIO），构建连接制造商与沃尔玛、家得宝、亚马逊及75家以上机构买家的端到端基础设施。</span></p>
         <div class="member-tags">
-          <span class="tag">D365 F&amp;O/SCM</span>
-          <span class="tag">EDI</span>
-          <span class="tag">ERP</span>
-          <span class="tag">PIM Integration</span>
-          <span class="tag">E-COM Integration</span>
-          <span class="tag">Small Parcel Integration</span>
-          <span class="tag">Packing Label</span>
+          <span class="tag">D365 F&amp;O/SCM</span><span class="tag">EDI</span><span class="tag">ERP</span><span class="tag">PIM Integration</span><span class="tag">E-COM Integration</span><span class="tag">Small Parcel Integration</span><span class="tag">Packing Label</span>
         </div>
       </div>
 
       <div class="member-card">
-        <div class="member-role">COO</div>
-        <div class="member-name-line"><span class="member-name">Tian Tang</span><span class="member-title">Chief Operating Officer</span></div>
-        <div class="member-title-zh zh">首席运营官</div>
+        <div class="member-name-line"><span class="member-name">Tian Tang</span><span class="member-title bio-en">Chief Operating Officer</span><span class="member-title bio-zh zh" style="display:none">首席运营官</span></div>
         <hr class="member-divider">
-        <p class="member-bio">Personally screens and onboards Chinese manufacturers — evaluating product fit, compliance readiness, and market potential before a single SKU goes live. Builds and manages GoComX's North American sales agent network, overseeing legal affairs, vendor contracts, and day-to-day operations to support rapid channel expansion across North American markets.<br><br><span class="zh" style="color:var(--muted);">亲自主导中国厂商招商与产品筛选，评估产品适配性、合规准备度与市场潜力。搭建并管理GoComX北美销售代理网络，统筹法务合约、供应商管理与日常运营，推动北美市场渠道持续扩张。</span></p>
+        <p class="member-bio"><span class="bio-en">Personally screens and onboards Chinese manufacturers — evaluating product fit, compliance readiness, and market potential before a single SKU goes live. Builds and manages GoComX's North American sales agent network, overseeing legal affairs, vendor contracts, and day-to-day operations to support rapid channel expansion across North American markets.</span><span class="bio-zh zh" style="display:none;color:var(--muted)">亲自主导中国厂商招商与产品筛选，评估产品适配性、合规准备度与市场潜力。搭建并管理GoComX北美销售代理网络，统筹法务合约、供应商管理与日常运营，推动北美市场渠道持续扩张。</span></p>
         <div class="member-tags">
-          <span class="tag">Operations</span>
-          <span class="tag">Strategy</span>
-          <span class="tag">Vendor Sourcing</span>
-          <span class="tag">Product Screening</span>
-          <span class="tag">Sales Network</span>
-          <span class="tag">Legal Affairs</span>
-          <span class="tag">Channel Expansion</span>
+          <span class="tag">Operations</span><span class="tag">Strategy</span><span class="tag">Vendor Sourcing</span><span class="tag">Product Screening</span><span class="tag">Sales Network</span><span class="tag">Legal Affairs</span><span class="tag">Channel Expansion</span>
         </div>
       </div>
 
       <div class="member-card">
-        <div class="member-role">E-Commerce</div>
-        <div class="member-name-line"><span class="member-name">Somesh Gyan</span><span class="member-title">E-Commerce Director &amp; Platform Operations Leader</span></div>
-        <div class="member-title-zh zh">电商执行长</div>
+        <div class="member-name-line"><span class="member-name">Somesh Gyan</span><span class="member-title bio-en">E-Commerce Director &amp; Platform Operations Leader</span><span class="member-title bio-zh zh" style="display:none">电商执行长</span></div>
         <hr class="member-divider">
-        <p class="member-bio">Drove $100M+ annual e-commerce revenue in the home &amp; lifestyle category with full P&amp;L ownership. Launched and scaled storefronts across Walmart, Amazon, Wayfair, and 20+ global platforms. Personally managed platform registrations, compliance, pricing strategy, and ad campaigns — from first SKU to 8-figure revenue.<br><br><span class="zh" style="color:var(--muted);">主导家居生活品类年收入超1亿美元，全面负责损益管理。亲手完成Walmart、Amazon、Wayfair等20余个平台的入驻注册与产品合规。从首个SKU到亿级营收，全程操盘定价策略、广告投放与平台运营细节。</span></p>
+        <p class="member-bio"><span class="bio-en">Drove $100M+ annual e-commerce revenue in the home &amp; lifestyle category with full P&amp;L ownership. Launched and scaled storefronts across Walmart, Amazon, Wayfair, and 20+ global platforms. Personally managed platform registrations, compliance, pricing strategy, and ad campaigns — from first SKU to 8-figure revenue.</span><span class="bio-zh zh" style="display:none;color:var(--muted)">主导家居生活品类年收入超1亿美元，全面负责损益管理。亲手完成Walmart、Amazon、Wayfair等20余个平台的入驻注册与产品合规。从首个SKU到亿级营收，全程操盘定价策略、广告投放与平台运营细节。</span></p>
         <div class="member-tags">
-          <span class="tag">P&amp;L</span>
-          <span class="tag">Omnichannel</span>
-          <span class="tag">$100M+ Rev</span>
-          <span class="tag">E-COM Strategy</span>
-          <span class="tag">Marketing</span>
-          <span class="tag">Platform Setup</span>
-          <span class="tag">Pricing Strategy</span>
-          <span class="tag">Compliance</span>
-          <span class="tag">Marketplace Ops</span>
+          <span class="tag">P&amp;L</span><span class="tag">Omnichannel</span><span class="tag">$100M+ Rev</span><span class="tag">E-COM Strategy</span><span class="tag">Marketing</span><span class="tag">Platform Setup</span><span class="tag">Pricing Strategy</span><span class="tag">Compliance</span><span class="tag">Marketplace Ops</span>
         </div>
       </div>
 
       <div class="member-card">
-        <div class="member-role">Secretary &amp; AI</div>
-        <div class="member-name-line"><span class="member-name">Andrew Ngo</span><span class="member-title">Corporate Secretary &amp; AI and Security Lead</span></div>
-        <div class="member-title-zh zh">公司秘书 · AI与安全主管</div>
+        <div class="member-name-line"><span class="member-name">Andrew Ngo</span><span class="member-title bio-en">Corporate Secretary &amp; AI and Security Lead</span><span class="member-title bio-zh zh" style="display:none">公司秘书 · AI与安全主管</span></div>
         <hr class="member-divider">
-        <p class="member-bio">Ensures GoComX operates with zero compliance gaps — managing corporate records, governance, and legal documentation as the company scales. Leads AI technology integration across marketing, finance, and operations, and maintains the security infrastructure protecting client data and platform integrity.<br><br><span class="zh" style="color:var(--muted);">确保GoComX在快速扩张中实现零合规漏洞，统筹公司治理、法务档案与合规记录。主导AI技术在营销、财务与运营中的落地应用，维护保障客户数据与平台稳定的信息安全体系。</span></p>
+        <p class="member-bio"><span class="bio-en">Ensures GoComX operates with zero compliance gaps — managing corporate records, governance, and legal documentation as the company scales. Leads AI technology integration across marketing, finance, and operations, and maintains the security infrastructure protecting client data and platform integrity.</span><span class="bio-zh zh" style="display:none;color:var(--muted)">确保GoComX在快速扩张中实现零合规漏洞，统筹公司治理、法务档案与合规记录。主导AI技术在营销、财务与运营中的落地应用，维护保障客户数据与平台稳定的信息安全体系。</span></p>
         <div class="member-tags">
-          <span class="tag">Governance</span>
-          <span class="tag">Compliance</span>
-          <span class="tag">AI Technology</span>
-          <span class="tag">Finance &amp; Accounting</span>
-          <span class="tag">Security</span>
-          <span class="tag">AI Marketing</span>
+          <span class="tag">Governance</span><span class="tag">Compliance</span><span class="tag">AI Technology</span><span class="tag">Finance &amp; Accounting</span><span class="tag">Security</span><span class="tag">AI Marketing</span>
         </div>
       </div>
 
@@ -237,6 +219,15 @@ footer { flex-shrink:0; background:linear-gradient(105deg,#0078d4,#005a9e); padd
   </div>
 </footer>
 
+<script>
+function setLang(lang) {
+  const isZh = lang === 'zh';
+  document.querySelectorAll('.bio-en').forEach(el => el.style.display = isZh ? 'none' : '');
+  document.querySelectorAll('.bio-zh').forEach(el => el.style.display = isZh ? '' : 'none');
+  document.getElementById('btn-en').classList.toggle('active', !isZh);
+  document.getElementById('btn-zh').classList.toggle('active', isZh);
+}
+</script>
 </body>
 </html>
 
