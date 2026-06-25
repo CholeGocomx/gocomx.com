@@ -27,16 +27,16 @@ nav { flex-shrink:0; display:flex; align-items:center; justify-content:space-bet
 .nav-logo-img { height:44px; width:auto; display:block; }
 .nav-tagline { font-size:var(--fs-xs); font-weight:400; color:var(--muted2); border-left:1px solid #e0e0e0; padding-left:16px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .nt-en { color:var(--blue); font-size:var(--fs-xs); }
-.nt-zh { color:var(--muted); font-size:var(--fs-xs); font-family:var(--font-zh); }
+.nt-zh { color:var(--muted); font-size:11px; font-family:var(--font-zh); }
 .nt-sep { color:#bbb; font-size:var(--fs-xs); }
 .nav-links { display:flex; gap:2px; list-style:none; align-items:center; flex-shrink:0; }
-.nav-links a { font-size:0.95rem; color:var(--muted2); text-decoration:none; padding:0 14px; height:52px; display:inline-flex; align-items:center; border-bottom:2px solid transparent; transition:color .15s,border-color .15s; white-space:nowrap; }
+.nav-links a { font-size:0.95rem; color:var(--muted2); text-decoration:none; padding:0 14px; height:52px; display:inline-flex; align-items:center; border-bottom:2px solid transparent; transition:color .15s,border-color .15s; font-weight:600; white-space:nowrap; }
 .nav-links a:hover { color:var(--blue); border-bottom-color:var(--blue); }
 .nav-links a.active { color:var(--blue); font-weight:600; border-bottom-color:var(--blue); }
 .lang-btn { padding:3px 0; width:46px; text-align:center; font-size:var(--fs-xs); font-weight:600; border:1.5px solid var(--blue); border-radius:4px; background:#fff; color:var(--blue); cursor:pointer; transition:background .15s,color .15s; }
 .lang-btn.active { background:var(--blue); color:#fff; }
 .lang-btn:hover:not(.active) { background:var(--blue-light); }
-.bio-zh { display:none; font-family:var(--font-zh) !important; }
+.bio-zh { display:none; font-family:var(--font-zh) !important; font-size:0.88em; }
 body.zh-mode .bio-en { display:none !important; }
 body.zh-mode .bio-zh { display:inline !important; }
 .zh { display:none; font-family:var(--font-zh); }
@@ -67,7 +67,7 @@ footer { flex-shrink:0; background:linear-gradient(105deg,var(--blue),var(--blue
 .panel:hover { box-shadow: var(--shadow-hover); }
 
 .col-label {
-  font-family: 'Segoe UI',system-ui,sans-serif;
+  font-family:var(--font);
   font-size: var(--fs-sm); color: var(--blue);
   letter-spacing: .08em; text-transform: uppercase; margin-bottom: 20px;
   display: flex; align-items: center; gap: 8px;
@@ -75,7 +75,7 @@ footer { flex-shrink:0; background:linear-gradient(105deg,var(--blue),var(--blue
 .col-label::before { content: ''; width: 20px; height: 2px; background: var(--blue); border-radius: 2px; }
 
 /* PANEL 1 — Brand */
-.brand-name { font-size: var(--fs-lg); font-weight: 800; letter-spacing: -.02em; line-height: 1.2; margin-bottom: 4px; }
+.brand-name { font-size: var(--fs-lg); font-weight: 700; letter-spacing: -.02em; line-height: 1.2; margin-bottom: 4px; }
 .brand-name span { color: var(--blue); }
 .brand-tagline { font-size: var(--fs-sm); color: var(--muted); margin-bottom: 12px; }
 .brand-desc { font-size: var(--fs-md); color: var(--text2); line-height: 1.7; margin-bottom: 6px; }
@@ -91,7 +91,7 @@ footer { flex-shrink:0; background:linear-gradient(105deg,var(--blue),var(--blue
 .step-item { display: flex; gap: 16px; margin-bottom: 24px; padding-bottom: 24px; border-bottom: 1px solid #f0f0f0; }
 .step-item:last-child { border-bottom: none; padding-bottom: 0; margin-bottom: 0; }
 .step-dot { display: none; }
-.step-heading { font-size: var(--fs-md); font-weight: 600; color: var(--blue); font-family: 'Segoe UI',system-ui,sans-serif; margin-bottom: 2px; }
+.step-heading { font-size: var(--fs-md); font-weight: 600; color: var(--blue); font-family:var(--font); margin-bottom: 2px; }
 .step-heading-zh { font-size: var(--fs-sm); color: var(--muted); margin-bottom: 6px; }
 .step-text { font-size: var(--fs-sm); color: var(--text2); line-height: 1.65; }
 .step-text .zh { color: var(--muted); margin-top: 4px; }
@@ -104,9 +104,9 @@ footer { flex-shrink:0; background:linear-gradient(105deg,var(--blue),var(--blue
   border: 1px solid #eaeaea;
 }
 .stat-card:hover { background: var(--blue-light); border-color: rgba(0,120,212,.2); }
-.stat-num { font-size: var(--fs-lg); font-weight: 700; color: var(--blue); line-height: 1; margin-bottom: 4px; font-family: 'Segoe UI',system-ui,sans-serif; }
-.stat-label { font-size: var(--fs-sm); color: var(--text2); font-family: 'Segoe UI',system-ui,sans-serif; font-weight: 500; }
-.stat-zh { font-size: var(--fs-sm); color: #374151; margin-top: 2px; }
+.stat-num { font-size: var(--fs-lg); font-weight: 700; color: var(--blue); line-height: 1; margin-bottom: 4px; font-family:var(--font); }
+.stat-label { font-size: var(--fs-sm); color: var(--text2); font-family:var(--font); font-weight: 500; }
+.stat-zh { font-size: var(--fs-sm); color: var(--muted); margin-top: 2px; }
 .badge-row {
   display: flex; gap: 8px; flex-wrap: wrap; margin-top: auto;
 }
@@ -171,7 +171,7 @@ footer { flex-shrink:0; background:linear-gradient(105deg,var(--blue),var(--blue
   margin: 14px 0 18px;
 }
 .ticker-label {
-  font-family: 'Segoe UI',system-ui,sans-serif;
+  font-family:var(--font);
   font-size: var(--fs-sm); color: var(--blue);
   letter-spacing: .08em; text-transform: uppercase;
   display: flex; align-items: center; gap: 8px; font-weight: 400;
@@ -250,7 +250,7 @@ body.zh-mode .stat-label { display: none; }
   </div>
 </nav>
 
-<div style="background:linear-gradient(105deg,#0078d4,#005a9e);padding:18px 48px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0"><div><h1 style="font-size:1.3rem;font-weight:600;color:#fff;font-family:'Segoe UI',system-ui,sans-serif;letter-spacing:-0.02em">Cross-Border Distribution OS</h1><p style="font-size:0.82rem;color:rgba(255,255,255,0.78);margin-top:4px">China Manufacturing SaaS + North American Retail Infrastructure</p></div></div>
+<div style="background:linear-gradient(105deg,#0078d4,#005a9e);padding:18px 48px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0"><div><h1 style="font-size:1.3rem;font-weight:600;color:#fff;font-family:var(--font);letter-spacing:-0.02em">Cross-Border Distribution OS</h1><p style="font-size:0.82rem;color:rgba(255,255,255,0.78);margin-top:4px">China Manufacturing SaaS + North American Retail Infrastructure</p></div></div>
 <div class="main-grid">
 
   <!-- Panel 1: Brand / Intro -->
@@ -464,6 +464,10 @@ function setLang(lang) {
 </script>
 </body>
 </html>
+
+
+
+
 
 
 

@@ -27,10 +27,10 @@ nav { flex-shrink:0; display:flex; align-items:center; justify-content:space-bet
 .nav-logo-img { height:44px; width:auto; display:block; }
 .nav-tagline { font-size:var(--fs-xs); font-weight:400; color:var(--muted2); border-left:1px solid #e0e0e0; padding-left:16px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .nt-en { color:var(--blue); font-size:var(--fs-xs); }
-.nt-zh { color:var(--muted); font-size:var(--fs-xs); font-family:var(--font-zh); }
+.nt-zh { color:var(--muted); font-size:11px; font-family:var(--font-zh); }
 .nt-sep { color:#bbb; font-size:var(--fs-xs); }
 .nav-links { display:flex; gap:2px; list-style:none; align-items:center; flex-shrink:0; }
-.nav-links a { font-size:0.92rem; color:var(--muted2); text-decoration:none; padding:0 14px; height:52px; display:inline-flex; align-items:center; border-bottom:2px solid transparent; transition:color .15s,border-color .15s; white-space:nowrap; }
+.nav-links a { font-size:0.92rem; color:var(--muted2); text-decoration:none; padding:0 14px; height:52px; display:inline-flex; align-items:center; border-bottom:2px solid transparent; transition:color .15s,border-color .15s; font-weight:600; white-space:nowrap; }
 .nav-links a:hover { color:var(--blue); border-bottom-color:var(--blue); }
 .nav-links a.active { color:var(--blue); font-weight:600; border-bottom-color:var(--blue); }
 @media (max-width:768px) { nav { padding:0 20px; } .nav-tagline { display:none; } }
@@ -60,17 +60,17 @@ nav { flex-shrink:0; display:flex; align-items:center; justify-content:space-bet
 .qr-wrap { display: flex; flex-direction: column; align-items: center; gap: 10px; }
 .qr-wrap img { width: 200px; height: 200px; border-radius: 12px; border: 2px solid var(--blue); background: #fff; box-shadow: 0 4px 16px rgba(0,120,212,.18); }
 .qr-label { font-size: var(--fs-sm); color: var(--muted); text-align: center; line-height: 1.6; font-weight: 500; }
-.qr-title { font-size: var(--fs-md); font-weight: 600; color: var(--blue); font-family: 'Segoe UI',system-ui,sans-serif; text-align: center; }
+.qr-title { font-size: var(--fs-md); font-weight: 600; color: var(--blue); font-family:var(--font); text-align: center; }
 
 @media (max-width: 640px) {
   nav, .deck-bar { padding-left: 20px; padding-right: 20px; }
   .nav-tagline, .deck-sub { display: none; }
 }
 footer { flex-shrink:0; background:linear-gradient(105deg,#0078d4,#005a9e); padding:14px 48px; display:flex; align-items:center; justify-content:center; gap:24px; flex-wrap:wrap; }
-.footer-copy { font-size: 0.88rem; color: #fff; font-weight: 400; font-family: 'Segoe UI',system-ui,sans-serif; }
+.footer-copy { font-size: var(--fs-xs); color: #fff; font-weight: 400; font-family:var(--font); }
 .footer-copy span { color: #fff; }
 .footer-info { display:flex; gap:20px; flex-wrap:wrap; align-items:center; justify-content:center; }
-.footer-info span, .footer-info a { font-size: 0.88rem; color: rgba(255,255,255,0.9); text-decoration: none; font-weight: 400; font-family: 'Segoe UI',system-ui,sans-serif; }
+.footer-info span, .footer-info a { font-size: var(--fs-xs); color: rgba(255,255,255,0.9); text-decoration: none; font-weight: 400; font-family:var(--font); }
 .footer-info a:hover { color:#fff; }
 </style>
 </head>
@@ -122,6 +122,9 @@ footer { flex-shrink:0; background:linear-gradient(105deg,#0078d4,#005a9e); padd
 </footer>
 </body>
 </html>
+
+
+
 
 
 

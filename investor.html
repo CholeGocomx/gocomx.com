@@ -30,16 +30,16 @@ nav { flex-shrink:0; display:flex; align-items:center; justify-content:space-bet
 .nav-page-tag { display:flex; align-items:center; }
 .nav-page-tag-main { font-size:var(--fs-xs); font-weight:400; }
 .nt-en { color:var(--blue); font-size:var(--fs-xs); }
-.nt-zh { color:var(--muted); font-size:var(--fs-xs); font-family:var(--font-zh); }
+.nt-zh { color:var(--muted); font-size:11px; font-family:var(--font-zh); }
 .nt-sep { color:#bbb; font-size:var(--fs-xs); }
 .nav-links { display:flex; gap:2px; list-style:none; align-items:center; flex-shrink:0; }
-.nav-links a { font-size:0.92rem; color:var(--muted2); text-decoration:none; padding:0 14px; height:52px; display:inline-flex; align-items:center; border-bottom:2px solid transparent; transition:color .15s,border-color .15s; white-space:nowrap; }
+.nav-links a { font-size:0.92rem; color:var(--muted2); text-decoration:none; padding:0 14px; height:52px; display:inline-flex; align-items:center; border-bottom:2px solid transparent; transition:color .15s,border-color .15s; font-weight:600; white-space:nowrap; }
 .nav-links a:hover { color:var(--blue); border-bottom-color:var(--blue); }
 .nav-links a.active { color:var(--blue); font-weight:600; border-bottom-color:var(--blue); }
 .lang-btn { padding:3px 0; width:46px; text-align:center; font-size:var(--fs-xs); font-weight:600; border:1.5px solid var(--blue); border-radius:4px; background:#fff; color:var(--blue); cursor:pointer; transition:background .15s,color .15s; }
 .lang-btn.active { background:var(--blue); color:#fff; }
 .lang-btn:hover:not(.active) { background:var(--blue-light); }
-.bio-zh { display:none; font-family:var(--font-zh) !important; }
+.bio-zh { display:none; font-family:var(--font-zh) !important; font-size:0.88em; }
 body.zh-mode .bio-en { display:none !important; }
 body.zh-mode .bio-zh { display:inline !important; }
 .icp-card-title .bio-en::before,.icp-card-title .bio-zh::before { content:none; }
@@ -60,50 +60,50 @@ footer { flex-shrink:0; background:linear-gradient(105deg,var(--blue),var(--blue
 }
 .page-bar-info { flex: 1; min-width: 0; overflow: hidden; }
 .page-bar-title {
-  font-size: 16px; font-weight: 600; color: var(--text);
+  font-size: var(--fs-md); font-weight: 600; color: var(--text);
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-  font-family: 'Noto Sans SC','Segoe UI',system-ui,sans-serif;
+  font-family:var(--font-zh);
 }
 .page-bar-sub {
-  font-size: 11.5px; color: var(--muted); margin-top: 1px;
+  font-size: var(--fs-xs); color: var(--muted); margin-top: 1px;
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-  font-family: 'Noto Sans SC','Segoe UI',system-ui,sans-serif;
+  font-family:var(--font-zh);
 }
 .page-bar-divider { width: 1px; height: 28px; background: var(--border); margin: 0 20px; flex-shrink: 0; }
 /* Lock form (visible when locked) */
 .page-bar-lock { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
-.page-bar-lock-label { font-size: 13px; font-weight: 700; color: var(--text); white-space: nowrap; margin-right: 4px; }
+.page-bar-lock-label { font-size: var(--fs-xs); font-weight: 600; color: var(--text); white-space: nowrap; margin-right: 4px; }
 .page-bar-lock-label span { color: var(--blue); }
 .page-bar-input {
-  width: 210px; padding: 7px 12px; font-size: 12px;
+  width: 210px; padding: 7px 12px; font-size: var(--fs-xs);
   border: 1.5px solid #d0d0d0; border-radius: 7px;
-  font-family: 'Segoe UI',system-ui,sans-serif; letter-spacing: .06em;
+  font-family:var(--font); letter-spacing: .06em;
   outline: none; transition: border-color .15s; text-transform: uppercase;
 }
 .page-bar-input:focus { border-color: var(--blue); }
 .page-bar-input.error { border-color: #ef4444; background: #fff5f5; }
 .page-bar-unlock-btn {
-  padding: 7px 16px; font-size: 13px; font-weight: 700;
+  padding: 7px 16px; font-size: var(--fs-xs); font-weight: 600;
   background: var(--blue); color: #fff; border: none; border-radius: 7px;
   cursor: pointer; font-family: inherit; transition: background .15s; white-space: nowrap;
 }
 .page-bar-unlock-btn:hover { background: var(--blue-dark); }
-.page-bar-hint { font-size: 12px; color: var(--muted); white-space: nowrap; }
+.page-bar-hint { font-size: var(--fs-xs); color: var(--muted); white-space: nowrap; }
 .page-bar-hint a { color: var(--blue); text-decoration: none; font-weight: 600; }
 .page-bar-hint a:hover { text-decoration: underline; }
-.page-bar-error { font-size: 0.88rem; color: #fff; white-space: nowrap; font-weight: 500; }
+.page-bar-error { font-size: var(--fs-xs); color: #fff; white-space: nowrap; font-weight: 500; }
 /* Unlocked actions */
 .page-bar-unlocked { display: none; align-items: center; gap: 8px; flex-shrink: 0; }
 .page-bar-open-btn {
   display: inline-flex; align-items: center; gap: 6px;
-  padding: 7px 16px; font-size: 13px; font-weight: 700;
+  padding: 7px 16px; font-size: var(--fs-xs); font-weight: 600;
   background: var(--blue); color: #fff; border: none; border-radius: 7px;
   cursor: pointer; font-family: inherit; text-decoration: none;
   transition: background .15s; white-space: nowrap;
 }
 .page-bar-open-btn:hover { background: var(--blue-dark); }
 .page-bar-exit-btn {
-  padding: 7px 14px; font-size: 12px; font-weight: 600; color: var(--muted);
+  padding: 7px 14px; font-size: var(--fs-xs); font-weight: 400; color: var(--muted);
   border: 1px solid var(--border); border-radius: 7px; background: #fff;
   cursor: pointer; font-family: inherit; white-space: nowrap; transition: all .15s;
 }
@@ -125,8 +125,8 @@ footer { flex-shrink:0; background:linear-gradient(105deg,var(--blue),var(--blue
 /* ── ICP SECTION ── */
 .icp-section { width: 100%; }
 .icp-header { margin-bottom: 22px; }
-.icp-header-title { font-size: 19px; font-weight: 600; color: var(--blue); font-family: 'Segoe UI',system-ui,sans-serif; }
-.icp-header-sub { font-size: var(--fs-sm); color: var(--muted); margin-top: 5px; line-height: 1.6; font-family: 'Noto Sans SC','Segoe UI',system-ui,sans-serif; }
+.icp-header-title { font-size: var(--fs-md); font-weight: 600; color: var(--blue); font-family:var(--font); }
+.icp-header-sub { font-size: var(--fs-sm); color: var(--muted); margin-top: 5px; line-height: 1.6; font-family:var(--font-zh); }
 @media (max-width: 900px) {
   .page-bar { padding: 10px 20px; height: auto; flex-wrap: wrap; gap: 8px; }
   .page-bar-divider { display: none; }
@@ -151,19 +151,19 @@ footer { flex-shrink:0; background:linear-gradient(105deg,var(--blue),var(--blue
   border: 2px solid var(--blue);
 }
 /* Card title — 2 lines: English · Chinese on line 1, pill on line 2 */
-.icp-card-title { font-size: 16px; font-weight: 600; color: var(--blue); line-height: 1.4; font-family: 'Segoe UI',system-ui,sans-serif; }
-.icp-card-title span { display: inline; font-size: 14px; font-weight: 400; color: var(--muted); }
+.icp-card-title { font-size: var(--fs-md); font-weight: 600; color: var(--blue); line-height: 1.4; font-family:var(--font); }
+.icp-card-title span { display: inline; font-size: var(--fs-xs); font-weight: 400; color: var(--muted); }
 .icp-card-title span::before { content: ' · '; color: var(--muted); }
-.icp-pill { display: block; font-size: 13px; font-weight: 400; border-radius: 4px; padding: 3px 0; margin-top: 4px; color: var(--blue); background: none; }
+.icp-pill { display: block; font-size: var(--fs-xs); font-weight: 400; border-radius: 4px; padding: 3px 0; margin-top: 4px; color: var(--blue); background: none; }
 
 /* Three sections — flex to fill full card height, all regular weight */
 .icp-s { display: flex; flex-direction: column; gap: 8px; padding: 16px 0; border-top: 1px solid var(--border); flex: 1; }
 .icp-s:first-of-type { border-top: none; padding-top: 0; }
-.icp-sh { font-size: 15px; font-weight: 600; color: var(--blue); margin-bottom: 4px; font-family: 'Segoe UI',system-ui,sans-serif; }
-.icp-r { font-size: 13px; font-weight: 400; color: var(--text); line-height: 1.7; display: flex; align-items: flex-start; gap: 8px; font-family: 'Noto Sans SC','Segoe UI',system-ui,sans-serif; }
+.icp-sh { font-size: var(--fs-md); font-weight: 600; color: var(--blue); margin-bottom: 4px; font-family:var(--font); }
+.icp-r { font-size: var(--fs-xs); font-weight: 400; color: var(--text); line-height: 1.7; display: flex; align-items: flex-start; gap: 8px; font-family:var(--font-zh); }
 .icp-r::before { content: '·'; color: var(--blue); font-weight: 400; flex-shrink: 0; margin-top: 2px; }
 .icp-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 4px; }
-.icp-ind-tag { font-size: 12px; color: var(--blue); background: var(--blue-light); border: 1px solid rgba(0,120,212,.18); border-radius: 4px; padding: 3px 10px; font-weight: 600; }
+.icp-ind-tag { font-size: var(--fs-xs); color: var(--blue); background: var(--blue-light); border: 1px solid rgba(0,120,212,.18); border-radius: 4px; padding: 3px 10px; font-weight: 600; }
 @media (max-width: 800px) { .icp-grid { grid-template-columns: 1fr; } }
 .doc-card {
   background: var(--card); border-radius: var(--radius);
@@ -172,7 +172,7 @@ footer { flex-shrink:0; background:linear-gradient(105deg,var(--blue),var(--blue
   text-align: center;
 }
 .doc-icon { font-size: 56px; margin-bottom: 20px; }
-.doc-title { font-size: 22px; font-weight: 600; color: var(--blue); font-family: 'Segoe UI',system-ui,sans-serif; margin-bottom: 6px; }
+.doc-title { font-size: var(--fs-lg); font-weight: 600; color: var(--blue); font-family:var(--font); margin-bottom: 6px; }
 .doc-title span { color: var(--blue); }
 .doc-sub { font-size: var(--fs-sm); color: var(--muted); margin-bottom: 32px; line-height: 1.7; }
 .doc-open-btn {
@@ -235,8 +235,8 @@ footer { flex-shrink:0; background:linear-gradient(105deg,var(--blue),var(--blue
   <!-- BANNER: left = title, right = unlock form -->
   <div style="background:linear-gradient(105deg,#0078d4,#005a9e);border-radius:10px;padding:20px 28px;display:flex;align-items:center;justify-content:center;gap:48px;margin-bottom:20px;flex-wrap:wrap">
     <div style="flex:1;min-width:0">
-      <div style="font-size:1.1rem;font-weight:600;color:#fff;font-family:'Segoe UI',system-ui,sans-serif;margin-bottom:5px">Why GoComX Cannot Be Copied · 竞争壁垒</div>
-      <div style="font-size:0.78rem;color:rgba(255,255,255,0.78);line-height:1.55;font-family:'Segoe UI',system-ui,sans-serif;max-width:560px">This is not a software company. GoComX is China Manufacturing SaaS + North American Retail Infrastructure — built at the intersection where no competitor currently stands.</div>
+      <div style="font-size:1.1rem;font-weight:600;color:#fff;font-family:var(--font);margin-bottom:5px">Why GoComX Cannot Be Copied · 竞争壁垒</div>
+      <div style="font-size:0.78rem;color:rgba(255,255,255,0.78);line-height:1.55;font-family:var(--font);max-width:560px">This is not a software company. GoComX is China Manufacturing SaaS + North American Retail Infrastructure — built at the intersection where no competitor currently stands.</div>
     </div>
     <!-- Locked state -->
     <div id="bar-lock" style="display:flex;align-items:center;gap:8px;flex-shrink:0;flex-wrap:wrap">
@@ -512,6 +512,11 @@ function setLang(lang) {
 </footer>
 </body>
 </html>
+
+
+
+
+
 
 
 

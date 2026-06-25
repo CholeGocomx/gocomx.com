@@ -19,7 +19,7 @@
   --font-zh:'Noto Sans SC','Segoe UI',system-ui,sans-serif;
 }
 *,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
-body { background:var(--bg); color:var(--text); font-family:var(--font); font-size:var(--fs-md); line-height:1.6; height:100vh; display:flex; flex-direction:column; overflow:hidden; }
+body { background:var(--bg); color:var(--text); font-family:var(--font); font-size:var(--fs-md); line-height:1.6; min-height:100vh; display:flex; flex-direction:column; }
 nav { flex-shrink:0; display:flex; align-items:center; justify-content:space-between; padding:0 48px; height:52px; background:var(--bg); box-shadow:0 1px 4px rgba(0,0,0,.08); z-index:100; }
 .nav-brand { display:flex; align-items:center; gap:16px; text-decoration:none; }
 .nav-logo-text { font-size:17px; font-weight:700; color:var(--text); }
@@ -27,21 +27,21 @@ nav { flex-shrink:0; display:flex; align-items:center; justify-content:space-bet
 .nav-logo-img { height:44px; width:auto; display:block; }
 .nav-tagline { font-size:var(--fs-xs); font-weight:400; color:var(--muted2); border-left:1px solid #e0e0e0; padding-left:16px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .nt-en { color:var(--blue); font-size:var(--fs-xs); }
-.nt-zh { color:var(--muted); font-size:var(--fs-xs); font-family:var(--font-zh); }
+.nt-zh { color:var(--muted); font-size:11px; font-family:var(--font-zh); }
 .nt-sep { color:#bbb; font-size:var(--fs-xs); }
 .nav-links { display:flex; gap:2px; list-style:none; align-items:center; flex-shrink:0; }
-.nav-links a { font-size:0.92rem; color:var(--muted2); text-decoration:none; padding:0 14px; height:52px; display:inline-flex; align-items:center; border-bottom:2px solid transparent; transition:color .15s,border-color .15s; white-space:nowrap; }
+.nav-links a { font-size:0.92rem; color:var(--muted2); text-decoration:none; padding:0 14px; height:52px; display:inline-flex; align-items:center; border-bottom:2px solid transparent; transition:color .15s,border-color .15s; font-weight:600; white-space:nowrap; }
 .nav-links a:hover { color:var(--blue); border-bottom-color:var(--blue); }
 .nav-links a.active { color:var(--blue); font-weight:600; border-bottom-color:var(--blue); }
 .lang-btn { padding:3px 0; width:46px; text-align:center; font-size:var(--fs-xs); font-weight:600; border:1.5px solid var(--blue); border-radius:4px; background:#fff; color:var(--blue); cursor:pointer; transition:background .15s,color .15s; }
 .lang-btn.active { background:var(--blue); color:#fff; }
 .lang-btn:hover:not(.active) { background:var(--blue-light); }
-.bio-zh { display:none; font-family:var(--font-zh) !important; }
+.bio-zh { display:none; font-family:var(--font-zh) !important; font-size:0.88em; }
 body.zh-mode .bio-en { display:none !important; }
 body.zh-mode .bio-zh { display:inline !important; }
 body.zh-mode .member-title.bio-zh { display:block !important; }
 body.zh-mode .member-bio .bio-zh { display:inline !important; }
-.zh { font-family:var(--font-zh); font-weight:400; }
+.zh { font-family:var(--font-zh); font-size:0.88em; font-weight:400; }
 footer { flex-shrink:0; background:linear-gradient(105deg,var(--blue),var(--blue-dark)); padding:14px 48px; display:flex; align-items:center; justify-content:center; gap:24px; flex-wrap:wrap; }
 .footer-copy { font-size:var(--fs-xs); font-weight:400; color:#fff; }
 .footer-info { display:flex; gap:20px; flex-wrap:wrap; align-items:center; justify-content:center; }
@@ -51,9 +51,8 @@ footer { flex-shrink:0; background:linear-gradient(105deg,var(--blue),var(--blue
 
 /* PAGE LAYOUT */
 .page-layout {
-  flex: 1; overflow: hidden;
   display: grid; grid-template-columns: 300px 1fr;
-  gap: 20px; padding: 20px 48px;
+  gap: 20px; padding: 20px 48px; align-items: start;
 }
 
 /* LEFT PANEL */
@@ -61,17 +60,15 @@ footer { flex-shrink:0; background:linear-gradient(105deg,var(--blue),var(--blue
   background: var(--card); border-radius: var(--radius);
   box-shadow: var(--shadow);
   padding: 36px 28px;
-  display: flex; flex-direction: column;
-  overflow-y: auto;
 }
 .page-label {
-  font-family: 'Segoe UI',system-ui,sans-serif;
+  font-family:var(--font);
   font-size: var(--fs-sm); color: var(--blue);
   letter-spacing: .08em; text-transform: uppercase; margin-bottom: 8px;
   display: flex; align-items: center; gap: 8px;
 }
 .page-label::before { content: ''; width: 20px; height: 2px; background: var(--blue); border-radius: 2px; }
-.page-title { font-size: var(--fs-lg); font-weight: 600; color: var(--blue); font-family: 'Segoe UI',system-ui,sans-serif; letter-spacing: -.01em; margin-bottom: 16px; }
+.page-title { font-size: var(--fs-lg); font-weight: 600; color: var(--blue); font-family:var(--font); letter-spacing: -.01em; margin-bottom: 16px; }
 .page-title span { color: var(--blue); }
 .page-desc { font-size: var(--fs-md); color: var(--text2); line-height: 1.7; margin-bottom: 8px; }
 .page-desc-zh { font-size: var(--fs-sm); color: var(--muted); line-height: 1.65; }
@@ -80,28 +77,28 @@ footer { flex-shrink:0; background:linear-gradient(105deg,var(--blue),var(--blue
 .page-right { overflow-y: auto; }
 .team-grid {
   display: grid; grid-template-columns: 1fr 1fr;
-  gap: 10px; flex: 1; min-height: 0;
+  gap: 16px; flex: 1; min-height: 0;
 }
 
 /* Microsoft-style member card */
 .member-card {
   background: var(--card); border-radius: var(--radius);
   box-shadow: var(--shadow);
-  padding: 14px 18px;
+  padding: 24px 26px;
   display: flex; flex-direction: column;
   overflow: hidden;
   transition: box-shadow .2s;
 }
 .member-card:hover { box-shadow: var(--shadow-hover); }
 .member-role { display: none; }
-.member-name { display: block; font-size: 1rem; font-weight: 600; color: var(--blue); font-family: 'Segoe UI',system-ui,sans-serif; margin-bottom: 2px; }
-.member-title { display: block; font-size: 13px; color: var(--text); line-height: 1.4; font-family: 'Segoe UI',system-ui,sans-serif; }
+.member-name { display: block; font-size: 1rem; font-weight: 600; color: var(--blue); font-family:var(--font); margin-bottom: 2px; }
+.member-title { display: block; font-size: var(--fs-xs); color: var(--text); line-height: 1.4; font-family:var(--font); }
 .member-name-line { margin-bottom: 3px; }
-.member-title-zh { font-size: 13px; color: #374151; margin-bottom: 8px; font-family: 'Segoe UI',system-ui,sans-serif; }
+.member-title-zh { font-size: var(--fs-xs); color: var(--muted); margin-bottom: 8px; font-family:var(--font-zh); }
 .member-divider { border: none; border-top: 1px solid #f0f0f0; margin-bottom: 8px; }
-.member-bio { font-size: 13px; color: var(--text2); line-height: 1.6; flex: 1; overflow: hidden; font-family: 'Segoe UI',system-ui,sans-serif; }
+.member-bio { font-size: var(--fs-xs); color: var(--text2); line-height: 1.6; flex: 1; overflow: hidden; font-family:var(--font); }
 .member-tags { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 4px; }
-.tag { font-size: 12px; padding: 2px 8px; background: #f2f4f7; border-radius: 4px; color: var(--muted); font-family: 'Segoe UI',system-ui,sans-serif; }
+.tag { font-size: var(--fs-xs); padding: 2px 8px; background: #f2f4f7; border-radius: 4px; color: var(--muted); font-family:var(--font); }
 
 
 @media (max-width: 960px) {
@@ -136,7 +133,7 @@ footer { flex-shrink:0; background:linear-gradient(105deg,var(--blue),var(--blue
   </div>
 </nav>
 
-<div style="background:linear-gradient(105deg,#0078d4,#005a9e);padding:18px 48px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0"><div><h1 style="font-size:1.3rem;font-weight:600;color:#fff;font-family:'Segoe UI',system-ui,sans-serif;letter-spacing:-0.02em">Our Team · 团队介绍</h1><p style="font-size:0.82rem;color:rgba(255,255,255,0.78);margin-top:4px">Vendor Onboarding Specialists</p></div></div>
+<div style="background:linear-gradient(105deg,#0078d4,#005a9e);padding:18px 48px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0"><div><h1 style="font-size:1.3rem;font-weight:600;color:#fff;font-family:var(--font);letter-spacing:-0.02em">Our Team · 团队介绍</h1><p style="font-size:0.82rem;color:rgba(255,255,255,0.78);margin-top:4px">Vendor Onboarding Specialists</p></div></div>
 <div class="page-layout">
 
   <!-- LEFT: Intro panel -->
@@ -211,6 +208,10 @@ function setLang(lang) {
 </script>
 </body>
 </html>
+
+
+
+
 
 
 

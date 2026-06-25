@@ -28,16 +28,16 @@ nav { flex-shrink:0; display:flex; align-items:center; justify-content:space-bet
 .nav-logo-img { height:44px; width:auto; display:block; }
 .nav-tagline { font-size:var(--fs-xs); font-weight:400; color:var(--muted2); border-left:1px solid #e0e0e0; padding-left:16px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .nt-en { color:var(--blue); font-size:var(--fs-xs); }
-.nt-zh { color:var(--muted); font-size:var(--fs-xs); font-family:var(--font-zh); }
+.nt-zh { color:var(--muted); font-size:11px; font-family:var(--font-zh); }
 .nt-sep { color:#bbb; font-size:var(--fs-xs); }
 .nav-links { display:flex; gap:2px; list-style:none; align-items:center; flex-shrink:0; }
-.nav-links a { font-size:0.92rem; color:var(--muted2); text-decoration:none; padding:0 14px; height:52px; display:inline-flex; align-items:center; border-bottom:2px solid transparent; transition:color .15s,border-color .15s; white-space:nowrap; }
+.nav-links a { font-size:0.92rem; color:var(--muted2); text-decoration:none; padding:0 14px; height:52px; display:inline-flex; align-items:center; border-bottom:2px solid transparent; transition:color .15s,border-color .15s; font-weight:600; white-space:nowrap; }
 .nav-links a:hover { color:var(--blue); border-bottom-color:var(--blue); }
 .nav-links a.active { color:var(--blue); font-weight:600; border-bottom-color:var(--blue); }
-.lang-btn-banner { padding:3px 0; width:46px; text-align:center; font-size:var(--fs-xs); font-weight:600; border:1.5px solid rgba(255,255,255,.7); border-radius:4px; background:transparent; color:#fff; cursor:pointer; transition:background .15s; }
-.lang-btn-banner.active { background:#fff; color:var(--blue); border-color:#fff; }
-.lang-btn-banner:hover:not(.active) { background:rgba(255,255,255,.15); }
-.bio-zh { display:none; font-family:var(--font-zh) !important; }
+.lang-btn { padding:3px 0; width:46px; text-align:center; font-size:var(--fs-xs); font-weight:600; border:1.5px solid var(--blue); border-radius:4px; background:#fff; color:var(--blue); cursor:pointer; transition:background .15s,color .15s; }
+.lang-btn.active { background:var(--blue); color:#fff; }
+.lang-btn:hover:not(.active) { background:var(--blue-light); }
+.bio-zh { display:none; font-family:var(--font-zh) !important; font-size:0.88em; }
 body.zh-mode .bio-en { display:none !important; }
 body.zh-mode .bio-zh { display:inline !important; }
 footer { flex-shrink:0; background:linear-gradient(105deg,var(--blue),var(--blue-dark)); padding:14px 48px; display:flex; align-items:center; justify-content:center; gap:24px; flex-wrap:wrap; }
@@ -47,7 +47,7 @@ footer { flex-shrink:0; background:linear-gradient(105deg,var(--blue),var(--blue
 .footer-info a:hover { color:#fff; }
 /* Page banner */
 .page-banner { background:linear-gradient(105deg,var(--blue),var(--blue-dark)); padding:14px 48px; display:flex; align-items:center; justify-content:space-between; flex-shrink:0; }
-.page-banner-title { font-size:var(--fs-md); font-weight:600; color:#fff; letter-spacing:-0.02em; }
+.page-banner-title { font-size:var(--fs-md); font-weight:400; color:#fff; letter-spacing:-0.02em; }
 .page-banner-sub { font-size:var(--fs-xs); color:rgba(255,255,255,.75); margin-top:3px; }
 /* Trust section */
 .trust-header { margin-bottom:16px; }
@@ -55,57 +55,59 @@ footer { flex-shrink:0; background:linear-gradient(105deg,var(--blue),var(--blue
 .trust-header-sub { font-size:var(--fs-xs); color:var(--muted2); margin-top:3px; }
 .trust-cards { display:flex !important; flex-direction:column !important; gap:12px; margin-bottom:12px; }
 .trust-card { display:block !important; background:#fff !important; border-radius:10px; border:1px solid #e5e7eb !important; padding:16px 18px; }
-.trust-card-title { font-size:var(--fs-sm); font-weight:600; color:var(--text); margin-bottom:10px; }
-.trust-card-title.blue { color:var(--blue); }
+.trust-card-title { font-size:var(--fs-sm); font-weight:600; color:var(--blue); margin-bottom:10px; }
 .trust-card-body { font-size:var(--fs-xs); color:var(--muted); line-height:1.7; }
 .trust-missing-list { display:flex; flex-direction:column; gap:4px; margin-bottom:10px; }
 .trust-missing-item { font-size:var(--fs-xs); color:var(--muted2); }
-.trust-quote { font-size:var(--fs-xs); color:#9ca3af; line-height:1.5; font-style:italic; padding-top:8px; border-top:1px solid #f3f4f6; }
+.trust-quote { font-size:var(--fs-xs); color:var(--muted); line-height:1.6; padding-top:8px; border-top:1px solid var(--border); }
 .trust-tags { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:8px; }
 .trust-tag { font-size:var(--fs-xs); font-weight:500; background:#eff6ff; border:1px solid #bfdbfe; color:var(--blue); border-radius:4px; padding:2px 10px; }
 .text-blue { color:var(--blue); }
-.quote-bar { background:linear-gradient(105deg,var(--blue),var(--blue-dark)); border-radius:8px; padding:12px 20px; text-align:center; }
-.quote-bar-sub { font-size:var(--fs-xs); color:rgba(255,255,255,.75); margin-bottom:3px; }
-.quote-bar-main { font-size:var(--fs-md); font-weight:700; color:#fff; }
+.quote-bar { padding:16px 0; text-align:center; border-top:1px solid var(--border); }
+.quote-bar-sub { font-size:var(--fs-md); color:var(--blue); margin-bottom:4px; font-family:var(--font); font-weight:400; }
+.quote-bar-main { font-size:var(--fs-md); font-weight:400; color:var(--blue); font-family:var(--font); }
+.quote-bar .bio-zh { font-family:var(--font-zh) !important; }
 @media (max-width:768px) { nav { padding:0 20px; } .nav-tagline { display:none; } }
 
 /* MAIN LAYOUT */
 .main-layout {
-  flex: 1; display: grid; grid-template-columns: 1fr 340px;
+  flex: 1; display: grid; grid-template-columns: 3fr 2fr;
   overflow: hidden;
 }
 .trust-panel {
-  overflow-y: auto; padding: 24px 32px 24px 48px;
+  overflow-y: auto; padding: 28px 36px 28px 48px;
   background: var(--bg);
 }
 .access-panel {
   background: #fff; border-left: 1px solid #e5e7eb;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
-  padding: 28px 28px; overflow-y: auto;
+  padding: 40px 36px; overflow-y: auto;
 }
+/* ACCESS CARD — centered, generous sizing */
+.access-card { width: 100%; max-width: 340px; text-align: center; }
 
 /* ACCESS CARD */
 .access-card { width: 100%; max-width: 280px; text-align: center; }
 .lock-icon { font-size: 40px; margin-bottom: 12px; }
-.lock-title { font-size: 18px; font-weight: 700; color: var(--blue); font-family: 'Segoe UI',system-ui,sans-serif; margin-bottom: 4px; }
-.lock-sub { font-size: 13px; color: var(--muted); margin-bottom: 20px; line-height: 1.6; }
+.lock-title { font-size: var(--fs-md); font-weight: 600; color: var(--blue); font-family: var(--font); margin-bottom: 4px; }
+.lock-sub { font-size: var(--fs-xs); color: var(--muted); margin-bottom: 20px; line-height: 1.6; }
 .lock-input {
-  width: 100%; padding: 10px 14px; font-size: var(--fs-md);
+  width: 100%; padding: 10px 14px; font-size: var(--fs-xs);
   border: 1.5px solid #d0d0d0; border-radius: 8px;
-  font-family: 'Segoe UI',system-ui,sans-serif; letter-spacing: .08em;
+  font-family: var(--font); letter-spacing: .08em;
   outline: none; transition: border-color .15s; text-transform: uppercase; margin-bottom: 10px;
 }
 .lock-input:focus { border-color: var(--blue); }
 .lock-input.error { border-color: #ef4444; background: #fff5f5; }
 .lock-btn {
-  width: 100%; padding: 10px; font-size: var(--fs-md); font-weight: 700;
+  width: 100%; padding: 10px; font-size: var(--fs-xs); font-weight: 600;
   background: var(--blue); color: #fff; border: none; border-radius: 8px;
-  cursor: pointer; font-family: inherit; transition: background .15s;
+  cursor: pointer; font-family: var(--font); transition: background .15s;
 }
 .lock-btn:hover { background: var(--blue-dark); }
 .lock-btn:disabled { background: #93c5fd; cursor: not-allowed; }
-.lock-error { font-size: 13px; color: #ef4444; margin-top: 8px; min-height: 18px; }
-.lock-hint { font-size: 13px; color: var(--muted); margin-top: 16px; }
+.lock-error { font-size: var(--fs-xs); color: #ef4444; margin-top: 8px; min-height: 18px; font-family: var(--font); }
+.lock-hint { font-size: var(--fs-xs); color: var(--muted); margin-top: 16px; font-family: var(--font); }
 .lock-hint a { color: var(--blue); text-decoration: none; font-weight: 600; }
 
 /* DOC UNLOCKED */
@@ -152,6 +154,10 @@ footer { flex-shrink:0; background:linear-gradient(105deg,var(--blue),var(--blue
     <li><a href="investor.html">Investor Deck</a></li>
     <li><a href="quotefee.html" class="active">Quote</a></li>
   </ul>
+  <div style="display:flex;gap:4px;margin-left:12px">
+    <button onclick="setLang('en')" id="btn-en" class="lang-btn active">EN</button>
+    <button onclick="setLang('zh')" id="btn-zh" class="lang-btn">中文</button>
+  </div>
 </nav>
 
 <!-- BANNER -->
@@ -159,10 +165,6 @@ footer { flex-shrink:0; background:linear-gradient(105deg,var(--blue),var(--blue
   <div>
     <div class="page-banner-title">Quote &amp; Documents · 报价与文件</div>
     <div class="page-banner-sub">Full E-COM Standard Data Package, Ready to Go</div>
-  </div>
-  <div style="display:flex;gap:4px">
-    <button onclick="setLang('en')" id="btn-en" class="lang-btn-banner active">EN</button>
-    <button onclick="setLang('zh')" id="btn-zh" class="lang-btn-banner">中文</button>
   </div>
 </div>
 
@@ -186,7 +188,7 @@ footer { flex-shrink:0; background:linear-gradient(105deg,var(--blue),var(--blue
     <div class="trust-cards">
 
       <div class="trust-card">
-        <div class="trust-card-title blue">"Why should I spend my time on you?"</div>
+        <div class="trust-card-title blue">Why should I spend my time on you?</div>
         <div class="trust-card-body">
           <span class="bio-en">This is the first question every North American sales rep asks — before they ever meet you. They are not evaluating your product. They are evaluating whether you are worth their time. In the USA, business runs on <strong class="text-blue">TRUST</strong> — not product specs. It is not selling SKU. It is selling TRUST.</span>
           <span class="bio-zh">这是每一位北美销售代理在见你之前，内心首先问的问题。他们评估的不是你的产品，而是你是否值得他们投入时间。在美国，商业关系建立在<strong class="text-blue">「信任」</strong>之上——而不是产品参数。卖的不是SKU，卖的是信任。</span>
@@ -236,7 +238,7 @@ footer { flex-shrink:0; background:linear-gradient(105deg,var(--blue),var(--blue
         <span class="bio-zh">技术让交易成为可能，但信任让生意得以持续。</span>
       </div>
       <div class="quote-bar-main">
-        <span class="bio-en">"Products create opportunities. Trusted relationships create revenue."</span>
+        <span class="bio-en">Products create opportunities. Trusted relationships create revenue.</span>
         <span class="bio-zh">产品创造机会，信任关系创造收入。</span>
       </div>
     </div>
@@ -321,7 +323,7 @@ async function checkCode() {
     err.textContent = 'Connection error. Please try again. · 连接失败，请重试。';
   } finally {
     btn.disabled = false;
-    btn.innerHTML = '<span class="bio-en">Unlock →</span><span class="bio-zh" style="font-family:\'Noto Sans SC\',sans-serif;display:none">解锁 →</span>';
+    btn.innerHTML = '<span class="bio-en">Unlock →</span><span class="bio-zh" style="font-family:var(--font-zh);display:none">解锁 →</span>';
   }
 }
 
@@ -354,6 +356,9 @@ function setLang(lang) {
 </footer>
 </body>
 </html>
+
+
+
 
 
 

@@ -27,10 +27,10 @@ nav { flex-shrink:0; display:flex; align-items:center; justify-content:space-bet
 .nav-logo-img { height:44px; width:auto; display:block; }
 .nav-tagline { font-size:var(--fs-xs); font-weight:400; color:var(--muted2); border-left:1px solid #e0e0e0; padding-left:16px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .nt-en { color:var(--blue); font-size:var(--fs-xs); }
-.nt-zh { color:var(--muted); font-size:var(--fs-xs); font-family:var(--font-zh); }
+.nt-zh { color:var(--muted); font-size:11px; font-family:var(--font-zh); }
 .nt-sep { color:#bbb; font-size:var(--fs-xs); }
 .nav-links { display:flex; gap:2px; list-style:none; align-items:center; flex-shrink:0; }
-.nav-links a { font-size:0.92rem; color:var(--muted2); text-decoration:none; padding:0 14px; height:52px; display:inline-flex; align-items:center; border-bottom:2px solid transparent; transition:color .15s,border-color .15s; white-space:nowrap; }
+.nav-links a { font-size:0.92rem; color:var(--muted2); text-decoration:none; padding:0 14px; height:52px; display:inline-flex; align-items:center; border-bottom:2px solid transparent; transition:color .15s,border-color .15s; font-weight:600; white-space:nowrap; }
 .nav-links a:hover { color:var(--blue); border-bottom-color:var(--blue); }
 .nav-links a.active { color:var(--blue); font-weight:600; border-bottom-color:var(--blue); }
 footer { flex-shrink:0; background:linear-gradient(105deg,var(--blue),var(--blue-dark)); padding:14px 48px; display:flex; align-items:center; justify-content:center; gap:24px; flex-wrap:wrap; }
@@ -58,18 +58,18 @@ footer { flex-shrink:0; background:linear-gradient(105deg,var(--blue),var(--blue
 .panel:hover { box-shadow: var(--shadow-hover); }
 
 .page-label {
-  font-family: 'Segoe UI',system-ui,sans-serif;
+  font-family:var(--font);
   font-size: var(--fs-sm); color: var(--blue);
   letter-spacing: .08em; text-transform: uppercase; margin-bottom: 8px;
   display: flex; align-items: center; gap: 8px;
 }
 .page-label::before { content: ''; width: 20px; height: 2px; background: var(--blue); border-radius: 2px; }
-.page-title { font-size: var(--fs-lg); font-weight: 600; color: var(--blue); font-family: 'Segoe UI',system-ui,sans-serif; letter-spacing: -.01em; margin-bottom: 4px; }
+.page-title { font-size: var(--fs-lg); font-weight: 600; color: var(--blue); font-family:var(--font); letter-spacing: -.01em; margin-bottom: 4px; }
 .page-title span { color: var(--blue); font-weight: 600; }
-.page-sub { font-size: var(--fs-md); color: var(--text2); margin-bottom: 4px; }
-.page-sub-zh { font-size: var(--fs-sm); color: var(--muted); margin-bottom: 20px; }
+.page-sub { font-size: var(--fs-md); font-weight: 400; color: var(--text2); margin-bottom: 4px; font-family: var(--font-zh); }
+.page-sub-zh { font-size: var(--fs-md); color: var(--muted); margin-bottom: 20px; font-family: var(--font-zh); }
 
-.panel-heading { font-size: var(--fs-lg); font-weight: 600; color: var(--blue); font-family: 'Segoe UI',system-ui,sans-serif; margin-bottom: 4px; }
+.panel-heading { font-size: var(--fs-lg); font-weight: 600; color: var(--blue); font-family:var(--font); margin-bottom: 4px; }
 .panel-heading-zh { font-size: var(--fs-sm); color: var(--muted); margin-bottom: 16px; }
 .offer-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
 .offer-list li {
@@ -83,10 +83,8 @@ footer { flex-shrink:0; background:linear-gradient(105deg,var(--blue),var(--blue
 .offer-zh { font-size: var(--fs-sm); color: var(--muted); margin-top: 3px; }
 
 /* Right panel (connect) keeps same style */
-.form-title { font-size: var(--fs-lg); font-weight: 600; color: var(--blue); font-family: 'Segoe UI',system-ui,sans-serif; margin-bottom: 4px; }
-.form-title-zh { font-size: var(--fs-sm); color: var(--muted); margin-bottom: 20px; }
-.form-title { font-size: var(--fs-lg); font-weight: 600; color: var(--blue); font-family: 'Segoe UI',system-ui,sans-serif; margin-bottom: 4px; }
-.form-title-zh { font-size: var(--fs-sm); color: var(--muted); margin-bottom: 24px; }
+.form-title { font-size: var(--fs-lg); font-weight: 600; color: var(--blue); font-family:var(--font); margin-bottom: 4px; }
+.form-title-zh { font-size: var(--fs-sm); color: var(--muted); margin-bottom: 24px; font-family: var(--font-zh); }
 /* Email option card */
 .contact-option {
   display: flex; align-items: center; justify-content: space-between;
@@ -98,8 +96,8 @@ footer { flex-shrink:0; background:linear-gradient(105deg,var(--blue),var(--blue
 .contact-option.copied { background: #f0fdf4; border-color: #22c55e; }
 .contact-option-left { display: flex; align-items: center; gap: 14px; }
 .contact-icon { font-size: 26px; flex-shrink: 0; }
-.contact-option-title { font-size: var(--fs-md); font-weight: 600; color: var(--blue); font-family: 'Segoe UI',system-ui,sans-serif; margin-bottom: 2px; }
-.contact-option-sub { font-size: var(--fs-sm); color: #404040; line-height: 1.4; }
+.contact-option-title { font-size: var(--fs-md); font-weight: 600; color: var(--blue); font-family:var(--font); margin-bottom: 2px; }
+.contact-option-sub { font-size: var(--fs-sm); color: var(--muted); line-height: 1.4; }
 #copy-indicator {
   font-size: var(--fs-sm); font-weight: 700;
   color: var(--blue); background: var(--blue-light);
@@ -132,8 +130,8 @@ footer { flex-shrink:0; background:linear-gradient(105deg,var(--blue),var(--blue
 .book-banner.zoom .book-arrow { color: var(--blue); }
 .book-banner-left { display: flex; align-items: center; gap: 14px; }
 .book-icon { font-size: 28px; flex-shrink: 0; }
-.book-title { font-size: var(--fs-md); font-weight: 600; color: var(--blue); font-family: 'Segoe UI',system-ui,sans-serif; margin-bottom: 2px; }
-.book-sub { font-size: var(--fs-sm); color: #404040; line-height: 1.4; }
+.book-title { font-size: var(--fs-md); font-weight: 600; color: var(--blue); font-family:var(--font); margin-bottom: 2px; }
+.book-sub { font-size: var(--fs-sm); color: var(--muted); line-height: 1.4; font-family: var(--font-zh); }
 .book-arrow { font-size: 20px; color: var(--blue); font-weight: 400; flex-shrink: 0; }
 .form-divider {
   text-align: center; margin: 16px 0; position: relative;
@@ -144,12 +142,12 @@ footer { flex-shrink:0; background:linear-gradient(105deg,var(--blue),var(--blue
 }
 .form-divider span {
   position: relative; background: #fff;
-  padding: 0 12px; font-size: var(--fs-sm); color: var(--muted);
+  padding: 0 12px; font-size: var(--fs-sm); color: var(--muted); font-family: var(--font-zh);
 }
 
 /* Contact Form */
 .form-row { margin-bottom: 11px; }
-.form-label { font-size: var(--fs-sm); font-weight: 600; color: var(--text); margin-bottom: 5px; display: block; }
+.form-label { font-size: var(--fs-xs); font-weight: 500; color: var(--muted); margin-bottom: 5px; display: block; font-family: var(--font-zh); }
 .form-input, .form-textarea {
   width: 100%; padding: 9px 13px;
   border: 1.5px solid #e0e0e0; border-radius: 8px;
@@ -163,7 +161,7 @@ footer { flex-shrink:0; background:linear-gradient(105deg,var(--blue),var(--blue
 .form-submit {
   width: auto; padding: 10px 32px; font-size: var(--fs-md); font-weight: 600;
   background: var(--blue); color: #fff; border: none; border-radius: 8px;
-  cursor: pointer; font-family: 'Segoe UI',system-ui,sans-serif; transition: background .15s; margin-top: 2px;
+  cursor: pointer; font-family: var(--font-zh); transition: background .15s; margin-top: 2px;
 }
 .form-submit:hover { background: var(--blue-dark); }
 .form-submit:disabled { background: #93afc8; cursor: not-allowed; }
@@ -172,8 +170,8 @@ footer { flex-shrink:0; background:linear-gradient(105deg,var(--blue),var(--blue
   background: var(--blue-light); border: 1.5px solid rgba(0,120,212,.35); border-radius: 10px; margin-top: 10px;
 }
 .form-success-icon { font-size: 28px; margin-bottom: 6px; }
-.form-success-title { font-size: var(--fs-md); font-weight: 700; color: var(--blue); }
-.form-success-sub { font-size: var(--fs-sm); color: #404040; margin-top: 3px; }
+.form-success-title { font-size: var(--fs-md); font-weight: 600; color: var(--blue); }
+.form-success-sub { font-size: var(--fs-sm); color: var(--muted); margin-top: 3px; font-family: var(--font-zh); }
 
 
 @media (max-width: 1100px) {
@@ -203,12 +201,11 @@ footer { flex-shrink:0; background:linear-gradient(105deg,var(--blue),var(--blue
   </ul>
 </nav>
 
-<div style="background:linear-gradient(105deg,#0078d4,#005a9e);padding:18px 48px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0"><div><h1 style="font-size:1.3rem;font-weight:600;color:#fff;font-family:'Segoe UI',system-ui,sans-serif;letter-spacing:-0.02em">Contact Us · 联系我们</h1><p style="font-size:0.82rem;color:rgba(255,255,255,0.78);margin-top:4px">Entry Point into the Retail Supply Chain</p></div></div>
+<div style="background:linear-gradient(105deg,#0078d4,#005a9e);padding:18px 48px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0"><div><h1 style="font-size:1.3rem;font-weight:600;color:#fff;font-family:var(--font);letter-spacing:-0.02em">Contact Us · 联系我们</h1><p style="font-size:0.82rem;color:rgba(255,255,255,0.78);margin-top:4px">Entry Point into the Retail Supply Chain</p></div></div>
 <div class="page-layout">
 
   <!-- PANEL LEFT: What happens next -->
   <div class="panel">
-    <div class="page-label">Next Steps · 联系流程</div>
     <div class="page-title">What Happens <span>Next</span></div>
     <p class="page-sub" style="margin-bottom:28px;">Four steps from contact to launch · 四步从联系到启动</p>
 
@@ -216,29 +213,29 @@ footer { flex-shrink:0; background:linear-gradient(105deg,var(--blue),var(--blue
       <div style="display:flex;gap:14px;align-items:flex-start;">
         <div style="width:28px;height:28px;min-width:28px;border-radius:50%;background:var(--blue-light);border:2px solid var(--blue);display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--blue);">1</div>
         <div>
-          <div style="font-size:var(--fs-sm);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;margin-bottom:2px;">We review your products and current channels</div>
-          <div style="font-size:var(--fs-sm);color:var(--muted);" class="zh">评估您的产品与现有渠道情况</div>
+          <div style="font-size:var(--fs-md);color:var(--text);margin-bottom:2px;">We review your products and current channels</div>
+          <div style="font-size:var(--fs-md);color:var(--muted);font-family:var(--font-zh);">评估您的产品与现有渠道情况</div>
         </div>
       </div>
       <div style="display:flex;gap:14px;align-items:flex-start;">
         <div style="width:28px;height:28px;min-width:28px;border-radius:50%;background:var(--blue-light);border:2px solid var(--blue);display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--blue);">2</div>
         <div>
-          <div style="font-size:var(--fs-sm);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;margin-bottom:2px;">We identify which North American retailers fit your category</div>
-          <div style="font-size:var(--fs-sm);color:var(--muted);" class="zh">识别适合您品类的北美零售渠道</div>
+          <div style="font-size:var(--fs-md);color:var(--text);margin-bottom:2px;">We identify which North American retailers fit your category</div>
+          <div style="font-size:var(--fs-md);color:var(--muted);font-family:var(--font-zh);">识别适合您品类的北美零售渠道</div>
         </div>
       </div>
       <div style="display:flex;gap:14px;align-items:flex-start;">
         <div style="width:28px;height:28px;min-width:28px;border-radius:50%;background:var(--blue-light);border:2px solid var(--blue);display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--blue);">3</div>
         <div>
-          <div style="font-size:var(--fs-sm);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;margin-bottom:2px;">We provide a compliance readiness assessment</div>
-          <div style="font-size:var(--fs-sm);color:var(--muted);" class="zh">提供合规准入评估报告</div>
+          <div style="font-size:var(--fs-md);color:var(--text);margin-bottom:2px;">We provide a compliance readiness assessment</div>
+          <div style="font-size:var(--fs-md);color:var(--muted);font-family:var(--font-zh);">提供合规准入评估报告</div>
         </div>
       </div>
       <div style="display:flex;gap:14px;align-items:flex-start;">
         <div style="width:28px;height:28px;min-width:28px;border-radius:50%;background:var(--blue-light);border:2px solid var(--blue);display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--blue);">4</div>
         <div>
-          <div style="font-size:var(--fs-sm);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;margin-bottom:2px;">You receive a tailored quote within 1 business day</div>
-          <div style="font-size:var(--fs-sm);color:var(--muted);" class="zh">1个工作日内收到定制化报价</div>
+          <div style="font-size:var(--fs-md);color:var(--text);margin-bottom:2px;">You receive a tailored quote within 1 business day</div>
+          <div style="font-size:var(--fs-md);color:var(--muted);font-family:var(--font-zh);">1个工作日内收到定制化报价</div>
         </div>
       </div>
     </div>
@@ -252,7 +249,6 @@ footer { flex-shrink:0; background:linear-gradient(105deg,var(--blue),var(--blue
   <!-- PANEL RIGHT: Get in Touch -->
   <div class="panel">
 
-    <div class="page-label">Get in Touch · 联系我们</div>
     <div class="page-title">Let's Work <span>Together</span></div>
     <p class="page-sub">Tell us about your products and target market — we'll take it from there. · 告诉我们您的产品与目标市场，其余交给我们。</p>
 
@@ -366,6 +362,10 @@ document.getElementById('contact-form').addEventListener('submit', async functio
 </script>
 </body>
 </html>
+
+
+
+
 
 
 
