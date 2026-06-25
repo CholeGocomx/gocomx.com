@@ -36,9 +36,11 @@ nav { flex-shrink:0; display:flex; align-items:center; justify-content:space-bet
 .lang-btn { padding:3px 0; width:46px; text-align:center; font-size:var(--fs-xs); font-weight:600; border:1.5px solid var(--blue); border-radius:4px; background:#fff; color:var(--blue); cursor:pointer; transition:background .15s,color .15s; }
 .lang-btn.active { background:var(--blue); color:#fff; }
 .lang-btn:hover:not(.active) { background:var(--blue-light); }
-.bio-zh { display:none; font-family:var(--font-zh); }
+.bio-zh { display:none; font-family:var(--font-zh) !important; }
 body.zh-mode .bio-en { display:none !important; }
 body.zh-mode .bio-zh { display:inline !important; }
+body.zh-mode .member-title.bio-zh { display:block !important; }
+body.zh-mode .member-bio .bio-zh { display:inline !important; }
 .zh { font-family:var(--font-zh); font-weight:400; }
 footer { flex-shrink:0; background:linear-gradient(105deg,var(--blue),var(--blue-dark)); padding:14px 48px; display:flex; align-items:center; justify-content:center; gap:24px; flex-wrap:wrap; }
 .footer-copy { font-size:var(--fs-xs); font-weight:400; color:#fff; }
@@ -202,8 +204,7 @@ footer { flex-shrink:0; background:linear-gradient(105deg,var(--blue),var(--blue
 <script>
 function setLang(lang) {
   const isZh = lang === 'zh';
-  document.querySelectorAll('.bio-en').forEach(el => el.style.display = isZh ? 'none' : '');
-  document.querySelectorAll('.bio-zh').forEach(el => el.style.display = isZh ? '' : 'none');
+  document.body.classList.toggle('zh-mode', isZh);
   document.getElementById('btn-en').classList.toggle('active', !isZh);
   document.getElementById('btn-zh').classList.toggle('active', isZh);
 }

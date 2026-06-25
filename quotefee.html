@@ -37,7 +37,7 @@ nav { flex-shrink:0; display:flex; align-items:center; justify-content:space-bet
 .lang-btn-banner { padding:3px 0; width:46px; text-align:center; font-size:var(--fs-xs); font-weight:600; border:1.5px solid rgba(255,255,255,.7); border-radius:4px; background:transparent; color:#fff; cursor:pointer; transition:background .15s; }
 .lang-btn-banner.active { background:#fff; color:var(--blue); border-color:#fff; }
 .lang-btn-banner:hover:not(.active) { background:rgba(255,255,255,.15); }
-.bio-zh { display:none; font-family:var(--font-zh); }
+.bio-zh { display:none; font-family:var(--font-zh) !important; }
 body.zh-mode .bio-en { display:none !important; }
 body.zh-mode .bio-zh { display:inline !important; }
 footer { flex-shrink:0; background:linear-gradient(105deg,var(--blue),var(--blue-dark)); padding:14px 48px; display:flex; align-items:center; justify-content:center; gap:24px; flex-wrap:wrap; }
@@ -53,16 +53,16 @@ footer { flex-shrink:0; background:linear-gradient(105deg,var(--blue),var(--blue
 .trust-header { margin-bottom:16px; }
 .trust-header-title { font-size:var(--fs-md); font-weight:700; color:var(--blue); }
 .trust-header-sub { font-size:var(--fs-xs); color:var(--muted2); margin-top:3px; }
-.trust-cards { display:flex; flex-direction:column; gap:12px; margin-bottom:12px; }
-.trust-card { background:var(--card); border-radius:10px; border:1px solid var(--border); padding:16px 18px; }
+.trust-cards { display:flex !important; flex-direction:column !important; gap:12px; margin-bottom:12px; }
+.trust-card { display:block !important; background:#fff !important; border-radius:10px; border:1px solid #e5e7eb !important; padding:16px 18px; }
 .trust-card-title { font-size:var(--fs-sm); font-weight:600; color:var(--text); margin-bottom:10px; }
 .trust-card-title.blue { color:var(--blue); }
 .trust-card-body { font-size:var(--fs-xs); color:var(--muted); line-height:1.7; }
-.trust-missing-grid { display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-bottom:10px; }
+.trust-missing-list { display:flex; flex-direction:column; gap:4px; margin-bottom:10px; }
 .trust-missing-item { font-size:var(--fs-xs); color:var(--muted2); }
 .trust-quote { font-size:var(--fs-xs); color:#9ca3af; line-height:1.5; font-style:italic; padding-top:8px; border-top:1px solid #f3f4f6; }
 .trust-tags { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:8px; }
-.trust-tag { font-size:var(--fs-xs); font-weight:500; background:var(--blue-light); border:1px solid #bfdbfe; color:var(--blue); border-radius:4px; padding:2px 10px; }
+.trust-tag { font-size:var(--fs-xs); font-weight:500; background:#eff6ff; border:1px solid #bfdbfe; color:var(--blue); border-radius:4px; padding:2px 10px; }
 .text-blue { color:var(--blue); }
 .quote-bar { background:linear-gradient(105deg,var(--blue),var(--blue-dark)); border-radius:8px; padding:12px 20px; text-align:center; }
 .quote-bar-sub { font-size:var(--fs-xs); color:rgba(255,255,255,.75); margin-bottom:3px; }
@@ -198,7 +198,7 @@ footer { flex-shrink:0; background:linear-gradient(105deg,var(--blue),var(--blue
           <span class="bio-en">What most Chinese vendors show up without</span>
           <span class="bio-zh">大多数中国厂商缺少的</span>
         </div>
-        <div class="trust-missing-grid">
+        <div class="trust-missing-list">
           <div class="trust-missing-item">— <span class="bio-en">Exclusive Territory</span><span class="bio-zh">独家代理区域</span></div>
           <div class="trust-missing-item">— <span class="bio-en">Regional Authorization</span><span class="bio-zh">区域授权</span></div>
           <div class="trust-missing-item">— <span class="bio-en">Brand Support</span><span class="bio-zh">品牌支持</span></div>
@@ -251,18 +251,18 @@ footer { flex-shrink:0; background:linear-gradient(105deg,var(--blue),var(--blue
       <div class="lock-title">Quote &amp; Fee Schedule</div>
       <p class="lock-sub">
         <span class="bio-en">Restricted access — enter your code to view pricing and documents.</span>
-        <span class="bio-zh" style="font-family:'Noto Sans SC',sans-serif">受限访问——请输入访问码查看报价与文件。</span>
+        <span class="bio-zh" style="font-family:var(--font-zh)">受限访问——请输入访问码查看报价与文件。</span>
       </p>
       <input type="password" class="lock-input" id="code-input" placeholder="ACCESS CODE" maxlength="30"
         onkeydown="if(event.key==='Enter') checkCode()">
       <button class="lock-btn" id="unlock-btn" onclick="checkCode()">
         <span class="bio-en">Unlock →</span>
-        <span class="bio-zh" style="font-family:'Noto Sans SC',sans-serif">解锁 →</span>
+        <span class="bio-zh" style="font-family:var(--font-zh)">解锁 →</span>
       </button>
       <div class="lock-error" id="error-msg"></div>
       <p class="lock-hint">
         <span class="bio-en">No code? <a href="contact.html">Contact us →</a></span>
-        <span class="bio-zh" style="font-family:'Noto Sans SC',sans-serif">没有访问码？<a href="contact.html">联系我们 →</a></span>
+        <span class="bio-zh" style="font-family:var(--font-zh)">没有访问码？<a href="contact.html">联系我们 →</a></span>
       </p>
     </div>
 
@@ -272,14 +272,14 @@ footer { flex-shrink:0; background:linear-gradient(105deg,var(--blue),var(--blue
       <div class="lock-title">Access Granted</div>
       <p class="lock-sub">
         <span class="bio-en">Your document is ready to view.</span>
-        <span class="bio-zh" style="font-family:'Noto Sans SC',sans-serif">您的文件已准备好查阅。</span>
+        <span class="bio-zh" style="font-family:var(--font-zh)">您的文件已准备好查阅。</span>
       </p>
       <a class="doc-open-btn" href="https://gocomx.sharepoint.com/:b:/g/IQCV-Be_3yEVR7iM0YhN2y2rASjg3FvwTlyVoa8VgWNtC1s?e=lgqhvu" target="_blank" rel="noopener">
-        📂 <span class="bio-en">Open Document</span><span class="bio-zh" style="font-family:'Noto Sans SC',sans-serif">打开文件</span>
+        📂 <span class="bio-en">Open Document</span><span class="bio-zh" style="font-family:var(--font-zh)">打开文件</span>
       </a>
-      <button class="doc-lock-btn" onclick="lockOut()">🔒 <span class="bio-en">Lock &amp; Exit</span><span class="bio-zh" style="font-family:'Noto Sans SC',sans-serif">退出</span></button>
+      <button class="doc-lock-btn" onclick="lockOut()">🔒 <span class="bio-en">Lock &amp; Exit</span><span class="bio-zh" style="font-family:var(--font-zh)">退出</span></button>
       <div class="doc-notice">
-        🔒 <span class="bio-en">Confidential · For authorized recipients only</span><span class="bio-zh" style="font-family:'Noto Sans SC',sans-serif">保密文件，仅供授权人员查阅，请勿转发。</span>
+        🔒 <span class="bio-en">Confidential · For authorized recipients only</span><span class="bio-zh" style="font-family:var(--font-zh)">保密文件，仅供授权人员查阅，请勿转发。</span>
       </div>
     </div><!-- /doc-area -->
   </div><!-- /access-panel -->
