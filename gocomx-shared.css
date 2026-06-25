@@ -1,0 +1,232 @@
+/* ============================================================
+   GoComX — Shared Stylesheet
+   Single source of truth for typography, colors, nav, footer,
+   language toggle, and common components.
+   ============================================================ */
+
+/* ── VARIABLES ── */
+:root {
+  --blue:        #0078d4;
+  --blue-dark:   #005a9e;
+  --blue-light:  #eff6ff;
+  --text:        #111827;
+  --text2:       #1f2937;
+  --muted:       #374151;
+  --muted2:      #6b7280;
+  --bg:          #f2f4f7;
+  --card:        #ffffff;
+  --border:      #e5e7eb;
+  --shadow:      0 2px 16px rgba(0,0,0,.07);
+  --shadow-hover:    0 6px 28px rgba(0,0,0,.12);
+  --radius:      14px;
+  --fs-lg:       20px;
+  --fs-md:       15px;
+  --fs-sm:       15px;
+  --fs-xs:       13px;
+  --font:        'Segoe UI', system-ui, sans-serif;
+  --font-zh:     'Noto Sans SC', 'Segoe UI', system-ui, sans-serif;
+}
+
+/* ── RESET ── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* ── BASE ── */
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: var(--fs-md);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── CHINESE FONT ── */
+.zh {
+  font-family: var(--font-zh);
+  font-weight: 400;
+}
+
+/* ── NAV ── */
+nav {
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 48px; height: 52px;
+  background: var(--bg);
+  box-shadow: 0 1px 4px rgba(0,0,0,.08);
+  z-index: 100;
+}
+.nav-brand {
+  display: flex; align-items: center; gap: 16px;
+  text-decoration: none; min-width: 0; flex-shrink: 1;
+}
+.nav-logo-text {
+  font-size: 17px; font-weight: 700; color: var(--text);
+  letter-spacing: 0; font-family: var(--font); white-space: nowrap;
+}
+.nav-logo-text span { color: var(--blue); }
+.nav-tagline {
+  font-size: 0.92rem; font-weight: 400; color: var(--muted2);
+  font-family: var(--font);
+  border-left: 1px solid #e0e0e0; padding-left: 16px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.nt-en  { color: var(--blue);  font-weight: 400; font-size: 0.92rem; font-family: var(--font); }
+.nt-zh  { color: var(--muted); font-weight: 400; font-size: 0.92rem; font-family: var(--font-zh); }
+.nt-sep { color: #bbb;         font-size: 0.92rem; }
+.nav-links {
+  display: flex; gap: 2px; list-style: none; align-items: center;
+  flex-shrink: 0;
+}
+.nav-links a {
+  font-size: 0.92rem; font-weight: 400; color: var(--muted2);
+  font-family: var(--font);
+  text-decoration: none; padding: 0 14px; height: 52px;
+  display: inline-flex; align-items: center;
+  border-bottom: 2px solid transparent;
+  transition: color .15s, border-color .15s;
+  white-space: nowrap;
+}
+.nav-links a:hover { color: var(--blue); border-bottom-color: var(--blue); }
+.nav-links a.active { color: var(--blue); font-weight: 600; border-bottom-color: var(--blue); }
+
+/* ── LANGUAGE TOGGLE ── */
+.lang-btn {
+  padding: 3px 0; width: 46px; text-align: center;
+  font-size: 0.82rem; font-weight: 600; font-family: var(--font);
+  border: 1.5px solid var(--blue); border-radius: 4px;
+  background: #fff; color: var(--blue);
+  cursor: pointer; transition: background .15s, color .15s;
+}
+.lang-btn.active  { background: var(--blue); color: #fff; }
+.lang-btn:hover:not(.active) { background: var(--blue-light); }
+
+/* Banner variant (white button on blue background) */
+.lang-btn-banner {
+  padding: 3px 0; width: 46px; text-align: center;
+  font-size: 0.82rem; font-weight: 600; font-family: var(--font);
+  border: 1.5px solid rgba(255,255,255,0.7); border-radius: 4px;
+  background: transparent; color: #fff;
+  cursor: pointer; transition: background .15s;
+}
+.lang-btn-banner.active { background: #fff; color: var(--blue); border-color: #fff; }
+.lang-btn-banner:hover:not(.active) { background: rgba(255,255,255,0.15); }
+
+/* Content switching */
+.bio-zh { display: none; font-family: var(--font-zh); }
+body.zh-mode .bio-en { display: none !important; }
+body.zh-mode .bio-zh { display: inline !important; }
+body.zh-mode .zh     { display: block; font-family: var(--font-zh); }
+
+/* ── FOOTER ── */
+footer {
+  flex-shrink: 0;
+  background: linear-gradient(105deg, var(--blue), var(--blue-dark));
+  padding: 14px 48px;
+  display: flex; align-items: center; justify-content: center;
+  gap: 24px; flex-wrap: wrap;
+}
+.footer-copy {
+  font-size: 0.88rem; font-weight: 400; color: #fff;
+  font-family: var(--font);
+}
+.footer-copy span { color: #fff; }
+.footer-info {
+  display: flex; gap: 20px; flex-wrap: wrap;
+  align-items: center; justify-content: center;
+}
+.footer-info span,
+.footer-info a {
+  font-size: 0.88rem; font-weight: 400; color: rgba(255,255,255,0.9);
+  font-family: var(--font); text-decoration: none;
+}
+.footer-info a:hover { color: #fff; }
+
+/* ── COMMON CARD ── */
+.card {
+  background: var(--card); border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+.card:hover { box-shadow: var(--shadow-hover); }
+
+/* ── PAGE BANNER (blue gradient bar below nav) ── */
+.page-banner {
+  background: linear-gradient(105deg, var(--blue), var(--blue-dark));
+  padding: 14px 48px;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-shrink: 0;
+}
+.page-banner-title {
+  font-size: var(--fs-md); font-weight: 600; color: #fff;
+  letter-spacing: -0.02em;
+}
+.page-banner-sub {
+  font-size: var(--fs-xs); color: rgba(255,255,255,0.75); margin-top: 3px;
+}
+
+/* ── TRUST SECTION HEADER ── */
+.trust-header { margin-bottom: 16px; }
+.trust-header-title {
+  font-size: var(--fs-md); font-weight: 700; color: var(--blue);
+}
+.trust-header-sub {
+  font-size: var(--fs-xs); color: var(--muted2); margin-top: 3px;
+}
+
+/* ── TRUST SECTION COMPONENTS (quotefee.html) ── */
+.text-blue { color: var(--blue); }
+
+.trust-cards {
+  display: flex; flex-direction: column; gap: 12px; margin-bottom: 12px;
+}
+.trust-card {
+  background: var(--card); border-radius: 10px;
+  border: 1px solid var(--border);
+  padding: 16px 18px;
+}
+.trust-card-title {
+  font-size: var(--fs-sm); font-weight: 600; color: var(--text);
+  font-family: var(--font); margin-bottom: 10px;
+}
+.trust-card-title.blue { color: var(--blue); font-size: 0.92rem; }
+.trust-card-body {
+  font-size: var(--fs-xs); color: var(--muted); line-height: 1.7;
+  font-family: var(--font);
+}
+.trust-missing-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 6px; margin-bottom: 10px;
+}
+.trust-missing-item {
+  font-size: var(--fs-xs); color: var(--muted2); font-family: var(--font);
+}
+.trust-quote {
+  font-size: 12px; color: #9ca3af; line-height: 1.5; font-style: italic;
+  padding-top: 8px; border-top: 1px solid #f3f4f6; font-family: var(--font);
+}
+.trust-tags {
+  display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px;
+}
+.trust-tag {
+  font-size: 12px; font-weight: 500; font-family: var(--font);
+  background: var(--blue-light); border: 1px solid #bfdbfe;
+  color: var(--blue); border-radius: 4px; padding: 2px 10px;
+}
+.quote-bar {
+  background: linear-gradient(105deg, var(--blue), var(--blue-dark));
+  border-radius: 8px; padding: 12px 20px; text-align: center;
+}
+.quote-bar-sub {
+  font-size: var(--fs-xs); color: rgba(255,255,255,0.75);
+  font-family: var(--font); margin-bottom: 3px;
+}
+.quote-bar-main {
+  font-size: var(--fs-md); font-weight: 700; color: #fff;
+  font-family: var(--font);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  nav { padding: 0 20px; }
+  .nav-tagline { display: none; }
+  footer { padding: 14px 20px; }
+}

@@ -10,40 +10,42 @@
 <link rel="apple-touch-icon" sizes="180x180" href="logo.png">
 <style>
 :root {
-  --blue: #0078d4; --blue-dark: #005a9e; --blue-light: #eff6ff;
-  --text: #111827; --text2: #1f2937; --muted: #374151;
-  --bg: #f2f4f7; --card: #ffffff;
-  --shadow: 0 2px 16px rgba(0,0,0,.07);
-  --shadow-hover: 0 6px 28px rgba(0,0,0,.12);
-  --radius: 14px;
-  --fs-lg: 20px; --fs-md: 15px; --fs-sm: 15px;
+  --blue:#0078d4; --blue-dark:#005a9e; --blue-light:#eff6ff;
+  --text:#111827; --text2:#1f2937; --muted:#374151; --muted2:#6b7280;
+  --bg:#f2f4f7; --card:#fff; --border:#e5e7eb;
+  --shadow:0 2px 16px rgba(0,0,0,.07); --shadow-hover:0 6px 28px rgba(0,0,0,.12);
+  --radius:14px; --fs-lg:20px; --fs-md:15px; --fs-sm:15px; --fs-xs:13px;
+  --font:'Segoe UI',system-ui,sans-serif;
+  --font-zh:'Noto Sans SC','Segoe UI',system-ui,sans-serif;
 }
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body {
-  background: var(--bg); color: var(--text);
-  font-family: 'Segoe UI',system-ui,sans-serif; font-size: var(--fs-md); line-height: 1.6;
-  height: 100vh; display: flex; flex-direction: column; overflow: hidden;
-}
-
-/* NAV */
-nav {
-  flex-shrink: 0;
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 0 48px; height: 52px;
-  background: var(--bg); box-shadow: 0 1px 4px rgba(0,0,0,.08); z-index: 100;
-}
-.nav-brand { display: flex; align-items: center; gap: 16px; text-decoration: none; }
-.nav-logo-text { font-size: 17px; font-weight: 700; color: #111827; letter-spacing: 0; font-family: 'Segoe UI',system-ui,sans-serif; }
-.nav-logo-text span { color: #0078d4; font-weight: 700; }
-.nav-logo-img { height: 44px; width: auto; display: block; }
-.nav-tagline { font-size: 0.92rem; border-left: 1px solid #e0e0e0; padding-left: 16px; font-weight: 400; letter-spacing: 0; color: #6b7280; font-family: 'Segoe UI',system-ui,sans-serif; }
-.nt-en { color: #0078d4; font-weight: 400; font-size: 0.92rem; }
-.nt-zh { color: #374151; font-weight: 400; font-size: 0.92rem; font-family: 'Noto Sans SC','Segoe UI',system-ui,sans-serif; }
-.nt-sep { color: #bbb; font-size: 0.92rem; }
-.nav-links { display: flex; gap: 2px; list-style: none; align-items: center; }
-.nav-links a { font-size: 0.92rem; font-weight: 400; color: #6b7280; font-family: 'Segoe UI',system-ui,sans-serif; text-decoration: none; padding: 0 14px; height: 52px; display: inline-flex; align-items: center; border-bottom: 2px solid transparent; transition: all .15s; white-space: nowrap; }
-.nav-links a:hover { color: var(--blue); border-bottom-color: var(--blue); background: none; }
-.nav-links a.active { color: var(--blue); font-weight: 600; border-bottom-color: var(--blue); }
+*,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--bg); color:var(--text); font-family:var(--font); font-size:var(--fs-md); line-height:1.6; height:100vh; display:flex; flex-direction:column; overflow:hidden; }
+nav { flex-shrink:0; display:flex; align-items:center; justify-content:space-between; padding:0 48px; height:52px; background:var(--bg); box-shadow:0 1px 4px rgba(0,0,0,.08); z-index:100; }
+.nav-brand { display:flex; align-items:center; gap:16px; text-decoration:none; }
+.nav-logo-text { font-size:17px; font-weight:700; color:var(--text); }
+.nav-logo-text span { color:var(--blue); }
+.nav-logo-img { height:44px; width:auto; display:block; }
+.nav-tagline { font-size:var(--fs-xs); font-weight:400; color:var(--muted2); border-left:1px solid #e0e0e0; padding-left:16px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.nt-en { color:var(--blue); font-size:var(--fs-xs); }
+.nt-zh { color:var(--muted); font-size:var(--fs-xs); font-family:var(--font-zh); }
+.nt-sep { color:#bbb; font-size:var(--fs-xs); }
+.nav-links { display:flex; gap:2px; list-style:none; align-items:center; flex-shrink:0; }
+.nav-links a { font-size:0.92rem; color:var(--muted2); text-decoration:none; padding:0 14px; height:52px; display:inline-flex; align-items:center; border-bottom:2px solid transparent; transition:color .15s,border-color .15s; white-space:nowrap; }
+.nav-links a:hover { color:var(--blue); border-bottom-color:var(--blue); }
+.nav-links a.active { color:var(--blue); font-weight:600; border-bottom-color:var(--blue); }
+.lang-btn { padding:3px 0; width:46px; text-align:center; font-size:var(--fs-xs); font-weight:600; border:1.5px solid var(--blue); border-radius:4px; background:#fff; color:var(--blue); cursor:pointer; transition:background .15s,color .15s; }
+.lang-btn.active { background:var(--blue); color:#fff; }
+.lang-btn:hover:not(.active) { background:var(--blue-light); }
+.bio-zh { display:none; font-family:var(--font-zh); }
+body.zh-mode .bio-en { display:none !important; }
+body.zh-mode .bio-zh { display:inline !important; }
+.zh { font-family:var(--font-zh); font-weight:400; }
+footer { flex-shrink:0; background:linear-gradient(105deg,var(--blue),var(--blue-dark)); padding:14px 48px; display:flex; align-items:center; justify-content:center; gap:24px; flex-wrap:wrap; }
+.footer-copy { font-size:var(--fs-xs); font-weight:400; color:#fff; }
+.footer-info { display:flex; gap:20px; flex-wrap:wrap; align-items:center; justify-content:center; }
+.footer-info span,.footer-info a { font-size:var(--fs-xs); font-weight:400; color:rgba(255,255,255,.9); text-decoration:none; }
+.footer-info a:hover { color:#fff; }
+@media (max-width:960px) { body { overflow:auto; height:auto; } .page-layout { grid-template-columns:1fr; overflow:visible; padding:16px 20px; } .team-grid { grid-template-columns:1fr; height:auto; } nav { padding:0 20px; } .nav-tagline { display:none; } footer { padding:14px 20px; } }
 
 /* PAGE LAYOUT */
 .page-layout {
@@ -99,28 +101,6 @@ nav {
 .member-tags { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 4px; }
 .tag { font-size: 12px; padding: 2px 8px; background: #f2f4f7; border-radius: 4px; color: var(--muted); font-family: 'Segoe UI',system-ui,sans-serif; }
 
-/* LANG TOGGLE */
-.lang-btn {
-  padding: 4px 14px; font-size: 0.82rem; font-weight: 600;
-  font-family: 'Segoe UI',system-ui,sans-serif;
-  border: 1.5px solid var(--blue); border-radius: 4px;
-  background: #fff; color: var(--blue); cursor: pointer; transition: all .15s;
-}
-.lang-btn.active { background: var(--blue); color: #fff; }
-.lang-btn:hover:not(.active) { background: var(--blue-light); }
-
-/* FOOTER */
-footer { flex-shrink:0; background:linear-gradient(105deg,#0078d4,#005a9e); padding:14px 48px; display:flex; align-items:center; justify-content:center; gap:24px; flex-wrap:wrap; }
-.footer-copy { font-size: 0.88rem; color: #fff; font-weight: 400; font-family: 'Segoe UI',system-ui,sans-serif; }
-.footer-copy span { color: #fff; }
-.footer-info { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; justify-content: center; }
-.footer-info span, .footer-info a { font-size: 0.88rem; color: rgba(255,255,255,0.9); text-decoration: none; font-weight: 400; font-family: 'Segoe UI',system-ui,sans-serif; }
-.footer-info a:hover { color:#fff; }
-
-.zh, :lang(zh) {
-  font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
-  font-weight: 400; -webkit-font-smoothing: antialiased;
-}
 
 @media (max-width: 960px) {
   body { overflow: auto; height: auto; }
@@ -148,6 +128,10 @@ footer { flex-shrink:0; background:linear-gradient(105deg,#0078d4,#005a9e); padd
     <li><a href="investor.html">Investor Deck</a></li>
     <li><a href="quotefee.html">Quote</a></li>
   </ul>
+  <div style="display:flex;gap:4px;margin-left:12px">
+    <button onclick="setLang('en')" id="btn-en" class="lang-btn active">EN</button>
+    <button onclick="setLang('zh')" id="btn-zh" class="lang-btn">中文</button>
+  </div>
 </nav>
 
 <div style="background:linear-gradient(105deg,#0078d4,#005a9e);padding:18px 48px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0"><div><h1 style="font-size:1.3rem;font-weight:600;color:#fff;font-family:'Segoe UI',system-ui,sans-serif;letter-spacing:-0.02em">Our Team · 团队介绍</h1><p style="font-size:0.82rem;color:rgba(255,255,255,0.78);margin-top:4px">Vendor Onboarding Specialists</p></div></div>
@@ -163,10 +147,6 @@ footer { flex-shrink:0; background:linear-gradient(105deg,#0078d4,#005a9e); padd
 
   <!-- RIGHT: Team cards -->
   <div class="page-right">
-    <div style="display:flex;justify-content:flex-end;margin-bottom:10px;gap:4px">
-      <button onclick="setLang('en')" id="btn-en" class="lang-btn active">EN</button>
-      <button onclick="setLang('zh')" id="btn-zh" class="lang-btn">中文</button>
-    </div>
     <div class="team-grid">
 
       <div class="member-card">

@@ -10,107 +10,123 @@
 <link rel="apple-touch-icon" sizes="180x180" href="logo.png">
 <style>
 :root {
-  --blue: #0078d4; --blue-dark: #005a9e; --blue-light: #eff6ff;
-  --text: #111827; --muted: #374151;
-  --bg: #f2f4f7; --card: #ffffff;
-  --border: rgba(0,0,0,0.09);
-  --shadow: 0 2px 16px rgba(0,0,0,.07);
-  --radius: 14px;
-  --fs-md: 15px; --fs-sm: 15px;
+  --blue:#0078d4; --blue-dark:#005a9e; --blue-light:#eff6ff;
+  --text:#111827; --muted:#374151; --muted2:#6b7280;
+  --bg:#f2f4f7; --card:#fff; --border:#e5e7eb;
+  --shadow:0 2px 16px rgba(0,0,0,.07); --radius:14px;
+  --fs-md:15px; --fs-sm:15px; --fs-xs:13px;
+  --font:'Segoe UI',system-ui,sans-serif;
+  --font-zh:'Noto Sans SC','Segoe UI',system-ui,sans-serif;
 }
-* { margin: 0; padding: 0; box-sizing: border-box; }
-html, body { height: 100%; }
-body { background: var(--bg); color: var(--text); font-family: 'Segoe UI',system-ui,sans-serif; display: flex; flex-direction: column; }
+*,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
+html,body { height:100%; }
+body { background:var(--bg); color:var(--text); font-family:var(--font); font-size:var(--fs-md); line-height:1.6; display:flex; flex-direction:column; }
+nav { flex-shrink:0; display:flex; align-items:center; justify-content:space-between; padding:0 48px; height:52px; background:var(--bg); box-shadow:0 1px 4px rgba(0,0,0,.08); z-index:100; }
+.nav-brand { display:flex; align-items:center; gap:16px; text-decoration:none; }
+.nav-logo-text { font-size:17px; font-weight:700; color:var(--text); }
+.nav-logo-text span { color:var(--blue); }
+.nav-logo-img { height:44px; width:auto; display:block; }
+.nav-tagline { font-size:var(--fs-xs); font-weight:400; color:var(--muted2); border-left:1px solid #e0e0e0; padding-left:16px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.nt-en { color:var(--blue); font-size:var(--fs-xs); }
+.nt-zh { color:var(--muted); font-size:var(--fs-xs); font-family:var(--font-zh); }
+.nt-sep { color:#bbb; font-size:var(--fs-xs); }
+.nav-links { display:flex; gap:2px; list-style:none; align-items:center; flex-shrink:0; }
+.nav-links a { font-size:0.92rem; color:var(--muted2); text-decoration:none; padding:0 14px; height:52px; display:inline-flex; align-items:center; border-bottom:2px solid transparent; transition:color .15s,border-color .15s; white-space:nowrap; }
+.nav-links a:hover { color:var(--blue); border-bottom-color:var(--blue); }
+.nav-links a.active { color:var(--blue); font-weight:600; border-bottom-color:var(--blue); }
+.lang-btn-banner { padding:3px 0; width:46px; text-align:center; font-size:var(--fs-xs); font-weight:600; border:1.5px solid rgba(255,255,255,.7); border-radius:4px; background:transparent; color:#fff; cursor:pointer; transition:background .15s; }
+.lang-btn-banner.active { background:#fff; color:var(--blue); border-color:#fff; }
+.lang-btn-banner:hover:not(.active) { background:rgba(255,255,255,.15); }
+.bio-zh { display:none; font-family:var(--font-zh); }
+body.zh-mode .bio-en { display:none !important; }
+body.zh-mode .bio-zh { display:inline !important; }
+footer { flex-shrink:0; background:linear-gradient(105deg,var(--blue),var(--blue-dark)); padding:14px 48px; display:flex; align-items:center; justify-content:center; gap:24px; flex-wrap:wrap; }
+.footer-copy { font-size:var(--fs-xs); font-weight:400; color:#fff; }
+.footer-info { display:flex; gap:20px; flex-wrap:wrap; align-items:center; justify-content:center; }
+.footer-info span,.footer-info a { font-size:var(--fs-xs); font-weight:400; color:rgba(255,255,255,.9); text-decoration:none; }
+.footer-info a:hover { color:#fff; }
+/* Page banner */
+.page-banner { background:linear-gradient(105deg,var(--blue),var(--blue-dark)); padding:14px 48px; display:flex; align-items:center; justify-content:space-between; flex-shrink:0; }
+.page-banner-title { font-size:var(--fs-md); font-weight:600; color:#fff; letter-spacing:-0.02em; }
+.page-banner-sub { font-size:var(--fs-xs); color:rgba(255,255,255,.75); margin-top:3px; }
+/* Trust section */
+.trust-header { margin-bottom:16px; }
+.trust-header-title { font-size:var(--fs-md); font-weight:700; color:var(--blue); }
+.trust-header-sub { font-size:var(--fs-xs); color:var(--muted2); margin-top:3px; }
+.trust-cards { display:flex; flex-direction:column; gap:12px; margin-bottom:12px; }
+.trust-card { background:var(--card); border-radius:10px; border:1px solid var(--border); padding:16px 18px; }
+.trust-card-title { font-size:var(--fs-sm); font-weight:600; color:var(--text); margin-bottom:10px; }
+.trust-card-title.blue { color:var(--blue); }
+.trust-card-body { font-size:var(--fs-xs); color:var(--muted); line-height:1.7; }
+.trust-missing-grid { display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-bottom:10px; }
+.trust-missing-item { font-size:var(--fs-xs); color:var(--muted2); }
+.trust-quote { font-size:var(--fs-xs); color:#9ca3af; line-height:1.5; font-style:italic; padding-top:8px; border-top:1px solid #f3f4f6; }
+.trust-tags { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:8px; }
+.trust-tag { font-size:var(--fs-xs); font-weight:500; background:var(--blue-light); border:1px solid #bfdbfe; color:var(--blue); border-radius:4px; padding:2px 10px; }
+.text-blue { color:var(--blue); }
+.quote-bar { background:linear-gradient(105deg,var(--blue),var(--blue-dark)); border-radius:8px; padding:12px 20px; text-align:center; }
+.quote-bar-sub { font-size:var(--fs-xs); color:rgba(255,255,255,.75); margin-bottom:3px; }
+.quote-bar-main { font-size:var(--fs-md); font-weight:700; color:#fff; }
+@media (max-width:768px) { nav { padding:0 20px; } .nav-tagline { display:none; } }
 
-/* NAV */
-nav {
-  flex-shrink: 0;
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 0 48px; height: 52px;
-  background: var(--bg); box-shadow: 0 1px 4px rgba(0,0,0,.08); z-index: 100;
+/* MAIN LAYOUT */
+.main-layout {
+  flex: 1; display: grid; grid-template-columns: 1fr 340px;
+  overflow: hidden;
 }
-.nav-brand { display: flex; align-items: center; gap: 16px; text-decoration: none; }
-.nav-logo-text { font-size: 17px; font-weight: 700; color: #111827; letter-spacing: 0; font-family: 'Segoe UI',system-ui,sans-serif; }
-.nav-logo-text span { color: #0078d4; font-weight: 700; }
-.nav-logo-img { height: 44px; width: auto; display: block; }
-.nav-tagline { font-size: 0.92rem; border-left: 1px solid #e0e0e0; padding-left: 16px; font-weight: 400; letter-spacing: 0; color: #6b7280; font-family: 'Segoe UI',system-ui,sans-serif; }
-.nt-en { color: #0078d4; font-weight: 400; font-size: 0.92rem; }
-.nt-zh { color: #374151; font-weight: 400; font-size: 0.92rem; font-family: 'Noto Sans SC','Segoe UI',system-ui,sans-serif; }
-.nt-sep { color: #bbb; font-size: 0.92rem; }
-.nav-links { display: flex; gap: 2px; list-style: none; align-items: center; }
-.nav-links a { font-size: 0.92rem; font-weight: 400; color: #6b7280; font-family: 'Segoe UI',system-ui,sans-serif; text-decoration: none; padding: 0 14px; height: 52px; display: inline-flex; align-items: center; border-bottom: 2px solid transparent; transition: all .15s; white-space: nowrap; }
-.nav-links a:hover { color: var(--text); background: #e8eaed; }
-.nav-links a.active { color: var(--blue); font-weight: 600; border-bottom-color: var(--blue); }
+.trust-panel {
+  overflow-y: auto; padding: 24px 32px 24px 48px;
+  background: var(--bg);
+}
+.access-panel {
+  background: #fff; border-left: 1px solid #e5e7eb;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 28px 28px; overflow-y: auto;
+}
 
-/* LOCK SCREEN */
-#lock-screen {
-  flex: 1; display: flex; align-items: center; justify-content: center;
-  background: linear-gradient(rgba(239,246,255,0.55), rgba(239,246,255,0.55)), url('fly-bag.jpg') center/cover no-repeat;
-}
-.lock-card {
-  background: var(--card); border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  padding: 48px 44px; width: 100%; max-width: 420px;
-  text-align: center;
-}
-.lock-icon { font-size: 48px; margin-bottom: 16px; }
-.lock-title { font-size: 22px; font-weight: 600; color: var(--blue); font-family: 'Segoe UI',system-ui,sans-serif; margin-bottom: 6px; }
-.lock-title span { color: var(--blue); }
-.lock-sub { font-size: var(--fs-sm); color: var(--muted); margin-bottom: 28px; line-height: 1.6; }
+/* ACCESS CARD */
+.access-card { width: 100%; max-width: 280px; text-align: center; }
+.lock-icon { font-size: 40px; margin-bottom: 12px; }
+.lock-title { font-size: 18px; font-weight: 700; color: var(--blue); font-family: 'Segoe UI',system-ui,sans-serif; margin-bottom: 4px; }
+.lock-sub { font-size: 13px; color: var(--muted); margin-bottom: 20px; line-height: 1.6; }
 .lock-input {
-  width: 100%; padding: 12px 16px; font-size: var(--fs-md);
+  width: 100%; padding: 10px 14px; font-size: var(--fs-md);
   border: 1.5px solid #d0d0d0; border-radius: 8px;
   font-family: 'Segoe UI',system-ui,sans-serif; letter-spacing: .08em;
-  outline: none; transition: border-color .15s; text-transform: uppercase;
-  margin-bottom: 12px;
+  outline: none; transition: border-color .15s; text-transform: uppercase; margin-bottom: 10px;
 }
 .lock-input:focus { border-color: var(--blue); }
 .lock-input.error { border-color: #ef4444; background: #fff5f5; }
 .lock-btn {
-  width: 100%; padding: 12px; font-size: var(--fs-md); font-weight: 700;
+  width: 100%; padding: 10px; font-size: var(--fs-md); font-weight: 700;
   background: var(--blue); color: #fff; border: none; border-radius: 8px;
   cursor: pointer; font-family: inherit; transition: background .15s;
 }
 .lock-btn:hover { background: var(--blue-dark); }
 .lock-btn:disabled { background: #93c5fd; cursor: not-allowed; }
-.lock-error { font-size: var(--fs-sm); color: #ef4444; margin-top: 10px; min-height: 20px; }
-.lock-hint { font-size: var(--fs-sm); color: var(--muted); margin-top: 20px; }
+.lock-error { font-size: 13px; color: #ef4444; margin-top: 8px; min-height: 18px; }
+.lock-hint { font-size: 13px; color: var(--muted); margin-top: 16px; }
 .lock-hint a { color: var(--blue); text-decoration: none; font-weight: 600; }
-.lock-hint a:hover { text-decoration: underline; }
 
-/* DOCUMENT VIEW */
-#doc-screen {
-  flex: 1; display: none; flex-direction: column; align-items: center; justify-content: center;
-  background: var(--bg);
-}
-.doc-card {
-  background: var(--card); border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  padding: 52px 48px; width: 100%; max-width: 520px;
-  text-align: center;
-}
-.doc-icon { font-size: 56px; margin-bottom: 20px; }
-.doc-title { font-size: 22px; font-weight: 600; color: var(--blue); font-family: 'Segoe UI',system-ui,sans-serif; margin-bottom: 6px; }
-.doc-title span { color: var(--blue); }
-.doc-sub { font-size: var(--fs-sm); color: var(--muted); margin-bottom: 32px; line-height: 1.7; }
+/* DOC UNLOCKED */
 .doc-open-btn {
-  display: inline-flex; align-items: center; gap: 10px;
-  padding: 14px 32px; font-size: var(--fs-md); font-weight: 700;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 12px 20px; font-size: var(--fs-md); font-weight: 700;
   background: var(--blue); color: #fff; border: none; border-radius: 8px;
   cursor: pointer; font-family: inherit; text-decoration: none;
-  transition: background .15s; margin-bottom: 16px; width: 100%; justify-content: center;
+  transition: background .15s; margin-bottom: 10px; width: 100%;
 }
 .doc-open-btn:hover { background: var(--blue-dark); }
 .doc-lock-btn {
-  font-size: var(--fs-sm); color: var(--muted); cursor: pointer;
-  padding: 8px 20px; border: 1px solid var(--border); border-radius: 6px;
+  font-size: 13px; color: var(--muted); cursor: pointer;
+  padding: 7px 16px; border: 1px solid var(--border); border-radius: 6px;
   background: #fff; font-family: inherit; transition: all .15s; width: 100%;
 }
 .doc-lock-btn:hover { color: var(--text); border-color: var(--muted); }
 .doc-notice {
-  margin-top: 24px; padding: 12px 16px;
+  margin-top: 16px; padding: 10px 14px;
   background: var(--blue-light); border-radius: 8px;
-  font-size: var(--fs-sm); color: var(--blue); line-height: 1.6;
+  font-size: 12px; color: var(--blue); line-height: 1.6; text-align: left;
 }
 
 @media (max-width: 640px) {
@@ -118,20 +134,6 @@ nav {
   .nav-tagline { display: none; }
   .lock-card { padding: 32px 24px; margin: 0 16px; }
 }
-/* LANG TOGGLE */
-.lang-btn { padding:3px 0; width:46px; text-align:center; font-size:0.82rem; font-weight:600; font-family:'Segoe UI',system-ui,sans-serif; border:1.5px solid var(--blue); border-radius:4px; background:#fff; color:var(--blue); cursor:pointer; transition:all .15s; }
-.lang-btn.active { background:var(--blue); color:#fff; }
-.lang-btn:hover:not(.active) { background:#eff6ff; }
-.bio-zh { display:none; }
-body.zh-mode .bio-en { display:none !important; }
-body.zh-mode .bio-zh { display:inline !important; }
-
-footer { flex-shrink:0; background:linear-gradient(105deg,#0078d4,#005a9e); padding:14px 48px; display:flex; align-items:center; justify-content:center; gap:24px; flex-wrap:wrap; }
-.footer-copy { font-size: 0.88rem; color: #fff; font-weight: 400; font-family: 'Segoe UI',system-ui,sans-serif; }
-.footer-copy span { color: #fff; }
-.footer-info { display:flex; gap:20px; flex-wrap:wrap; align-items:center; justify-content:center; }
-.footer-info span, .footer-info a { font-size: 0.88rem; color: rgba(255,255,255,0.9); text-decoration: none; font-weight: 400; font-family: 'Segoe UI',system-ui,sans-serif; }
-.footer-info a:hover { color:#fff; }
 </style>
 </head>
 <body>
@@ -150,132 +152,139 @@ footer { flex-shrink:0; background:linear-gradient(105deg,#0078d4,#005a9e); padd
     <li><a href="investor.html">Investor Deck</a></li>
     <li><a href="quotefee.html" class="active">Quote</a></li>
   </ul>
-  <div style="display:flex;gap:4px;margin-left:12px">
-    <button onclick="setLang('en')" id="btn-en" class="lang-btn active">EN</button>
-    <button onclick="setLang('zh')" id="btn-zh" class="lang-btn">中文</button>
-  </div>
 </nav>
 
-<!-- LOCK SCREEN -->
-<div style="background:linear-gradient(105deg,#0078d4,#005a9e);padding:18px 48px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0"><div><h1 style="font-size:1.3rem;font-weight:600;color:#fff;font-family:'Segoe UI',system-ui,sans-serif;letter-spacing:-0.02em">Quote & Documents · 报价与文件</h1><p style="font-size:0.82rem;color:rgba(255,255,255,0.78);margin-top:4px">Full E-COM Standard Data Package, Ready to Go</p></div></div>
-<!-- TRUST READINESS SECTION -->
-<div style="background:#fff;border-bottom:1px solid #e5e7eb;padding:20px 48px;flex-shrink:0">
-  <div style="max-width:960px;margin:0 auto">
+<!-- BANNER -->
+<div class="page-banner">
+  <div>
+    <div class="page-banner-title">Quote &amp; Documents · 报价与文件</div>
+    <div class="page-banner-sub">Full E-COM Standard Data Package, Ready to Go</div>
+  </div>
+  <div style="display:flex;gap:4px">
+    <button onclick="setLang('en')" id="btn-en" class="lang-btn-banner active">EN</button>
+    <button onclick="setLang('zh')" id="btn-zh" class="lang-btn-banner">中文</button>
+  </div>
+</div>
 
-    <!-- Header -->
-    <div style="margin-bottom:16px">
-      <div style="font-size:1rem;font-weight:700;color:#0078d4;font-family:'Segoe UI',system-ui,sans-serif">
+<!-- MAIN LAYOUT -->
+<div class="main-layout">
+
+  <!-- LEFT: Trust content -->
+  <div class="trust-panel">
+
+    <div class="trust-header">
+      <div class="trust-header-title">
         <span class="bio-en">Are You Ready to Build TRUST with a USA Buyer?</span>
         <span class="bio-zh">你准备好与美国买家建立「信任」了吗？</span>
       </div>
-      <div style="font-size:0.82rem;color:#6b7280;margin-top:3px;font-family:'Segoe UI',system-ui,sans-serif">
+      <div class="trust-header-sub">
         <span class="bio-en">Before any serious business discussion begins, this is what every North American sales rep evaluates first.</span>
-        <span class="bio-zh" style="font-family:'Noto Sans SC',sans-serif">在任何正式商业讨论开始之前，这是每一位北美销售代理首先评估的事情。</span>
+        <span class="bio-zh">在任何正式商业讨论开始之前，这是每一位北美销售代理首先评估的事情。</span>
       </div>
     </div>
 
-    <!-- 2-column grid -->
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
+    <div class="trust-cards">
 
-      <!-- Left: Core message -->
-      <div style="background:#eff6ff;border-radius:10px;padding:16px 20px;border-left:4px solid #0078d4">
-        <div style="font-size:0.95rem;font-weight:700;color:#0078d4;font-family:'Segoe UI',system-ui,sans-serif;margin-bottom:8px">"Why should I spend my time on you?"</div>
-        <div style="font-size:0.84rem;color:#1f2937;line-height:1.7;font-family:'Segoe UI',system-ui,sans-serif">
-          <span class="bio-en">This is the first question every North American sales rep asks — before they ever meet you. They are not evaluating your product. They are evaluating whether you are worth their time.<br>In the USA, business runs on <strong style="color:#0078d4">TRUST</strong> — not product specs. It is not selling SKU. It is selling TRUST.</span>
-          <span class="bio-zh" style="font-family:'Noto Sans SC',sans-serif">这是每一位北美销售代理在见你之前，内心首先问的问题。他们评估的不是你的产品，而是你是否值得他们投入时间。<br>在美国，商业关系建立在<strong style="color:#0078d4">「信任」</strong>之上——而不是产品参数。卖的不是SKU，卖的是信任。</span>
+      <div class="trust-card">
+        <div class="trust-card-title blue">"Why should I spend my time on you?"</div>
+        <div class="trust-card-body">
+          <span class="bio-en">This is the first question every North American sales rep asks — before they ever meet you. They are not evaluating your product. They are evaluating whether you are worth their time. In the USA, business runs on <strong class="text-blue">TRUST</strong> — not product specs. It is not selling SKU. It is selling TRUST.</span>
+          <span class="bio-zh">这是每一位北美销售代理在见你之前，内心首先问的问题。他们评估的不是你的产品，而是你是否值得他们投入时间。在美国，商业关系建立在<strong class="text-blue">「信任」</strong>之上——而不是产品参数。卖的不是SKU，卖的是信任。</span>
         </div>
       </div>
 
-      <!-- Right: What's missing + foundation -->
-      <div style="display:flex;flex-direction:column;gap:12px">
-
-        <!-- Missing elements -->
-        <div style="background:#fff8f0;border-radius:10px;padding:14px 18px;border-left:4px solid #f97316;flex:1">
-          <div style="font-size:0.88rem;font-weight:700;color:#ea580c;font-family:'Segoe UI',system-ui,sans-serif;margin-bottom:8px">
-            <span class="bio-en">Most Chinese Vendors Show Up Without</span>
-            <span class="bio-zh" style="font-family:'Noto Sans SC',sans-serif">大多数中国厂商缺少的</span>
-          </div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px">
-            <div style="font-size:0.82rem;color:#374151"><span style="color:#ef4444;font-weight:700">✕</span> <span class="bio-en">Exclusive Territory</span><span class="bio-zh" style="font-family:'Noto Sans SC',sans-serif">独家代理区域</span></div>
-            <div style="font-size:0.82rem;color:#374151"><span style="color:#ef4444;font-weight:700">✕</span> <span class="bio-en">Regional Authorization</span><span class="bio-zh" style="font-family:'Noto Sans SC',sans-serif">区域授权</span></div>
-            <div style="font-size:0.82rem;color:#374151"><span style="color:#ef4444;font-weight:700">✕</span> <span class="bio-en">Brand Support</span><span class="bio-zh" style="font-family:'Noto Sans SC',sans-serif">品牌支持</span></div>
-            <div style="font-size:0.82rem;color:#374151"><span style="color:#ef4444;font-weight:700">✕</span> <span class="bio-en">After-Sales Commitment</span><span class="bio-zh" style="font-family:'Noto Sans SC',sans-serif">售后承诺</span></div>
-            <div style="font-size:0.82rem;color:#374151"><span style="color:#ef4444;font-weight:700">✕</span> <span class="bio-en">Market Protection</span><span class="bio-zh" style="font-family:'Noto Sans SC',sans-serif">市场保护</span></div>
-          </div>
-          <div style="font-size:0.8rem;color:#9ca3af;margin-top:10px;line-height:1.55;font-style:italic">
-            <span class="bio-en">"A buyer will feel cheated. First time — maybe. Second time — never."</span>
-            <span class="bio-zh" style="font-family:'Noto Sans SC',sans-serif">买手会觉得被耍了。第一次或许，第二次绝不。</span>
-          </div>
+      <div class="trust-card">
+        <div class="trust-card-title">
+          <span class="bio-en">What most Chinese vendors show up without</span>
+          <span class="bio-zh">大多数中国厂商缺少的</span>
         </div>
-
-        <!-- Foundation chips -->
-        <div style="background:#f0fdf4;border-radius:10px;padding:12px 18px;border-left:4px solid #16a34a">
-          <div style="font-size:0.82rem;font-weight:700;color:#15803d;font-family:'Segoe UI',system-ui,sans-serif;margin-bottom:8px">
-            <span class="bio-en">The Trust Foundation You Must Bring</span>
-            <span class="bio-zh" style="font-family:'Noto Sans SC',sans-serif">必须具备的信任基础</span>
-          </div>
-          <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px">
-            <span style="font-size:0.78rem;background:#fff;border:1px solid #bbf7d0;color:#15803d;border-radius:4px;padding:3px 10px;font-weight:600"><span class="bio-en">Exclusive Territory</span><span class="bio-zh" style="font-family:'Noto Sans SC',sans-serif">独家代理区域</span></span>
-            <span style="font-size:0.78rem;background:#fff;border:1px solid #bbf7d0;color:#15803d;border-radius:4px;padding:3px 10px;font-weight:600"><span class="bio-en">Commission Agreement</span><span class="bio-zh" style="font-family:'Noto Sans SC',sans-serif">佣金协议</span></span>
-            <span style="font-size:0.78rem;background:#fff;border:1px solid #bbf7d0;color:#15803d;border-radius:4px;padding:3px 10px;font-weight:600"><span class="bio-en">Sales Rep Agreement</span><span class="bio-zh" style="font-family:'Noto Sans SC',sans-serif">销售代理协议</span></span>
-            <span style="font-size:0.78rem;background:#fff;border:1px solid #bbf7d0;color:#15803d;border-radius:4px;padding:3px 10px;font-weight:600"><span class="bio-en">Market Protection</span><span class="bio-zh" style="font-family:'Noto Sans SC',sans-serif">市场保护</span></span>
-          </div>
-          <div style="font-size:0.8rem;color:#374151;line-height:1.6;">
-            <span class="bio-en">Without these foundations, TRUST cannot be established. Especially COMMISSION — without a data-supported system, serious buyers won't spend time negotiating with your referred suppliers.</span>
-            <span class="bio-zh" style="font-family:'Noto Sans SC',sans-serif">没有这些基础，信任无法建立。尤其是佣金机制——没有数据系统支撑，真正的买手不会花时间认真谈你介绍的供应商。</span>
-          </div>
+        <div class="trust-missing-grid">
+          <div class="trust-missing-item">— <span class="bio-en">Exclusive Territory</span><span class="bio-zh">独家代理区域</span></div>
+          <div class="trust-missing-item">— <span class="bio-en">Regional Authorization</span><span class="bio-zh">区域授权</span></div>
+          <div class="trust-missing-item">— <span class="bio-en">Brand Support</span><span class="bio-zh">品牌支持</span></div>
+          <div class="trust-missing-item">— <span class="bio-en">After-Sales Commitment</span><span class="bio-zh">售后承诺</span></div>
+          <div class="trust-missing-item">— <span class="bio-en">Market Protection</span><span class="bio-zh">市场保护</span></div>
+        </div>
+        <div class="trust-quote">
+          <span class="bio-en">"A buyer will feel cheated. First time — maybe. Second time — never."</span>
+          <span class="bio-zh">买手会觉得被耍了。第一次或许，第二次绝不。</span>
         </div>
       </div>
+
+      <div class="trust-card">
+        <div class="trust-card-title">
+          <span class="bio-en">The trust foundation you must bring</span>
+          <span class="bio-zh">必须具备的信任基础</span>
+        </div>
+        <div class="trust-tags">
+          <span class="trust-tag"><span class="bio-en">Exclusive Territory</span><span class="bio-zh">独家代理区域</span></span>
+          <span class="trust-tag"><span class="bio-en">Commission Agreement</span><span class="bio-zh">佣金协议</span></span>
+          <span class="trust-tag"><span class="bio-en">Sales Rep Agreement</span><span class="bio-zh">销售代理协议</span></span>
+          <span class="trust-tag"><span class="bio-en">Market Protection</span><span class="bio-zh">市场保护</span></span>
+        </div>
+        <div class="trust-card-body">
+          <span class="bio-en">Without these foundations, TRUST cannot be established. Especially COMMISSION — without a data-supported system, serious buyers won't spend time negotiating with your referred suppliers.</span>
+          <span class="bio-zh">没有这些基础，信任无法建立。尤其是佣金机制——没有数据系统支撑，真正的买手不会花时间认真谈你介绍的供应商。</span>
+        </div>
+      </div>
+
     </div>
 
-    <!-- Bottom quote bar -->
-    <div style="background:linear-gradient(105deg,#0078d4,#005a9e);border-radius:8px;padding:12px 24px;text-align:center">
-      <div style="font-size:0.88rem;color:rgba(255,255,255,0.75);margin-bottom:4px;font-family:'Segoe UI',system-ui,sans-serif">
+    <div class="quote-bar">
+      <div class="quote-bar-sub">
         <span class="bio-en">Technology enables commerce, but trust enables business.</span>
-        <span class="bio-zh" style="font-family:'Noto Sans SC',sans-serif">技术让交易成为可能，但信任让生意得以持续。</span>
+        <span class="bio-zh">技术让交易成为可能，但信任让生意得以持续。</span>
       </div>
-      <div style="font-size:1rem;font-weight:700;color:#fff;font-family:'Segoe UI',system-ui,sans-serif;letter-spacing:0.01em">
+      <div class="quote-bar-main">
         <span class="bio-en">"Products create opportunities. Trusted relationships create revenue."</span>
-        <span class="bio-zh" style="font-family:'Noto Sans SC',sans-serif">产品创造机会，信任关系创造收入。</span>
+        <span class="bio-zh">产品创造机会，信任关系创造收入。</span>
       </div>
     </div>
 
   </div>
-</div>
 
-<div id="lock-screen">
-  <div class="lock-card">
-    <div class="lock-icon">📄</div>
-    <div class="lock-title">Quote &amp; <span>Fee Schedule</span></div>
-    <p class="lock-sub">This document is restricted.<br>Please enter your access code to continue.<br><span style="font-family:'Noto Sans SC',sans-serif;">此文件受限，请输入访问码以继续。</span></p>
-    <p style="font-size:13px;color:#374151;background:#f8f9fb;border:1px solid #e0e0e0;border-radius:8px;padding:10px 14px;margin-bottom:14px;line-height:1.65;font-family:'Noto Sans SC',sans-serif;">报价仅对完成初步评估的客户开放。已有访问码？请输入。</p>
-    <input type="password" class="lock-input" id="code-input" placeholder="ENTER ACCESS CODE" maxlength="30"
-      onkeydown="if(event.key==='Enter') checkCode()">
-    <button class="lock-btn" id="unlock-btn" onclick="checkCode()">Unlock →</button>
-    <div class="lock-error" id="error-msg"></div>
-    <p class="lock-hint">Don't have a code? <a href="contact.html">Contact us →</a></p>
-  </div>
-</div>
-
-<!-- DOCUMENT SCREEN -->
-<div id="doc-screen">
-  <div class="doc-card">
-    <div class="doc-icon">📄</div>
-    <div class="doc-title">Quote &amp; <span>Fee Schedule</span></div>
-    <p class="doc-sub">
-      Access granted. Your document is ready to view.<br>
-      <span style="font-family:'Noto Sans SC',sans-serif;">验证成功，您的文件已准备好查阅。</span>
-    </p>
-    <a class="doc-open-btn" href="https://gocomx.sharepoint.com/:b:/g/IQCV-Be_3yEVR7iM0YhN2y2rASjg3FvwTlyVoa8VgWNtC1s?e=lgqhvu" target="_blank" rel="noopener">
-      📂 Open Document · 打开文件
-    </a>
-    <button class="doc-lock-btn" onclick="lockOut()">🔒 Lock &amp; Exit</button>
-    <div class="doc-notice">
-      🔒 Confidential · For authorized recipients only<br>
-      <span style="font-family:'Noto Sans SC',sans-serif;">保密文件，仅供授权人员查阅，请勿转发。</span>
+  <!-- RIGHT: Access card -->
+  <div class="access-panel">
+    <!-- Lock state -->
+    <div id="lock-area" class="access-card">
+      <div class="lock-icon">🔐</div>
+      <div class="lock-title">Quote &amp; Fee Schedule</div>
+      <p class="lock-sub">
+        <span class="bio-en">Restricted access — enter your code to view pricing and documents.</span>
+        <span class="bio-zh" style="font-family:'Noto Sans SC',sans-serif">受限访问——请输入访问码查看报价与文件。</span>
+      </p>
+      <input type="password" class="lock-input" id="code-input" placeholder="ACCESS CODE" maxlength="30"
+        onkeydown="if(event.key==='Enter') checkCode()">
+      <button class="lock-btn" id="unlock-btn" onclick="checkCode()">
+        <span class="bio-en">Unlock →</span>
+        <span class="bio-zh" style="font-family:'Noto Sans SC',sans-serif">解锁 →</span>
+      </button>
+      <div class="lock-error" id="error-msg"></div>
+      <p class="lock-hint">
+        <span class="bio-en">No code? <a href="contact.html">Contact us →</a></span>
+        <span class="bio-zh" style="font-family:'Noto Sans SC',sans-serif">没有访问码？<a href="contact.html">联系我们 →</a></span>
+      </p>
     </div>
-  </div>
-</div>
+
+    <!-- Unlocked state -->
+    <div id="doc-area" class="access-card" style="display:none">
+      <div class="lock-icon">✅</div>
+      <div class="lock-title">Access Granted</div>
+      <p class="lock-sub">
+        <span class="bio-en">Your document is ready to view.</span>
+        <span class="bio-zh" style="font-family:'Noto Sans SC',sans-serif">您的文件已准备好查阅。</span>
+      </p>
+      <a class="doc-open-btn" href="https://gocomx.sharepoint.com/:b:/g/IQCV-Be_3yEVR7iM0YhN2y2rASjg3FvwTlyVoa8VgWNtC1s?e=lgqhvu" target="_blank" rel="noopener">
+        📂 <span class="bio-en">Open Document</span><span class="bio-zh" style="font-family:'Noto Sans SC',sans-serif">打开文件</span>
+      </a>
+      <button class="doc-lock-btn" onclick="lockOut()">🔒 <span class="bio-en">Lock &amp; Exit</span><span class="bio-zh" style="font-family:'Noto Sans SC',sans-serif">退出</span></button>
+      <div class="doc-notice">
+        🔒 <span class="bio-en">Confidential · For authorized recipients only</span><span class="bio-zh" style="font-family:'Noto Sans SC',sans-serif">保密文件，仅供授权人员查阅，请勿转发。</span>
+      </div>
+    </div><!-- /doc-area -->
+  </div><!-- /access-panel -->
+
+</div><!-- /main-layout -->
 
 <script>
 const VALIDATE_URL = 'https://gocomx-api-f4c9eegcfsbxeban.westus2-01.azurewebsites.net/api/validateCode';
@@ -301,8 +310,8 @@ async function checkCode() {
     const data = await res.json();
 
     if (data.valid) {
-      document.getElementById('lock-screen').style.display = 'none';
-      document.getElementById('doc-screen').style.display = 'flex';
+      document.getElementById('lock-area').style.display = 'none';
+      document.getElementById('doc-area').style.display = 'block';
     } else {
       input.classList.add('error');
       err.textContent = 'Incorrect code. Please try again. · 访问码错误，请重试。';
@@ -312,13 +321,13 @@ async function checkCode() {
     err.textContent = 'Connection error. Please try again. · 连接失败，请重试。';
   } finally {
     btn.disabled = false;
-    btn.textContent = 'Unlock →';
+    btn.innerHTML = '<span class="bio-en">Unlock →</span><span class="bio-zh" style="font-family:\'Noto Sans SC\',sans-serif;display:none">解锁 →</span>';
   }
 }
 
 function lockOut() {
-  document.getElementById('doc-screen').style.display = 'none';
-  document.getElementById('lock-screen').style.display = 'flex';
+  document.getElementById('doc-area').style.display = 'none';
+  document.getElementById('lock-area').style.display = 'block';
   document.getElementById('code-input').value = '';
   document.getElementById('error-msg').textContent = '';
 }
@@ -331,6 +340,8 @@ function setLang(lang) {
   document.getElementById('btn-en').classList.toggle('active', !isZh);
   document.getElementById('btn-zh').classList.toggle('active', isZh);
 }
+// Keep lang-btn-banner in sync (same buttons, just aliased)
+
 </script>
 
 <footer>
