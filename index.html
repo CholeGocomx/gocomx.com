@@ -74,9 +74,9 @@ nav {
 /* PANEL 1 — Brand */
 .brand-name { font-size: var(--fs-lg); font-weight: 800; letter-spacing: -.02em; line-height: 1.2; margin-bottom: 4px; }
 .brand-name span { color: var(--blue); }
-.brand-tagline { font-size: var(--fs-sm); color: var(--muted); margin-bottom: 24px; }
-.brand-desc { font-size: var(--fs-md); color: var(--text2); line-height: 1.75; margin-bottom: 10px; }
-.brand-desc-zh { font-size: var(--fs-sm); color: var(--muted); line-height: 1.65; margin-bottom: 32px; }
+.brand-tagline { font-size: var(--fs-sm); color: var(--muted); margin-bottom: 12px; }
+.brand-desc { font-size: var(--fs-md); color: var(--text2); line-height: 1.7; margin-bottom: 6px; }
+.brand-desc-zh { font-size: var(--fs-sm); color: var(--muted); line-height: 1.6; margin-bottom: 16px; }
 .cta-group { display: flex; gap: 10px; flex-wrap: wrap; margin-top: auto; }
 .btn { display: inline-flex; align-items: center; gap: 6px; padding: 10px 22px; font-size: var(--fs-md); font-weight: 600; border-radius: 6px; text-decoration: none; cursor: pointer; font-family: inherit; transition: all .15s; border: 1.5px solid transparent; }
 .btn-primary { background: var(--blue); color: #fff; border-color: var(--blue); }
@@ -180,7 +180,7 @@ nav {
   border-radius: 10px; padding: 2px 9px;
 }
 .ticker-wrap {
-  height: 320px; overflow: hidden; position: relative;
+  height: 240px; overflow: hidden; position: relative;
   background: transparent;
   margin-bottom: 14px;
 }
@@ -221,7 +221,7 @@ footer { flex-shrink:0; background:linear-gradient(105deg,#0078d4,#005a9e); padd
 
 .zh, :lang(zh) {
   font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
-  font-weight: 500; -webkit-font-smoothing: antialiased;
+  font-weight: 400; -webkit-font-smoothing: antialiased;
 }
 
 @media (max-width: 960px) {
@@ -256,8 +256,6 @@ footer { flex-shrink:0; background:linear-gradient(105deg,#0078d4,#005a9e); padd
 
   <!-- Panel 1: Brand / Intro -->
   <div class="panel">
-    <div class="col-label">Company · 公司介绍</div>
-    <div class="brand-name">Go<span>Com</span>X</div>
     <div class="brand-tagline">The Infrastructure for Chinese Manufacturers to Enter North American Retail · 中国制造进入北美零售供应链的基础设施平台 — 服务和托管</div>
     <p class="brand-desc">
       Chinese factories lose North American retail contracts every day — not because their products are wrong, but because they lack the compliance infrastructure to enter and stay in. GoComX is that infrastructure: vendor onboarding, Routing Guide compliance, Chargeback elimination, ASN, GS1 labels, Vendor Portal setup, ERP connection, and retailer relationships — all built for you, on a pre-built retail integration network that is production-proven.
@@ -265,9 +263,7 @@ footer { flex-shrink:0; background:linear-gradient(105deg,#0078d4,#005a9e); padd
     <p class="brand-desc-zh zh">
       中国工厂每天都在失去北美零售合同——不是因为产品不好，而是因为没有进入并留在北美零售渠道的合规基础设施。GoComX 就是这套基础设施：Vendor入驻、Routing Guide合规、Chargeback消除、ASN、GS1标签、Vendor Portal配置、ERP对接，以及零售商关系——全部为你搭建到位，依托一套已经过生产验证的预构建零售集成网络。
     </p>
-    <div style="margin-bottom:20px;">
-      <a href="quotefee.html" class="btn btn-primary">Get a Quote · 查看报价 →</a>
-    </div>
+
     <div class="ticker-header">
       <span class="ticker-label">Active Channels · 已接入渠道</span>
       <span class="ticker-count">80+</span>
@@ -459,6 +455,7 @@ footer { flex-shrink:0; background:linear-gradient(105deg,#0078d4,#005a9e); padd
 </script>
 </body>
 </html>
+
 
 
 
