@@ -118,6 +118,14 @@ nav {
   .nav-tagline { display: none; }
   .lock-card { padding: 32px 24px; margin: 0 16px; }
 }
+/* LANG TOGGLE */
+.lang-btn { padding:3px 0; width:46px; text-align:center; font-size:0.82rem; font-weight:600; font-family:'Segoe UI',system-ui,sans-serif; border:1.5px solid var(--blue); border-radius:4px; background:#fff; color:var(--blue); cursor:pointer; transition:all .15s; }
+.lang-btn.active { background:var(--blue); color:#fff; }
+.lang-btn:hover:not(.active) { background:#eff6ff; }
+.bio-zh { display:none; }
+body.zh-mode .bio-en { display:none !important; }
+body.zh-mode .bio-zh { display:inline !important; }
+
 footer { flex-shrink:0; background:linear-gradient(105deg,#0078d4,#005a9e); padding:14px 48px; display:flex; align-items:center; justify-content:center; gap:24px; flex-wrap:wrap; }
 .footer-copy { font-size: 0.88rem; color: #fff; font-weight: 400; font-family: 'Segoe UI',system-ui,sans-serif; }
 .footer-copy span { color: #fff; }
@@ -142,10 +150,99 @@ footer { flex-shrink:0; background:linear-gradient(105deg,#0078d4,#005a9e); padd
     <li><a href="investor.html">Investor Deck</a></li>
     <li><a href="quotefee.html" class="active">Quote</a></li>
   </ul>
+  <div style="display:flex;gap:4px;margin-left:12px">
+    <button onclick="setLang('en')" id="btn-en" class="lang-btn active">EN</button>
+    <button onclick="setLang('zh')" id="btn-zh" class="lang-btn">中文</button>
+  </div>
 </nav>
 
 <!-- LOCK SCREEN -->
 <div style="background:linear-gradient(105deg,#0078d4,#005a9e);padding:18px 48px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0"><div><h1 style="font-size:1.3rem;font-weight:600;color:#fff;font-family:'Segoe UI',system-ui,sans-serif;letter-spacing:-0.02em">Quote & Documents · 报价与文件</h1><p style="font-size:0.82rem;color:rgba(255,255,255,0.78);margin-top:4px">Full E-COM Standard Data Package, Ready to Go</p></div></div>
+<!-- TRUST READINESS SECTION -->
+<div style="background:#fff;border-bottom:1px solid #e5e7eb;padding:20px 48px;flex-shrink:0">
+  <div style="max-width:960px;margin:0 auto">
+
+    <!-- Header -->
+    <div style="margin-bottom:16px">
+      <div style="font-size:1rem;font-weight:700;color:#0078d4;font-family:'Segoe UI',system-ui,sans-serif">
+        <span class="bio-en">Are You Ready to Build TRUST with a USA Buyer?</span>
+        <span class="bio-zh">你准备好与美国买家建立「信任」了吗？</span>
+      </div>
+      <div style="font-size:0.82rem;color:#6b7280;margin-top:3px;font-family:'Segoe UI',system-ui,sans-serif">
+        <span class="bio-en">Before any serious business discussion begins, this is what every North American sales rep evaluates first.</span>
+        <span class="bio-zh" style="font-family:'Noto Sans SC',sans-serif">在任何正式商业讨论开始之前，这是每一位北美销售代理首先评估的事情。</span>
+      </div>
+    </div>
+
+    <!-- 2-column grid -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
+
+      <!-- Left: Core message -->
+      <div style="background:#eff6ff;border-radius:10px;padding:16px 20px;border-left:4px solid #0078d4">
+        <div style="font-size:0.95rem;font-weight:700;color:#0078d4;font-family:'Segoe UI',system-ui,sans-serif;margin-bottom:8px">"Why should I spend my time on you?"</div>
+        <div style="font-size:0.84rem;color:#1f2937;line-height:1.7;font-family:'Segoe UI',system-ui,sans-serif">
+          <span class="bio-en">This is the first question every North American sales rep asks — before they ever meet you. They are not evaluating your product. They are evaluating whether you are worth their time.<br>In the USA, business runs on <strong style="color:#0078d4">TRUST</strong> — not product specs. It is not selling SKU. It is selling TRUST.</span>
+          <span class="bio-zh" style="font-family:'Noto Sans SC',sans-serif">这是每一位北美销售代理在见你之前，内心首先问的问题。他们评估的不是你的产品，而是你是否值得他们投入时间。<br>在美国，商业关系建立在<strong style="color:#0078d4">「信任」</strong>之上——而不是产品参数。卖的不是SKU，卖的是信任。</span>
+        </div>
+      </div>
+
+      <!-- Right: What's missing + foundation -->
+      <div style="display:flex;flex-direction:column;gap:12px">
+
+        <!-- Missing elements -->
+        <div style="background:#fff8f0;border-radius:10px;padding:14px 18px;border-left:4px solid #f97316;flex:1">
+          <div style="font-size:0.88rem;font-weight:700;color:#ea580c;font-family:'Segoe UI',system-ui,sans-serif;margin-bottom:8px">
+            <span class="bio-en">Most Chinese Vendors Show Up Without</span>
+            <span class="bio-zh" style="font-family:'Noto Sans SC',sans-serif">大多数中国厂商缺少的</span>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px">
+            <div style="font-size:0.82rem;color:#374151"><span style="color:#ef4444;font-weight:700">✕</span> <span class="bio-en">Exclusive Territory</span><span class="bio-zh" style="font-family:'Noto Sans SC',sans-serif">独家代理区域</span></div>
+            <div style="font-size:0.82rem;color:#374151"><span style="color:#ef4444;font-weight:700">✕</span> <span class="bio-en">Regional Authorization</span><span class="bio-zh" style="font-family:'Noto Sans SC',sans-serif">区域授权</span></div>
+            <div style="font-size:0.82rem;color:#374151"><span style="color:#ef4444;font-weight:700">✕</span> <span class="bio-en">Brand Support</span><span class="bio-zh" style="font-family:'Noto Sans SC',sans-serif">品牌支持</span></div>
+            <div style="font-size:0.82rem;color:#374151"><span style="color:#ef4444;font-weight:700">✕</span> <span class="bio-en">After-Sales Commitment</span><span class="bio-zh" style="font-family:'Noto Sans SC',sans-serif">售后承诺</span></div>
+            <div style="font-size:0.82rem;color:#374151"><span style="color:#ef4444;font-weight:700">✕</span> <span class="bio-en">Market Protection</span><span class="bio-zh" style="font-family:'Noto Sans SC',sans-serif">市场保护</span></div>
+          </div>
+          <div style="font-size:0.8rem;color:#9ca3af;margin-top:10px;line-height:1.55;font-style:italic">
+            <span class="bio-en">"A buyer will feel cheated. First time — maybe. Second time — never."</span>
+            <span class="bio-zh" style="font-family:'Noto Sans SC',sans-serif">买手会觉得被耍了。第一次或许，第二次绝不。</span>
+          </div>
+        </div>
+
+        <!-- Foundation chips -->
+        <div style="background:#f0fdf4;border-radius:10px;padding:12px 18px;border-left:4px solid #16a34a">
+          <div style="font-size:0.82rem;font-weight:700;color:#15803d;font-family:'Segoe UI',system-ui,sans-serif;margin-bottom:8px">
+            <span class="bio-en">The Trust Foundation You Must Bring</span>
+            <span class="bio-zh" style="font-family:'Noto Sans SC',sans-serif">必须具备的信任基础</span>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px">
+            <span style="font-size:0.78rem;background:#fff;border:1px solid #bbf7d0;color:#15803d;border-radius:4px;padding:3px 10px;font-weight:600"><span class="bio-en">Exclusive Territory</span><span class="bio-zh" style="font-family:'Noto Sans SC',sans-serif">独家代理区域</span></span>
+            <span style="font-size:0.78rem;background:#fff;border:1px solid #bbf7d0;color:#15803d;border-radius:4px;padding:3px 10px;font-weight:600"><span class="bio-en">Commission Agreement</span><span class="bio-zh" style="font-family:'Noto Sans SC',sans-serif">佣金协议</span></span>
+            <span style="font-size:0.78rem;background:#fff;border:1px solid #bbf7d0;color:#15803d;border-radius:4px;padding:3px 10px;font-weight:600"><span class="bio-en">Sales Rep Agreement</span><span class="bio-zh" style="font-family:'Noto Sans SC',sans-serif">销售代理协议</span></span>
+            <span style="font-size:0.78rem;background:#fff;border:1px solid #bbf7d0;color:#15803d;border-radius:4px;padding:3px 10px;font-weight:600"><span class="bio-en">Market Protection</span><span class="bio-zh" style="font-family:'Noto Sans SC',sans-serif">市场保护</span></span>
+          </div>
+          <div style="font-size:0.8rem;color:#374151;line-height:1.6;">
+            <span class="bio-en">Without these foundations, TRUST cannot be established. Especially COMMISSION — without a data-supported system, serious buyers won't spend time negotiating with your referred suppliers.</span>
+            <span class="bio-zh" style="font-family:'Noto Sans SC',sans-serif">没有这些基础，信任无法建立。尤其是佣金机制——没有数据系统支撑，真正的买手不会花时间认真谈你介绍的供应商。</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom quote bar -->
+    <div style="background:linear-gradient(105deg,#0078d4,#005a9e);border-radius:8px;padding:12px 24px;text-align:center">
+      <div style="font-size:0.88rem;color:rgba(255,255,255,0.75);margin-bottom:4px;font-family:'Segoe UI',system-ui,sans-serif">
+        <span class="bio-en">Technology enables commerce, but trust enables business.</span>
+        <span class="bio-zh" style="font-family:'Noto Sans SC',sans-serif">技术让交易成为可能，但信任让生意得以持续。</span>
+      </div>
+      <div style="font-size:1rem;font-weight:700;color:#fff;font-family:'Segoe UI',system-ui,sans-serif;letter-spacing:0.01em">
+        <span class="bio-en">"Products create opportunities. Trusted relationships create revenue."</span>
+        <span class="bio-zh" style="font-family:'Noto Sans SC',sans-serif">产品创造机会，信任关系创造收入。</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
 <div id="lock-screen">
   <div class="lock-card">
     <div class="lock-icon">📄</div>
@@ -224,6 +321,15 @@ function lockOut() {
   document.getElementById('lock-screen').style.display = 'flex';
   document.getElementById('code-input').value = '';
   document.getElementById('error-msg').textContent = '';
+}
+</script>
+
+<script>
+function setLang(lang) {
+  var isZh = lang === 'zh';
+  document.body.classList.toggle('zh-mode', isZh);
+  document.getElementById('btn-en').classList.toggle('active', !isZh);
+  document.getElementById('btn-zh').classList.toggle('active', isZh);
 }
 </script>
 
