@@ -30,7 +30,7 @@ nav { flex-shrink:0; display:flex; align-items:center; justify-content:space-bet
 .nav-page-tag { display:flex; align-items:center; }
 .nav-page-tag-main { font-size:var(--fs-xs); font-weight:400; }
 .nt-en { color:var(--blue); font-size:var(--fs-xs); }
-.nt-zh { color:var(--muted); font-size:11px; font-family:var(--font-zh); }
+.nt-zh { color:var(--muted); font-size:var(--fs-xs); font-family:var(--font-zh); }
 .nt-sep { color:#bbb; font-size:var(--fs-xs); }
 .nav-links { display:flex; gap:2px; list-style:none; align-items:center; flex-shrink:0; }
 .nav-links a { font-size:0.92rem; font-family:var(--font); color:var(--muted2); text-decoration:none; padding:0 14px; height:52px; display:inline-flex; align-items:center; border-bottom:2px solid transparent; transition:color .15s,border-color .15s; font-weight:600; white-space:nowrap; }
@@ -60,7 +60,7 @@ footer { flex-shrink:0; background:linear-gradient(105deg,var(--blue),var(--blue
 }
 .page-bar-info { flex: 1; min-width: 0; overflow: hidden; }
 .page-bar-title {
-  font-size: var(--fs-md); font-weight: 600; color: var(--text);
+  font-size: var(--fs-md); font-weight: 400; color: var(--text);
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   font-family:var(--font-zh);
 }
@@ -163,7 +163,7 @@ body.zh-mode .icp-card-title .bio-zh { display:inline !important; font-size:var(
 .icp-s:first-of-type { border-top: none; padding-top: 0; }
 .icp-sh { font-size: var(--fs-md); font-weight: 600; color: var(--blue); margin-bottom: 4px; font-family:var(--font); }
 .icp-sh .bio-zh { font-size: var(--fs-md) !important; font-family:var(--font-zh) !important; }
-.icp-r { font-size: var(--fs-xs); font-weight: 400; color: var(--text); line-height: 1.7; display: flex; align-items: flex-start; gap: 8px; font-family:var(--font-zh); }
+.icp-r { font-size: var(--fs-sm); font-weight: 400; color: var(--text); line-height: 1.7; display: flex; align-items: flex-start; gap: 8px; font-family:var(--font-zh); }
 .icp-r::before { content: '·'; color: var(--blue); font-weight: 400; flex-shrink: 0; margin-top: 2px; }
 .icp-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 4px; }
 .icp-ind-tag { font-size: var(--fs-xs); color: var(--blue); background: var(--blue-light); border: 1px solid rgba(0,120,212,.18); border-radius: 4px; padding: 3px 10px; font-weight: 600; }
