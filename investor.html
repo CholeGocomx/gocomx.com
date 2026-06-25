@@ -195,6 +195,12 @@ nav {
   .nav-tagline { display: none; }
   .lock-card { padding: 32px 24px; margin: 0 16px; }
 }
+footer { flex-shrink:0; background:linear-gradient(105deg,#0078d4,#005a9e); padding:14px 48px; display:flex; align-items:center; justify-content:center; gap:24px; flex-wrap:wrap; }
+.footer-copy { font-size:0.82rem; color:#fff; font-weight:700; font-family:'Segoe UI',system-ui,sans-serif; }
+.footer-copy span { color:#93c5fd; }
+.footer-info { display:flex; gap:20px; flex-wrap:wrap; align-items:center; justify-content:center; }
+.footer-info span, .footer-info a { font-size:0.78rem; color:rgba(255,255,255,0.82); text-decoration:none; font-weight:400; }
+.footer-info a:hover { color:#fff; }
 </style>
 </head>
 <body>
@@ -217,32 +223,33 @@ nav {
   </ul>
 </nav>
 
-<!-- PAGE BAR — lock form only (title is in nav tagline) -->
-<div class="page-bar" style="justify-content:center;">
-  <!-- Locked state -->
-  <div class="page-bar-lock" id="bar-lock">
-    <span class="page-bar-lock-label">Investor <span>Deck</span> ·</span>
-    <input type="password" class="page-bar-input" id="code-input" placeholder="ACCESS CODE" maxlength="30"
-      onkeydown="if(event.key==='Enter') checkCode()">
-    <button class="page-bar-unlock-btn" id="unlock-btn" onclick="checkCode()">Unlock →</button>
-    <span class="page-bar-error" id="error-msg"></span>
-    <span class="page-bar-hint">No code? <a href="contact.html">Contact us</a></span>
-  </div>
-  <!-- Unlocked state -->
-  <div class="page-bar-unlocked" id="bar-unlocked">
-    <a class="page-bar-open-btn" href="https://gocomx.sharepoint.com/:b:/g/IQB3I010EEQwRK5cULBmGWZqAePKTAajeMpT_HgdqWcyvTg?e=8f9FiN" target="_blank" rel="noopener">📂 Open Deck · 打开文件</a>
-    <button class="page-bar-exit-btn" onclick="lockOut()">🔒 Lock &amp; Exit</button>
-  </div>
-</div>
-
 <!-- LOCK SCREEN -->
 <div id="lock-screen">
+
+  <!-- BANNER: left = title, right = unlock form -->
+  <div style="background:linear-gradient(105deg,#0078d4,#005a9e);border-radius:10px;padding:20px 28px;display:flex;align-items:center;justify-content:space-between;gap:24px;margin-bottom:20px;flex-wrap:wrap">
+    <div style="flex:1;min-width:0">
+      <div style="font-size:1.1rem;font-weight:600;color:#fff;font-family:'Segoe UI',system-ui,sans-serif;margin-bottom:5px">Why GoComX Cannot Be Copied · 竞争壁垒</div>
+      <div style="font-size:0.78rem;color:rgba(255,255,255,0.78);line-height:1.55;font-family:'Segoe UI',system-ui,sans-serif;max-width:560px">This is not a software company. GoComX is China Manufacturing SaaS + North American Retail Infrastructure — built at the intersection where no competitor currently stands.</div>
+    </div>
+    <!-- Locked state -->
+    <div id="bar-lock" style="display:flex;align-items:center;gap:8px;flex-shrink:0;flex-wrap:wrap">
+      <input type="password" class="page-bar-input" id="code-input" placeholder="ACCESS CODE" maxlength="30"
+        onkeydown="if(event.key==='Enter') checkCode()" style="background:#fff;border-color:#fff">
+      <button class="page-bar-unlock-btn" id="unlock-btn" onclick="checkCode()" style="background:#fff;color:#0078d4;font-weight:700;border:none">Unlock →</button>
+      <span class="page-bar-error" id="error-msg" style="color:#fca5a5"></span>
+      <span class="page-bar-hint" style="color:rgba(255,255,255,0.75);font-size:0.78rem">No code? <a href="contact.html" style="color:#fff;font-weight:600">Contact us</a></span>
+    </div>
+    <!-- Unlocked state -->
+    <div id="bar-unlocked" style="display:none;align-items:center;gap:8px;flex-shrink:0">
+      <a class="page-bar-open-btn" href="https://gocomx.sharepoint.com/:b:/g/IQB3I010EEQwRK5cULBmGWZqAePKTAajeMpT_HgdqWcyvTg?e=8f9FiN" target="_blank" rel="noopener" style="background:#fff;color:#0078d4">📂 Open Deck · 打开文件</a>
+      <button class="page-bar-exit-btn" onclick="lockOut()" style="background:rgba(255,255,255,0.15);color:#fff;border-color:rgba(255,255,255,0.3)">🔒 Lock &amp; Exit</button>
+    </div>
+  </div>
+
   <!-- MOAT CARDS -->
   <div class="icp-section">
-  <div class="icp-header">
-    <div class="icp-header-title">Why GoComX Cannot Be Copied · 竞争壁垒</div>
-    <div class="icp-header-sub">This is not a software company. GoComX is China Manufacturing SaaS + North American Retail Infrastructure — built at the intersection where no competitor currently stands. · 这不是一家软件公司。GoComX 是中国制造业 SaaS + 北美零售供应链基础设施——建立在目前没有任何竞争对手所在的市场交叉点。</div>
-  </div>
+  <div class="icp-header" style="display:none"></div>
   <div class="icp-grid">
     <div class="icp-card">
       <div class="icp-card-head">
@@ -461,8 +468,18 @@ function lockOut() {
 }
 </script>
 
+<footer>
+  <div class="footer-copy">© 2026 Go<span>Com</span>X</div>
+  <div class="footer-info">
+    <span>📍 Irvine, CA, U.S.A</span>
+    <a href="mailto:info@gocomx.com">✉️ info@gocomx.com</a>
+    <span>🕐 Mon – Fri, 9:00 AM – 6:00 PM PST</span>
+  </div>
+</footer>
 </body>
 </html>
+
+
 
 
 

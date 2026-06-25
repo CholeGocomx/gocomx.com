@@ -118,6 +118,12 @@ nav {
   .nav-tagline { display: none; }
   .lock-card { padding: 32px 24px; margin: 0 16px; }
 }
+footer { flex-shrink:0; background:linear-gradient(105deg,#0078d4,#005a9e); padding:14px 48px; display:flex; align-items:center; justify-content:center; gap:24px; flex-wrap:wrap; }
+.footer-copy { font-size:0.82rem; color:#fff; font-weight:700; font-family:'Segoe UI',system-ui,sans-serif; }
+.footer-copy span { color:#93c5fd; }
+.footer-info { display:flex; gap:20px; flex-wrap:wrap; align-items:center; justify-content:center; }
+.footer-info span, .footer-info a { font-size:0.78rem; color:rgba(255,255,255,0.82); text-decoration:none; font-weight:400; }
+.footer-info a:hover { color:#fff; }
 </style>
 </head>
 <body>
@@ -139,6 +145,7 @@ nav {
 </nav>
 
 <!-- LOCK SCREEN -->
+<div style="background:linear-gradient(105deg,#0078d4,#005a9e);padding:18px 48px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0"><div><h1 style="font-size:1.3rem;font-weight:600;color:#fff;font-family:'Segoe UI',system-ui,sans-serif;letter-spacing:-0.02em">Quote & Documents · 报价与文件</h1><p style="font-size:0.82rem;color:rgba(255,255,255,0.78);margin-top:4px">Full E-COM Standard Data Package, Ready to Go</p></div></div>
 <div id="lock-screen">
   <div class="lock-card">
     <div class="lock-icon">📄</div>
@@ -220,8 +227,19 @@ function lockOut() {
 }
 </script>
 
+<footer>
+  <div class="footer-copy">© 2026 Go<span>Com</span>X</div>
+  <div class="footer-info">
+    <span>📍 Irvine, CA, U.S.A</span>
+    <a href="mailto:info@gocomx.com">✉️ info@gocomx.com</a>
+    <span>🕐 Mon – Fri, 9:00 AM – 6:00 PM PST</span>
+  </div>
+</footer>
 </body>
 </html>
+
+
+
 
 
 
